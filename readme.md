@@ -1,7 +1,7 @@
 # Agency Keybinder: Release 1.0 Juni/Juli
 
 # Allgemeine Sachen
-## Rangübersicht --> Max
+## RangÃ¼bersicht --> Max
 0 - Sonstiges 
 1 - Wheelman
 2 - Hitman
@@ -9,7 +9,7 @@
 4 - Leaderschaft ( Hitman )
 5 - Techniker
 
-## Sonstige Ränge --> Max / Jakob
+## Sonstige RÃ¤nge --> Max / Jakob
 0 - Normal
 1 - VIP ( Jakob now ) --> Funktionen macht Jakob
 
@@ -25,3 +25,4 @@
 
 # Control Panel --> Max / Frank
 
+Hi Test
