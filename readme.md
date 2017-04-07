@@ -2,16 +2,16 @@
 
 # Allgemeine Sachen
 ## Rangübersicht --> Max
-0 - Sonstiges 
-1 - Wheelman
-2 - Hitman
-3 - Leaderschaft ( Wheelman )
-4 - Leaderschaft ( Hitman )
-5 - Techniker
+0 - Sonstiges <br />
+1 - Wheelman<br />
+2 - Hitman<br />
+3 - Leaderschaft ( Wheelman )<br />
+4 - Leaderschaft ( Hitman )<br />
+5 - Techniker<br />
 
 ## Sonstige Ränge --> Max / Jakob
-0 - Normal
-1 - VIP ( Jakob now ) --> Funktionen macht Jakob
+0 - Normal<br />
+1 - VIP ( Jakob now ) --> Funktionen macht Jakob<br />
 
 ## Overlay --> Frank
 
@@ -24,5 +24,3 @@
 
 
 # Control Panel --> Max / Frank
-
-Hi Test
