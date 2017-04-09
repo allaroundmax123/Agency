@@ -23,11 +23,11 @@
 - To be continued
 
 # Wheelman
-## Funktionen
+## Funktionen -> Frank/Jakob
 - Alles aus altem Keybinder<br />
 - Verbesserter Statszähltimer<br />
 
-## Funktionen aus den Tickets
+## Funktionen aus den Tickets -> Frank/Jakob
 - Ticket 25 komplett ( Vorschlag )
 - Ticket 22 ( Vorschlag 1 & 4 )
 - Ticket 20 ( Bug )
@@ -35,7 +35,7 @@
 - Ticket 21 ( Bug )
 
 # Hitman
-## Funktionen
+## Funktionen -> Jakob/Max
 - Alles aus altem Keybinder
 
 
