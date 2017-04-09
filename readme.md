@@ -11,16 +11,40 @@
 
 ## Sonstige Ränge --> Max / Jakob
 0 - Normal<br />
-1 - VIP ( Jakob now ) --> Funktionen macht Jakob<br />
+1 - VIP ( Jakob know )<br />
 
 ## Overlay --> Frank
+- Overlay komplett Dynamisch verschiebbar/einstellbar<br />
+- Soll im GUI einstellbar sein<br />
+- Verfügbare Variablen: HP, Standort<br />
+- Wheelman Variablen: AngAuf -> Angenommene Aufträge; AusAuf -> Ausgeführte Aufträge; GehWan -> Gehackte Wanteds; Einnahmewh -> Gesamte Einnahmen als Wheelman<br />
+- Hitman Variablen: AusAuft -> Ausgeführte Contracts; Einnahmehi -> Gesamte Einnahmen als Hitman<br />
+
+- To be continued
 
 # Wheelman
 ## Funktionen
+- Alles aus altem Keybinder<br />
+- Verbesserter Statszähltimer<br />
 
+## Funktionen aus den Tickets
+- Ticket 25 komplett ( Vorschlag )
+- Ticket 22 ( Vorschlag 1 & 4 )
+- Ticket 20 ( Bug )
+- Ticket 24 ( Bug )
+- Ticket 21 ( Bug )
 
 # Hitman
 ## Funktionen
+- Alles aus altem Keybinder
+
 
 
 # Control Panel --> Max / Frank
+- Ticket 27
+- Ticket 26
+- Neues Ticketsystem
+- Bessere Statistiken
+- Leaderschaft Hitman darf keine Wheelmanmember bearbeiten und andersrum.
+- Statistiken von einem Zeitraum X angucken
+
