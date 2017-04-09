@@ -1,13 +1,11 @@
-# Agency Keybinder: Release 1.0 Juni/Juli
+# Wheelman Keybinder: Release 5.0 Juni/Juli
 
 # Allgemeine Sachen
 ## Rangübersicht --> Max
 0 - Sonstiges <br />
 1 - Wheelman<br />
-2 - Hitman<br />
-3 - Leaderschaft ( Wheelman )<br />
-4 - Leaderschaft ( Hitman )<br />
-5 - Techniker<br />
+2 - Leaderschaft ( Wheelman )<br />
+3 - Techniker<br />
 
 ## Sonstige Ränge --> Max / Jakob
 0 - Normal<br />
@@ -17,8 +15,7 @@
 - Overlay komplett Dynamisch verschiebbar/einstellbar<br />
 - Soll im GUI einstellbar sein<br />
 - Verfügbare Variablen: HP, Standort<br />
-- Wheelman Variablen: AngAuf -> Angenommene Aufträge; AusAuf -> Ausgeführte Aufträge; GehWan -> Gehackte Wanteds; Einnahmewh -> Gesamte Einnahmen als Wheelman<br />
-- Hitman Variablen: AusAuft -> Ausgeführte Contracts; Einnahmehi -> Gesamte Einnahmen als Hitman<br />
+- Wheelman Variablen: AngAuf -> Angenommene Aufträge; AusAuf -> Ausgeführte Aufträge; GehWan -> Gehackte Wanteds; Einnahme -> Gesamte Einnahmen<br />
 
 - To be continued
 
@@ -34,10 +31,6 @@
 - Ticket 24 ( Bug )
 - Ticket 21 ( Bug )
 
-# Hitman
-## Funktionen -> Jakob/Max
-- Alles aus altem Keybinder
-
 
 
 # Control Panel --> Max / Frank
@@ -45,6 +38,5 @@
 - Ticket 26
 - Neues Ticketsystem
 - Bessere Statistiken
-- Leaderschaft Hitman darf keine Wheelmanmember bearbeiten und andersrum.
 - Statistiken von einem Zeitraum X angucken
 
