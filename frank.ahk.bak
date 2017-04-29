@@ -68,7 +68,8 @@ GuiMain()
 	Gui, -SysMenu
 
 	; Bilder hinzufügen
-	Gui, Add, Picture, x0 y0 +BackgroundTrans, src/gui/pic1.jpg
+	Random, randPicture, 1, 4
+	Gui, Add, Picture, x0 y0 +BackgroundTrans, src/gui/pic%randPicture%.jpg
 
 	; Font einstellen
 	Gui, Font, s16, Source Code Pro
@@ -76,7 +77,7 @@ GuiMain()
 
 	; Heading erstellen
 	Gui, Add, Picture, x0 y0 w800 h40 +BackgroundTrans, src/gui/trans80.png
-	Gui, Add, Text, x180 y6 +BackgroundTrans, Wheelman - Keybinder v0.0.1
+	Gui, Add, Text, x180 y6 +BackgroundTrans, Wheelman - Keybinder v5.0
 
 	; Footer erstellen
 	Gui, Font, s9
