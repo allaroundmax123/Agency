@@ -11,7 +11,7 @@ ifExist, updater.exe
         FileDelete, updater.exe
 		
 IfNotExist, background.png
-	URLDownloadToFile, http://agency.jameschans.de/keybinder/background.png, background.png
+	URLDownloadToFile, https://agency.jameschans.de/keybinder/background.png, background.png
 
 keybinderVersion = 1.0.0a
 global username := GetUsername()
@@ -20,7 +20,7 @@ if(username == "")
 {
 RegRead, username, HKCU, Software\SAMP, PlayerName
 }
-url = http://agency.jameschans.de/keybinder/check.php?name=%username%
+url = https://agency.jameschans.de/keybinder/check.php?name=%username%
 UrlDownloadtoVar(url, result)
 StringSplit, result, result, ~
 errors2(result1)
@@ -31,7 +31,7 @@ if(result1 == 1)
 }
 
 
-urli = http://agency.jameschans.de/keybinder/version.txt
+urli = https://agency.jameschans.de/keybinder/version.txt
 URLDownloadToVar(urli, result_)
 if(result_ > keybinderVersion)
 {
@@ -39,7 +39,7 @@ if(result_ > keybinderVersion)
         IfMsgBox, Yes
         {
                 MsgBox, 68, Update wird heruntergeladen!, Das Update wird nun heruntergeladen, 3
-                URLDownloadToFile, http://agency.jameschans.de/keybinder/updater.exe, updater.exe
+                URLDownloadToFile, https://agency.jameschans.de/keybinder/updater.exe, updater.exe
                 MsgBox, 68, Updater start, Der Updater wird nun gestartet und der Keybinder geschlossen., 3
                 run, updater.exe
                 ExitApp
@@ -202,7 +202,7 @@ Loop, 30
 } ; Oben ins Script
 
 
-URLDownloadToFile, http://agency.jameschans.de/keybinder/info.txt, info.txt
+URLDownloadToFile, https://agency.jameschans.de/keybinder/info.txt, info.txt
 FileRead, information, info.txt
 Sleep 100
 FileDelete, info.txt
@@ -827,10 +827,10 @@ If(InStr(line1, "hat einen Eintrag entfernt") || InStr(line2, "hat einen Eintrag
 		if(line1name == line2name || line1name == line3name || line1name == ""){
 			return
 		}
-		urli = http://agency.jameschans.de/keybinder/einnahme.php?name=%username%&einnahme=%money_2%
+		urli = https://agency.jameschans.de/keybinder/einnahme.php?name=%username%&einnahme=%money_2%
 		UrlDownloadToVar(urli, resultm)
 		StringSplit, resultm_, resultm, ~
-		url = http://agency.jameschans.de/keybinder/gehackt.php?name=%username%&anzahl=1
+		url = https://agency.jameschans.de/keybinder/gehackt.php?name=%username%&anzahl=1
 		UrlDownloadToVar(url, result)
 		StringSplit, result_, result, ~
 		errors(result_1)
@@ -843,8 +843,8 @@ If(InStr(line1, "hat einen Eintrag entfernt") || InStr(line2, "hat einen Eintrag
 			VarSetCapacity(result, 0)
 			VarSetCapacity(urli, 0)
 			VarSetCapacity(resulti, 0)
-			url = http://agency.jameschans.de/keybinder/dm/deinnahme.php?name=%username%&einnahme=%money_2%
-			urli = http://agency.jameschans.de/keybinder/dm/dgehackt.php?name=%username%&anzahl=1
+			url = https://agency.jameschans.de/keybinder/dm/deinnahme.php?name=%username%&einnahme=%money_2%
+			urli = https://agency.jameschans.de/keybinder/dm/dgehackt.php?name=%username%&anzahl=1
 			URLDownloadToVar(url, result)
 			URLDownloadToVar(urli, resulti)
 			StringSplit, result, result, ~
@@ -873,10 +873,10 @@ If(InStr(line1, "hat einen Eintrag entfernt") || InStr(line2, "hat einen Eintrag
 		}
 		money_gesamt += moneyl2_2
 		money_gesamt += moneyl1_2
-		urli = http://agency.jameschans.de/keybinder/einnahme.php?name=%username%&einnahme=%money_gesamt%
+		urli = https://agency.jameschans.de/keybinder/einnahme.php?name=%username%&einnahme=%money_gesamt%
 		UrlDownloadToVar(urli, resultm)
 		StringSplit, resultm_, resultm, ~
-		url = http://agency.jameschans.de/keybinder/gehackt.php?name=%username%&anzahl=2
+		url = https://agency.jameschans.de/keybinder/gehackt.php?name=%username%&anzahl=2
 		UrlDownloadToVar(url, result)
 		StringSplit, result_, result, ~
 		errors(result_1)
@@ -888,8 +888,8 @@ If(InStr(line1, "hat einen Eintrag entfernt") || InStr(line2, "hat einen Eintrag
 			VarSetCapacity(result, 0)
 			VarSetCapacity(urli, 0)
 			VarSetCapacity(resulti, 0)
-			url = http://agency.jameschans.de/keybinder/dm/deinnahme.php?name=%username%&einnahme=%money_2%
-			urli = http://agency.jameschans.de/keybinder/dm/dgehackt.php?name=%username%&anzahl=2
+			url = https://agency.jameschans.de/keybinder/dm/deinnahme.php?name=%username%&einnahme=%money_2%
+			urli = https://agency.jameschans.de/keybinder/dm/dgehackt.php?name=%username%&anzahl=2
 			URLDownloadToVar(url, result)
 			URLDownloadToVar(urli, resulti)
 			StringSplit, result, result, ~
@@ -923,10 +923,10 @@ If(InStr(line1, "hat einen Eintrag entfernt") || InStr(line2, "hat einen Eintrag
 		money_gesamt += moneyl2_2
 		money_gesamt += moneyl1_2
 		
-		urli = http://agency.jameschans.de/keybinder/einnahme.php?name=%username%&einnahme=%money_gesamt%
+		urli = https://agency.jameschans.de/keybinder/einnahme.php?name=%username%&einnahme=%money_gesamt%
 		UrlDownloadToVar(urli, resultm)
 		StringSplit, resultm_, resultm, ~
-		url = http://agency.jameschans.de/keybinder/gehackt.php?name=%username%&anzahl=3
+		url = https://agency.jameschans.de/keybinder/gehackt.php?name=%username%&anzahl=3
 		UrlDownloadToVar(url, result)
 		StringSplit, result_, result, ~
 		errors(result_1)
@@ -939,8 +939,8 @@ If(InStr(line1, "hat einen Eintrag entfernt") || InStr(line2, "hat einen Eintrag
 			VarSetCapacity(result, 0)
 			VarSetCapacity(urli, 0)
 			VarSetCapacity(resulti, 0)
-			url = http://agency.jameschans.de/keybinder/dm/deinnahme.php?name=%username%&einnahme=%money_2%
-			urli = http://agency.jameschans.de/keybinder/dm/dgehackt.php?name=%username%&anzahl=3
+			url = https://agency.jameschans.de/keybinder/dm/deinnahme.php?name=%username%&einnahme=%money_2%
+			urli = https://agency.jameschans.de/keybinder/dm/dgehackt.php?name=%username%&anzahl=3
 			URLDownloadToVar(url, result)
 			URLDownloadToVar(urli, resulti)
 			StringSplit, result, result, ~
@@ -1047,11 +1047,11 @@ GetChatLine(0, line1)
 if(InStr(line1, "steigt in dein Fahrzeug ein und zahlt"))
 {
 		RegExMatch(line1, "(.*) steigt in dein Fahrzeug ein und zahlt (.*)\$", money_)
-		urli = http://agency.jameschans.de/keybinder/einnahme.php?name=%username%&einnahme=%money_2%
+		urli = https://agency.jameschans.de/keybinder/einnahme.php?name=%username%&einnahme=%money_2%
 		UrlDownloadToVar(urli, resultm)
 		StringSplit, resultm_, resultm, ~
         SendChat("/f Ich habe den Kunden " money_1 " erfolgreich befreit. Danke!")
-		url = http://agency.jameschans.de/keybinder/ausge.php?name=%username%
+		url = https://agency.jameschans.de/keybinder/ausge.php?name=%username%
 		result := ""
 		result_1 := ""
 		URLDownloadToVar(url, result)
@@ -1063,8 +1063,8 @@ if(InStr(line1, "steigt in dein Fahrzeug ein und zahlt"))
 		{
 			AddChatMessage("|{01DF01}Agency{FFFFFF}| Du hast schon " FormatNumber(result2) " Personen befreit und " FormatNumber(resultm_2) "$ verdient.")
 			
-			url = http://agency.jameschans.de/keybinder/dm/deinnahme.php?name=%username%&einnahme=%money_2%
-			urli = http://agency.jameschans.de/keybinder/dm/dausge.php?name=%username%
+			url = https://agency.jameschans.de/keybinder/dm/deinnahme.php?name=%username%&einnahme=%money_2%
+			urli = https://agency.jameschans.de/keybinder/dm/dausge.php?name=%username%
 			URLDownloadToVar(url, result)
 			URLDownloadToVar(urli, resulti)
 			StringSplit, result, result, ~
@@ -1112,7 +1112,7 @@ if(InStr(Chatline, "|=================||============||=================|")){
 GetChatLine(0, Link)
 IfInString, Link, http
 {
-res :=  SubStr(Link,(s := InStr(Link,"http://")),InStr(Link,"/",0,1,3) - s + 1)
+res :=  SubStr(Link,(s := InStr(Link,"https://")),InStr(Link,"/",0,1,3) - s + 1)
 If(!InStr(Link, radio))
 AddChatMessage("[Link] Es wurde ein Link erkannt und in der Zwischenablage gespeichert")
 Clipboard := res
@@ -1402,7 +1402,7 @@ GetChatLine(0, line1)
 if(InStr(line1, "Du hast den Auftrag von") && InStr(line1, "angenommen"))
 {
 	Settimer, accept, off
-	url = http://agency.jameschans.de/keybinder/angen.php?name=%username%
+	url = https://agency.jameschans.de/keybinder/angen.php?name=%username%
 	UrlDownloadToVar(url, result)
 	StringSplit, result_, result, ~
 	errors(result_1)
@@ -1411,7 +1411,7 @@ if(InStr(line1, "Du hast den Auftrag von") && InStr(line1, "angenommen"))
 		AddChatMessage("|{01DF01}Agency{FFFFFF}| Du hast bereits " FormatNumber(result_2) " Aufträge angenommen")
 		url := ""
 		result := ""
-		url = http://agency.jameschans.de/keybinder/dm/dangen.php?name=%username%
+		url = https://agency.jameschans.de/keybinder/dm/dangen.php?name=%username%
 		URLDownloadToVar(url, result)
 		StringSplit, result, result, ~
 		errors(result1)
@@ -1892,7 +1892,7 @@ return
 
 :?:/whstats::
 username := GetUsername()
-url = http://agency.jameschans.de/keybinder/stats.php?name=%username%
+url = https://agency.jameschans.de/keybinder/stats.php?name=%username%
 URLDownloadToVar(url, result)
 StringSplit, result_, result, ~
 errors(result_1)
@@ -2609,7 +2609,7 @@ return
 
 :?:t/cops::
 copscount := 0
-UrlDownloadToVar("http://agency.jameschans.de/keybinder/allcops.php", result)
+UrlDownloadToVar("https://agency.jameschans.de/keybinder/allcops.php", result)
 cops := "Name `t`t`t`t`tID`n"
 if(coplist == 1){
 	Loop, Parse, result, ~
@@ -2671,7 +2671,7 @@ playername := GetUsername()
 cname := PlayerInput("/Cop-Name: ")
 if cname is number
 	cname := GetPlayerNameByID(cname)
-url = http://agency.jameschans.de/keybinder/addcop.php?name=%cname%&uname=%playername%
+url = https://agency.jameschans.de/keybinder/addcop.php?name=%cname%&uname=%playername%
 URLDownloadToVar(url, result)
 StringSplit, result, result, ~
 errors(result1)
@@ -2683,7 +2683,7 @@ return
 Suspend Permit
 username := GetUsername()
 cname := PlayerInput("/Cop-Name: ")
-url = http://agency.jameschans.de/keybinder/delcop.php?name=%cname%&uname=%username%
+url = https://agency.jameschans.de/keybinder/delcop.php?name=%cname%&uname=%username%
 URLDownloadToVar(url, result)
 StringSplit, result, result, ~
 errors(result1)
@@ -2795,8 +2795,8 @@ errors2(output){
 }
 
 contractupload(username, geld){
-	url = http://hitman.jameschans.de/keybinder/addhitman.php?name=%username%&einnahme=%geld%
-	urli = http://hitman.jameschans.de/keybinder/dm/addhitman.php?name=%username%&einnahmen=%geld%
+	url = https://hitman.jameschans.de/keybinder/addhitman.php?name=%username%&einnahme=%geld%
+	urli = https://hitman.jameschans.de/keybinder/dm/addhitman.php?name=%username%&einnahmen=%geld%
 	URLDownloadToVar(url, result1)
 	URLDownloadToVar(urli, result2)
 	StringSplit, output1_, result1, ~
