@@ -1,65 +1,61 @@
-#Include API.ahk
+ï»¿#Include API.ahk
 #ifWinActive, GTA:SA:MP
 #SingleInstance, force
 #Persistent
 #UseHook
 #NoEnv
 Menu, Tray, NoStandard
-Menu, Tray, Add , Schließen, GuiClose
-
-;php PW rwrg21wah45z6g1y6ea
-;Keybinder bis zum Agency Release
+Menu, Tray, Add , SchlieÃŸen, GuiClose
 
 ifExist, updater.exe
         FileDelete, updater.exe
 		
 IfNotExist, background.png
-	URLDownloadToFile, http://wheelman.jameschans.de/keybinder/background.png, background.png
+	URLDownloadToFile, http://agency.jameschans.de/keybinder/background.png, background.png
 
-keybinderVersion := 4.7
+keybinderVersion = 1.0.0a
 global username := GetUsername()
 
 if(username == "")
 {
 RegRead, username, HKCU, Software\SAMP, PlayerName
 }
-url = http://wheelman.jameschans.de/keybinder/check.php?name=%username%
+url = http://agency.jameschans.de/keybinder/check.php?name=%username%
 UrlDownloadtoVar(url, result)
-result = 1
-if(result == 0 || result == -1 || result == -2)
+StringSplit, result, result, ~
+errors2(result1)
+if(result1 == 1)
 {
-	MsgBox, 16, Fehler, Du stehst nicht auf der Whitelist`, bitte kontaktiere die Leaderschaft, 4
-	ExitApp
-} else {
-	VarSetCapacity(url, -1)
-	VarSetCapacity(result, -1)
+	VarSetCapacity(url, ERROR)
+	VarSetCapacity(result, ERROR)
 }
 
 
-urli = http://wheelman.jameschans.de/keybinder/version.txt
+urli = http://agency.jameschans.de/keybinder/version.txt
 URLDownloadToVar(urli, result_)
 if(result_ > keybinderVersion)
 {
-        MsgBox, 68, Update verfügbar, Lieber Benutzer,`nes ist ein neues Update für den Keybinder verfügbar ( Version %result_% ).`nMöchtest Du nun updaten?
+        MsgBox, 68, Update verfÃ¼gbar, Lieber Benutzer,`nes ist ein neues Update fÃ¼r den Keybinder verfÃ¼gbar ( Version %result_% ).`nMÃ¶chtest Du nun updaten?
         IfMsgBox, Yes
         {
                 MsgBox, 68, Update wird heruntergeladen!, Das Update wird nun heruntergeladen, 3
-                URLDownloadToFile, http://wheelman.jameschans.de/keybinder/updater.exe, updater.exe
+                URLDownloadToFile, http://agency.jameschans.de/keybinder/updater.exe, updater.exe
                 MsgBox, 68, Updater start, Der Updater wird nun gestartet und der Keybinder geschlossen., 3
                 run, updater.exe
                 ExitApp
         }
 }
 
-
 Settimer, hacken, 150
+SetTimer, Timer, 1000
 SetTimer, Grabben, On
 SetTimer, fee, 1000
 SetTimer, XTaste, 500
 SetTimer, Alotto, 1000
 SetTimer, antiSpam, On
-Settimer, clearvariable, 20000
-Settimer, contracts, 1000
+Settimer, clearvariable, 5000
+
+
 
 
 ;{
@@ -101,9 +97,12 @@ InIRead, ALight, settings.ini, Einstellung, ALight
 IniRead, coplist, settings.ini, Einstellung, Copliste, 2
 IniRead, fg, settings.ini, Einstellung, Festgeld, 1250000
 IniRead, XTasteOn, settings.ini, Einstellung, XTasteOn
-IniRead, oldcontracts, settings.ini, Einstellung, oldcontracts
+/*IniRead, overlayOn, settings.ini, Einstellung, OverlayOn, false
 
-
+if(overlayOn){
+	Settimer, overlay, 1000
+}
+*/
 ;Werbung
 IniRead, Werbung, settings.ini, AD, Werbung
 ;Kidnap
@@ -134,7 +133,6 @@ SMS
 /re`t`t`t-`t`t antwort auf die letzt sms
 ============================================================================================================
 
-
 Handy
 ============================================================================================================
 /p `t`t`t-`t`t Telefonat annehmen
@@ -142,20 +140,12 @@ Handy
 /h `t`t`t-`t`t Auflegen
 ============================================================================================================
 
-
 Umrechner
 ============================================================================================================
 /ftime`t`t`t-`t`tSchreibt im /f wie lange man noch sitzt
 /cd`t`t`t-`t`tCountdown 5-1
 /min`t`t`t-`t`trechnet sec in min
 /tr`t`t`t-`t`tTaschenrechner mit +-*/
-============================================================================================================
-
-
-Hitman
-============================================================================================================
-/oc`t`t`t-`t`tOffline Contract
-/dc`t`t`t-`t`tDeath Contract
 ============================================================================================================
 
 
@@ -177,11 +167,11 @@ Sonstiges
 
 KIDNAP
 ============================================================================================================
-/fahrer`t`t`t-`t`tgibt dein Partner an (Auch für Kidnap(Fahrer))
-/sitz`t`t`t-`t`tgibt die Position an, für das Kidnap-Opfer
+/fahrer`t`t`t-`t`tgibt dein Partner an (Auch fÃ¼r Kidnap(Fahrer))
+/sitz`t`t`t-`t`tgibt die Position an, fÃ¼r das Kidnap-Opfer
 /opfer`t`t`t-`t`tgibt das Kidnap-Opfer an
 /kidinfo`t`t`t-`t`tZeigt deinen Partner, Platz & Opfer an
-/sad`t`t`t-`t`t Führt die Eingene AD aus
+/sad`t`t`t-`t`t FÃ¼hrt die Eingene AD aus
 /gk`t`t`t-`t`t manuelle Gk abfrage
 ============================================================================================================
 
@@ -189,8 +179,8 @@ KIDNAP
 TASTEN
 ============================================================================================================
 Pause`t`t`t-`t`tPausierte den Keybinder
-X`t`t`t-`t`tÖffnet zoll/tankt das fahrzeug
-#`t`t`t-`t`tFührt das Kidnapsystem aus
+X`t`t`t-`t`tÃ–ffnet zoll/tankt das fahrzeug
+#`t`t`t-`t`tFÃ¼hrt das Kidnapsystem aus
 ============================================================================================================
 
 
@@ -198,7 +188,7 @@ COPLISTE
 ============================================================================================================
 /cops`t`t`t-`t`tZeigt alle Cops an die gerade Online sind
 /delcop`t`t`t-`t`tEntfernt einen Cop.
-/addcop `t`t`t-`t`tFügt einen Cop hinzu
+/addcop `t`t`t-`t`tFÃ¼gt einen Cop hinzu
 )
 
 ;{ ======= Inilesen
@@ -212,14 +202,16 @@ Loop, 30
 } ; Oben ins Script
 
 
-URLDownloadToFile, http://wheelman.jameschans.de/keybinder/info.txt, info.txt
+URLDownloadToFile, http://agency.jameschans.de/keybinder/info.txt, info.txt
 FileRead, information, info.txt
 Sleep 100
 FileDelete, info.txt
+;}
 
+;{
  Gui, Destroy
  Gui, Add, Edit, x0 y0 w0 h0 +ReadOnly,
- Gui, Add, Picture, x-8 y-31 w910 h650 +BackGroundTrans, %A_ScriptDir%\background.png
+ Gui, Add, Picture, x-8 y-31 w910 h850 +BackGroundTrans, %A_ScriptDir%\background.png
 ; Gui, Tab, Start
 
 Loop, 30
@@ -230,16 +222,16 @@ Loop, 30
 
 ; = Spalte 1
 y := 39
-Loop, 14
+Loop, 11
 {
 	Gui, Add, Hotkey, x25 y%y% w90 h20 vHK%A_Index% gLabel, % HK%A_Index%
 	y += 40
 }
-;}
 
-;{
+
+
 Gui, Add, text, x132 y39 +BackGroundTrans cwhite, Motor An/Aus
-Gui, Add, text, x132 y80 +BackGroundTrans cwhite, Fahrzeug Abschließen
+Gui, Add, text, x132 y80 +BackGroundTrans cwhite, Fahrzeug AbschlieÃŸen
 Gui, Add, text, x132 y120 +BackGroundTrans cwhite, Members
 Gui, Add, text, x132 y160 +BackGroundTrans cwhite, Crewmembers
 Gui, Add, text, x132 y200 +BackGroundTrans cwhite, Fisch Essen (1-5)
@@ -249,14 +241,10 @@ Gui, Add, text, x132 y320 +BackGroundTrans cwhite, Call Backup
 Gui, Add, text, x132 y360 +BackGroundTrans cwhite, Cancel Backup
 Gui, Add, text, x132 y400 +BackGroundTrans cwhite, Help Backup
 Gui, Add, text, x132 y440 +BackGroundTrans cwhite, Ejected alle im Car
-Gui, Add, text, x132 y480 +BackGroundTrans cwhite, Buykit
-Gui, Add, text, x132 y520 +BackGroundTrans cwhite, Usekit
-Gui, Add, text, x132 y560 +BackGroundTrans cwhite, Mask
-Gui, Add, Text, x225 y440 ginfoejected +BackGroundTrans cwhite, 
 
 ; == Spalte 2
 y := 39
-cmdcount := 15
+cmdcount := 12
 Loop, 14
 {
 	Gui, Add, Hotkey, x312 y%y% w90 h20 vHK%cmdcount% gLabel, % HK%cmdcount%
@@ -273,17 +261,16 @@ Gui, Add, text, x422 y280 +BackGroundTrans cwhite, Revert Auftrag
 Gui, Add, text, x422 y320 +BackGroundTrans cwhite, Cancel Wheelman
 Gui, Add, text, x422 y360 +BackGroundTrans cwhite, Ausruesten(V1)
 Gui, Add, text, x422 y400 +BackGroundTrans cwhite, Ausruesten(V2)
-Gui, Add, text, x422 y440 +BackGroundTrans cwhite, Hram
-Gui, Add, text, x422 y480 +BackGroundTrans cwhite, Contracts
-Gui, Add, text, x422 y520 +BackGroundTrans cwhite, Tor auf
-Gui, Add, text, x422 y560 +BackGroundTrans cwhite, Hide
+Gui, Add, text, x422 y440 +BackGroundTrans cwhite, Maske aufsetzen
+Gui, Add, text, x422 y480 +BackGroundTrans cwhite, /oldcontracts
+Gui, Add, text, x422 y520 +BackGroundTrans cwhite, /hram
+Gui, Add, text, x422 y560 +BackGroundTrans cwhite, Contractsystem
 
 ; == Spalte 3
 y := 39
 
-cmdcount := 29
-Loop, 11
-	
+cmdcount := 26
+Loop, 10
 { 
 	Gui, Add, Hotkey, x592 y%y% w90 h20 vHK%cmdcount% gLabel, % HK%cmdcount%
 	Gui, Add, edit, x702 y%y% w90 h20 vCMD%cmdcount%, % CMD%cmdcount%
@@ -294,25 +281,31 @@ Loop, 11
 
 ;~ Groupbox Belegbar
 Gui, Add, text, x10 y5 +BackgroundTrans cwhite, Belegbare Hotkeys
-Gui, Add, Groupbox, x10 y15 w880 h585  +BackGroundTrans cwhite,
+Gui, Add, Groupbox, x10 y15 w870 h770  +BackGroundTrans cwhite,
 
 
 ;~ Buttons
-
-Gui, Add, Button, x570 y535 w90 h40 gEbinds cwhite, Variablen
-Gui, Add, Button, x570 y485 w90 h40 gEinstellungen cwhite, Einstellungen
-Gui, Add, Button, x670 y535 w90 h40 gFest, Keybinds 
-Gui, Add, Button, x670 y485 w90 h40 gBTdynHotSave, Speichern
-Gui, Add, Button, x770 y535 w90 h40 gconnect cwhite, Direct Connect
-Gui, Add, Button, x770 y485 w90 h40 guseless cwhite, Letztes Update
+Gui, Add, Button, x20 y730 w90 h40 gSad cwhite, Eigene Werbung  
+Gui, Add, Button, x20 y680 w90 h40 gAusruesten cwhite, Ausruesten
+Gui, Add, Button, x120 y730 w90 h40 gEbinds cwhite, Variablen
+Gui, Add, Button, x120 y680 w90 h40 gEinstellungen cwhite, Einstellungen
+Gui, Add, Button, x220 y730 w90 h40 gFest, Keybinds 
+Gui, Add, Button, x220 y680 w90 h40 gBTdynHotSave, Speichern
+Gui, Add, Button, x320 y730 w90 h40 gconnect cwhite, Direct Connect
+Gui, Add, Button, x320 y680 w90 h40 guseless cwhite, Letztes Update
 
 ;~ Headline
-Gui, Add, Text, x765 y5 +BackGroundTrans cwhite, © made by Pietro_Miller 
+Gui, Add, Text, x695 y5 +BackGroundTrans cwhite, Â© made by Pietro_Miller && John_Reese
 
-
+;~ Informationsbox
+StringReplace, information, information, \n, `n
+Gui, Font, Arial Bold
+Gui, Add, Text, x426 y640 +BackgroundTrans cwhite, %information%
+Gui, Add, Groupbox, x422 y630 w430 h140 +BackgroundTrans cwhite,
+ 
 ;~ Gui Show
 
-Gui, Show, w900 h620, Agency Keybinder V %keybinderVersion%
+Gui, Show, w900 h800, Agency Keybinder V. %keybinderVersion%
 return
 ;}
 
@@ -323,13 +316,9 @@ Run, %PFAD%\samp.exe server.rpg-city.de:7777
 return
 
 useless:
-MsgBox, 64,Update 4.5, Funktionen Hinzugefügt:`n`nEinstellbar, ob die X-Funktion aktiv ist oder nicht`nEject schmeißt alle leute aus dem Fahrzeug`ne & 1-3 `tschmeißt User auf den Plätzen 1-3 raus.`n/tu`t/tie /untie alle im car`n/ut`t/untie /tie alle im car`n/tu1-3`t/tie /untie Platz 1-3`n/ut1-3`t/untie /tie Platz 1-3 
+MsgBox, 64,Update 1.0.0a, Keybinder auf Agency angepasst
 return
 
-
-infoejected:
-MsgBox, 64, Info Eject System, Stellen sie die Taste ein um alle Personen im Car automatisch zu Ejecten.`nDie Funktion ist mit den Tasten Ausgewählte Taste + 1-3.`nPro Shortcut wird die Person auf Sitz 1-3 ejectet.
-return
 
 Sad:
 
@@ -339,7 +328,7 @@ Gui, 2: Add, Edit, x30 y137 w250 h20 vWerbung, %Werbung%
 Gui, 2: Add, Button, x285 y133 w60 h25 gSpeichern_AD, Speichern
 Gui, 2: Add, GroupBox, x12 y9 w337 h170 +BackgroundTrans,
 Gui, 2: Add, Text, x15 y3 cwhite +BackgroundTrans, Eigene advertising
-Gui, 2: Add, Text, x36 y40 w300 h80  +BackGroundTrans cwhite, Herzlich Willkommen bei deinem individuelles advertising-Profil.`nHier kannst du dein Persönliche Werbung erstellen mit deiner Eigener Variation. Füge in das Fenster deine eigene Werbung ein wie du sie haben Möchtest`n z.B Du wirst gerade Verhaftet / Willst keine Wanteds mehr haben? /service -> Wheelman`nDas /ad musst du nicht machen.
+Gui, 2: Add, Text, x36 y40 w300 h80  +BackGroundTrans cwhite, Herzlich Willkommen bei deinem individuelles advertising-Profil.`nHier kannst du dein PersÃ¶nliche Werbung erstellen mit deiner Eigener Variation. FÃ¼ge in das Fenster deine eigene Werbung ein wie du sie haben MÃ¶chtest`n z.B Du wirst gerade Verhaftet / Willst keine Wanteds mehr haben? /service -> agency`nDas /ad musst du nicht machen.
 
 Gui, 2: Show, w361 h216, Eigene AD
 return
@@ -358,26 +347,26 @@ return
 Ausruesten:
 ;{~ Gui 3: New
 Gui, 3: Add, Picture, x0 y0 w900 h300 +BackgroundTrans, %A_ScriptDir%\background.png
-Gui, 3: Add, Text, x22 y29 w910 h70 +BackgroundTrans cwhite, Herzlich Willkommen bei deinem individuelles Ausrüst-Profil.`nHier kannst du dein Persönliches Ausrüst Profil erstellen mit deinen Eigener Variation für das Ausruesten.`nDu kannnst auch deine Eigene Taste auswählen mit der du dich ausrüsten möchtest. `nWICHTIG: Der erste Waffenslot darf nicht leer sein | Die Hotkeys für das AusrüstProf, kannst Du auf der Startseite Festlegen.
+Gui, 3: Add, Text, x22 y29 w910 h70 +BackgroundTrans cwhite, Herzlich Willkommen bei deinem individuelles AusrÃ¼st-Profil.`nHier kannst du dein PersÃ¶nliches AusrÃ¼st Profil erstellen mit deinen Eigener Variation fÃ¼r das Ausruesten.`nDu kannnst auch deine Eigene Taste auswÃ¤hlen mit der du dich ausrÃ¼sten mÃ¶chtest. `nWICHTIG: Der erste Waffenslot darf nicht leer sein | Die Hotkeys fÃ¼r das AusrÃ¼stProf, kannst Du auf der Startseite Festlegen.
 Gui, 3: Add, GroupBox, x12 y9 w800 h75 , 
 Gui, 3: Add, GroupBox, x12 y108 w800 h153 ,
 Gui, 3: Add, Text, x12 y102 +BackgroundTrans cwhite, Information
 Gui, 3: Add, Text, x12 y3 +BackgroundTrans cwhite, Ausruesten
-Gui, 3: Add, DropDownList, x22 y137 w90 h110 vProfil1_1, ||Messer|Deagle|Shotgun|MP5|M4|Sniper|Drogen
-Gui, 3: Add, DropDownList, x122 y137 w90 h110 vProfil1_2, ||Messer|Deagle|Shotgun|MP5|M4|Sniper|Drogen
-Gui, 3: Add, DropDownList, x222 y137 w90 h110 vProfil1_3, ||Messer|Deagle|Shotgun|MP5|M4|Sniper|Drogen
-Gui, 3: Add, DropDownList, x322 y137 w90 h110 vProfil1_4, ||Messer|Deagle|Shotgun|MP5|M4|Sniper|Drogen
-Gui, 3: Add, DropDownList, x422 y137 w90 h110 vProfil1_5, ||Messer|Deagle|Shotgun|MP5|M4|Sniper|Drogen
-Gui, 3: Add, DropDownList, x522 y137 w90 h110 vProfil1_6, ||Messer|Deagle|Shotgun|MP5|M4|Sniper|Drogen
-Gui, 3: Add, DropDownList, x622 y137 w90 h110 vProfil1_7, ||Messer|Deagle|Shotgun|MP5|M4|Sniper|Drogen
+Gui, 3: Add, DropDownList, x22 y137 w90 h110 vProfil1_1, ||Deagle|Shotgun|MP5|AK47|Drogen
+Gui, 3: Add, DropDownList, x122 y137 w90 h110 vProfil1_2, ||Deagle|Shotgun|MP5|AK47|Drogen
+Gui, 3: Add, DropDownList, x222 y137 w90 h110 vProfil1_3, ||Deagle|Shotgun|MP5|AK47|Drogen
+Gui, 3: Add, DropDownList, x322 y137 w90 h110 vProfil1_4, ||Deagle|Shotgun|MP5|AK47|Drogen
+Gui, 3: Add, DropDownList, x422 y137 w90 h110 vProfil1_5, ||Deagle|Shotgun|MP5|AK47|Drogen
+Gui, 3: Add, DropDownList, x522 y137 w90 h110 vProfil1_6, ||Deagle|Shotgun|MP5|AK47|Drogen
+Gui, 3: Add, DropDownList, x622 y137 w90 h110 vProfil1_7, ||Deagle|Shotgun|MP5|AK47|Drogen
 ;V2
-Gui, 3: Add, DropDownList, x22 y172 w90 h110 vProfil2_1, ||Messer|Deagle|Shotgun|MP5|M4|Sniper|Drogen
-Gui, 3: Add, DropDownList, x122 y172 w90 h110 vProfil2_2, ||Messer|Deagle|Shotgun|MP5|M4|Sniper|Drogen
-Gui, 3: Add, DropDownList, x222 y172 w90 h110 vProfil2_3, ||Messer|Deagle|Shotgun|MP5|M4|Sniper|Drogen
-Gui, 3: Add, DropDownList, x322 y172 w90 h110 vProfil2_4, ||Messer|Deagle|Shotgun|MP5|M4|Sniper|Drogen
-Gui, 3: Add, DropDownList, x422 y172 w90 h110 vProfil2_5, ||Messer|Deagle|Shotgun|MP5|M4|Sniper|Drogen
-Gui, 3: Add, DropDownList, x522 y172 w90 h110 vProfil2_6, ||Messer|Deagle|Shotgun|MP5|M4|Sniper|Drogen
-Gui, 3: Add, DropDownList, x622 y172 w90 h110 vProfil2_7, ||Messer|Deagle|Shotgun|MP5|M4|Sniper|Drogen
+Gui, 3: Add, DropDownList, x22 y172 w90 h110 vProfil2_1, ||Deagle|Shotgun|MP5|AK47|Drogen
+Gui, 3: Add, DropDownList, x122 y172 w90 h110 vProfil2_2, ||Deagle|Shotgun|MP5|AK47|Drogen
+Gui, 3: Add, DropDownList, x222 y172 w90 h110 vProfil2_3, ||Deagle|Shotgun|MP5|AK47|Drogen
+Gui, 3: Add, DropDownList, x322 y172 w90 h110 vProfil2_4, ||Deagle|Shotgun|MP5|AK47|Drogen
+Gui, 3: Add, DropDownList, x422 y172 w90 h110 vProfil2_5, ||Deagle|Shotgun|MP5|AK47|Drogen
+Gui, 3: Add, DropDownList, x522 y172 w90 h110 vProfil2_6, ||Deagle|Shotgun|MP5|AK47|Drogen
+Gui, 3: Add, DropDownList, x622 y172 w90 h110 vProfil2_7, ||Deagle|Shotgun|MP5|AK47|Drogen
 
 GuiControl, 3: Choose, Profil1_1, %Profil1_1%
 GuiControl, 3: Choose, Profil1_2, %Profil1_2%
@@ -398,7 +387,7 @@ GuiControl, 3: Choose, Profil2_7, %Profil2_7%
 
 Gui, 3: Add, Button, x78 y205 w120 h40 gSpeichern_Ausruesten, Speichern
 
-Gui, 3: Show, w822 h273, Ausrüsten
+Gui, 3: Show, w822 h273, AusrÃ¼sten
 return
 
 
@@ -465,25 +454,24 @@ return
 
 EBinds:
 Gui, 4:Add, Picture, x0 y0 w460 h290 +BackgroundTrans, %A_ScriptDir%\background.png
-Gui, 4: add, Text, x27 y29 +BackgroundTrans cwhite, Verfügbare Labels:`n`n[HP] => Gibt die HP aus`n`n[Land] => Gibt das Land aus`n`n[Stadt] => Gibt die Stadt aus`n`n[Veh] => Gibt den Fahrzeugname aus`n`n[VehHP] => Gibt die Fahrzeughp aus`n`n
+Gui, 4: add, Text, x27 y29 +BackgroundTrans cwhite, VerfÃ¼gbare Labels:`n`n[HP] => Gibt die HP aus`n`n[Land] => Gibt das Land aus`n`n[Stadt] => Gibt die Stadt aus`n`n[Veh] => Gibt den Fahrzeugname aus`n`n[VehHP] => Gibt die Fahrzeughp aus`n`n
 Gui, 4: add, Text, x227 y29 +BackgroundTrans cwhite,  `n`n[Kill] => Gibt die aktuellen Kills aus`n`n[Death] => Gibt die aktuellen Tode aus`n`n[KD] => Gibt die KD aus`n`n[HEAL] => Healt sich bei <100 HP`n`n[MOTOR] => Motorsystem
-Gui, 4: Add, Button, x12 y217 w100 h40 gZurückstart, Zurück
+Gui, 4: Add, Button, x12 y217 w100 h40 gZurÃ¼ckstart, ZurÃ¼ck
 Gui, 4: Add, GroupBox, x12 y9 w403 h200 +BackgroundTrans cwhite,
 Gui, 4: add, text, x12 y4 +BackgroundTrans cwhite, Variablen
 
-Gui, 4: Show, Center  h268 w427, Wheelman Keybinder
+Gui, 4: Show, Center  h268 w427, Agency Keybinder
 return
 
 Einstellungen:
 ;{
-
 Gui, 5:Add, Picture, x0 y0 w780 h550 +BackgroundTrans, %A_ScriptDir%\background.png
 Gui, 5: Add, GroupBox, x12 y9 w360 h312 +BackgroundTrans cwhite,
 Gui, 5: Add, Text, x13 y2 +BackgroundTrans cwhite, de/aktivieren
 Gui, 5: Add, CheckBox, x20 y25 w12 h12 +BackgroundTrans cwhite vOrgcall Checked%Orgcall%,
 Gui, 5: Add, Text, x35 y25 +BackgroundTrans cwhite, Meldet den Backup-call auch im /crew-chat?
-Gui, 5: Add, Checkbox, x20 y50 w12 h12 +BackgroundTrans cwhite voldcontracts Checked%oldcontracts% ,
-Gui, 5: Add, Text, x35 y50 +BackgroundTrans cwhite, Oldcontracts verwenden?
+Gui, 5: Add, Checkbox, x20 y50 w12 h12 +BackgroundTrans cwhite vStats Checked%Stats% ,
+Gui, 5: Add, Text, x35 y50 +BackgroundTrans cwhite, Stellt ein ob die Stats bearbeitet werden?
 Gui, 5: Add, Checkbox, x20 y75 w12 h12 +BackgroundTrans cwhite vAktvierenHP Checked%AktvierenHP% ,
 Gui, 5: Add, Text, x35 y75 +BackgroundTrans cwhite, Die HP selbst einstellen, wann er Paket/Fische/Drogen used?
 Gui, 5: Add, Checkbox, x20 y100 w12 h12 +BackgroundTrans cwite vFeeEinstell Checked%FeeEinstell%
@@ -493,16 +481,16 @@ Gui, 5: add, Text, x35 y200 +BackgroundTrans cwhite, beim Absteigen den Motor au
 Gui, 5: add, Checkbox, x20 y225 w12 h12 +BackgroundTrans cwhite vALotto_An Checked%ALotto_An%,
 Gui, 5: add, Text, x35 y225 +BackgroundTrans cwhite, Automatisch Lottospielen?
 Gui, 5: Add, Checkbox, x20 y250 w12 h12 +BackgroundTrans cwhite  vAlock Checked%Alock%,
-Gui, 5: Add, Text, x35 y250 +BackgroundTrans cwhite, Fahrzeug abschließen beim Motorstart
+Gui, 5: Add, Text, x35 y250 +BackgroundTrans cwhite, Fahrzeug abschlieÃŸen beim Motorstart
 Gui, 5: add, Checkbox, x20 y275 w12 h12 +BackgroundTrans cwhite vALight Checked%ALight%,
 Gui, 5: Add, Text, x35 y275 +BackgroundTrans cwhite, Fahrzeuglicht einschalten bei Motorstart
 Gui, 5: Add, Checkbox, x20 y300 w12 h12 +BackgroundTrans cwhite vXtasteOn Checked%XTasteOn%,
-Gui, 5: Add, Text, x35 y300 +BackgroundTrans cwhite, Tank/Zoll per X Taste öffnen
+Gui, 5: Add, Text, x35 y300 +BackgroundTrans cwhite, Tank/Zoll per X Taste Ã¶ffnen
 ;Fisch
 Gui, 5: Add, GroupBox, x385 y200 w300 h100 +BackgroundTrans cwhite,
 Gui, 5: Add, Text, x385 y190 +BackgroundTrans cwhite, Einstellung /Fish
 Gui, 5: Add, Text, x400 y225 +BackgroundTrans cwhite, Willst du den Billigsten Fisch, den HP niedrigsten Fisch oder
-Gui, 5: Add, Text, x400 y240 +BackgroundTrans cwhite,  keinen Fisch wegschmeißen?
+Gui, 5: Add, Text, x400 y240 +BackgroundTrans cwhite,  keinen Fisch wegschmeiÃŸen?
 Gui, 5: Add, Text, x400 y255 +BackgroundTrans cwhite, HP = 1 || $ = 2 || Nix = 3
 Gui, 5: Add, Edit, x520 y254 w50 h16 vangelType, %angelType%
 
@@ -510,7 +498,7 @@ Gui, 5: Add, Edit, x520 y254 w50 h16 vangelType, %angelType%
 Gui, 5: Add, GroupBox, x385 y320 w300 h100 +BackgroundTrans cwhite,
 Gui, 5: Add, Text, x385 y310 +BackgroundTrans cwhite, Einstellung /cops
 Gui, 5: Add, Text, x400 y335 +BackgroundTrans cwhite, Willst Du die Copliste als Dialog oder im Chat?
-Gui, 5: Add, Text, x400 y350 +BackgroundTrans cwhite,  keinen Fisch wegschmeißen?
+Gui, 5: Add, Text, x400 y350 +BackgroundTrans cwhite,  keinen Fisch wegschmeiÃŸen?
 Gui, 5: Add, Text, x400 y365 +BackgroundTrans cwhite, Dialog = 1 || Chat = 2
 Gui, 5: Add, Edit, x520 y364 w50 h16 vcoplist, %coplist%
 
@@ -518,13 +506,6 @@ Gui, 5: Add, Edit, x520 y364 w50 h16 vcoplist, %coplist%
 Gui, 5: Add, Groupbox, x12 y335 w150 h55 +BackgroundTrans cwhite
 Gui, 5: Add, Text, x15 y328 +BackgroundTrans cwhite, Festgeld
 Gui, 5: Add, Edit, x15 y355 w100 h20 vfg, %fg%
-
-
-
-;Buttons
-Gui, 5: Add, Button, x400 y450 w80 h30 gSad cwhite, Eigene Werbung  
-Gui, 5: Add, Button, x500 y450 w80 h30 gAusruesten cwhite, Ausruesten
-Gui, 5: Add, Button, x605 y450 w80 h30 gSave_Einstellungen, Speichern
 
 IF(ALotto_An == 1)
 {
@@ -565,7 +546,8 @@ Gui, 5: Add, Checkbox, x20 y175 w12 h12 +BackgroundTrans cwhite vFische Checked%
 Gui, 5: Add, Text, x35 y175 +BackgroundTrans cwhite, Fische erst ab einer speziellen HP usebar.
 }
 
-Gui, 5: Show, Center h500 w700,Einstellungen
+Gui, 5: Show, Center h500 w700, Agency Keybinder Einstellungen
+Gui, 5: Add, Button, x485 y440 w100 h40 gSave_Einstellungen, Speichern
 return
 
 Save_Einstellungen:
@@ -590,7 +572,7 @@ GuiControlGet, ALight
 GuiControlGet, coplist
 GuiControlGet, fg
 GuiControlGet, XTasteOn
-GuiControlGet, oldcontracts
+
 
 
 IniWrite, %AutoMotorAus%, settings.ini, Einstellung, AutoMotorAus
@@ -614,22 +596,21 @@ IniWrite, %ALight%, settings.ini, Einstellung, ALight
 IniWrite, %coplist%, settings.ini, Einstellung, Copliste
 IniWrite, %fg%, settings.ini, Einstellung, Festgeld
 IniWrite, %XTasteOn%, settings.ini, Einstellung, XTasteOn
-IniWrite, %oldcontracts%, settings.ini, Einstellung, oldcontracts
 
 MsgBox, 64, Einstellung, Einstellungen gespeichert. Lade Keybinder neu...
 Reload
 return
 ;}
 
-Zurückstart:
+ZurÃ¼ckstart:
 Reload
 return
 
 Fest:
 Gui, 6:Add, Picture, x0 y0 w770 h290 +BackgroundTrans, %A_ScriptDir%\background.png
 Gui, 6: Add, Edit, x6 y7 w730 h220 ReadOnly, %Slashbinds%
-Gui, 6: Add, Button, x6 y232 w100 h30 gZurückstart, Zurück
-Gui, 6: Show, Center  h268 w747, Wheelman Keybinder
+Gui, 6: Add, Button, x6 y232 w100 h30 gZurÃ¼ckstart, ZurÃ¼ck
+Gui, 6: Show, Center  h268 w747, agency Keybinder
 return
 
 BTdynHotSave: ;{
@@ -675,7 +656,7 @@ return
 
 ALotto:
 GetChatLine(1, line2)
-If(InStr(line2, "Die nächste Lotto Ziehung beginnt um"))
+If(InStr(line2, "Die nÃ¤chste Lotto Ziehung beginnt um"))
 {
 	IF(ALotto_An == 1)
 	{	
@@ -684,7 +665,7 @@ If(InStr(line2, "Die nächste Lotto Ziehung beginnt um"))
 			Lottogewinn := params1
 			IF(ALotto_Preis >= Lottogewinn)
 			{
-				AddChatMessage("{0E1681}Agency{FFFFFF} | Drücke '{FFBF00}X{FFFFFF}' um ein Lotto Ticket zu kaufen")
+				AddChatMessage("|{01DF01}Agency{FFFFFF}| DrÃ¼cke '{FFBF00}X{FFFFFF}' um ein Lotto Ticket zu kaufen")
 				KeyWait, X, D, T5
 				if !ErrorLevel
 				{
@@ -712,7 +693,7 @@ if(IsPlayerInAnyVehicle() && IsPlayerDriver())
 {
 	if(IsPlayerInRangeOfPoint(614.7936,1689.5481,6.5567, 10) || IsPlayerInRangeOfPoint(-1328.5437,2677.2109,49.6285, 10) || IsPlayerInRangeOfPoint(1595.7455,2198.9319,10.3875, 10) || IsPlayerInRangeOfPoint(2202.3479,2473.9041,10.3849, 10) || IsPlayerInRangeOfPoint(2113.8887,920.1363,10.3840, 10) || IsPlayerInRangeOfPoint(-2408.7478,975.8612,44.8655, 10) || IsPlayerInRangeOfPoint(-2029.3025,156.4132,28.4108, 10) || IsPlayerInRangeOfPoint(-1676.3165,414.2832,6.7490, 10) || IsPlayerInRangeOfPoint(1004.1802,-939.2733,41.7504, 10) || IsPlayerInRangeOfPoint(1944.1013,-1772.9907,12.9622, 10) || IsPlayerInRangeOfPoint(-90.6283,-1169.5378,1.9707, 10) || IsPlayerInRangeOfPoint(-1605.3982,-2714.4424,48.5335, 10) || IsPlayerInRangeOfPoint(-2243.8896,-2560.5569,31.9219, 10) || IsPlayerInRangeOfPoint(1380.9418,457.1429,19.4861, 10) || IsPlayerInRangeOfPoint(70.4341,1218.6842,18.3743, 10) || IsPlayerInRangeOfPoint(1555.4310,-1605.5901,13.1827, 10))
 	{
-		AddChatMessage(" |{01DF01}Wheelman{FFFFFF}| Du kannst jetzt dein Fahrzeug betanken. Drück '{FFBF00}X{FFFFFF}' zum bestätigen.")
+		AddChatMessage(" |{01DF01}Agency{FFFFFF}| Du kannst jetzt dein Fahrzeug betanken. DrÃ¼ck '{FFBF00}X{FFFFFF}' zum bestÃ¤tigen.")
 		KeyWait, X, D, T10
 		if(InStr(chat0, "Du bist an keiner Tankstelle."))
 		{
@@ -733,7 +714,7 @@ if(IsPlayerInAnyVehicle() && IsPlayerDriver())
 		}
 	} else if(IsPlayerInRangeOfPoint(1733.4684,546.3726,26.2758, 10) || IsPlayerInRangeOfPoint(1741.1063,543.4731,26.3013, 10) || IsPlayerInRangeOfPoint(1744.0303,523.6337,27.3567, 10) || IsPlayerInRangeOfPoint(1752.7092,521.6908,27.3102, 10) || IsPlayerInRangeOfPoint(512.5435,476.6207,18.4921, 10) || IsPlayerInRangeOfPoint(529.2228,467.2050,18.5020, 10) || IsPlayerInRangeOfPoint(-159.7899,414.1762,11.6441, 10) || IsPlayerInRangeOfPoint(-157.4410,392.2368,11.6423, 10) || IsPlayerInRangeOfPoint(-1408.2322,824.1868,46.9611, 10) || IsPlayerInRangeOfPoint(-1414.7716,803.5920,46.8070, 10) || IsPlayerInRangeOfPoint(-2695.0493,1284.6304,54.9936, 10) || IsPlayerInRangeOfPoint(-2686.3394,1284.2363,54.9928, 10) || IsPlayerInRangeOfPoint(-2676.6162,1265.3683,54.9934, 10) || IsPlayerInRangeOfPoint(-2668.1848,1264.9076,54.9993, 10) || IsPlayerInRangeOfPoint(-963.0773,-343.0494,35.6944, 10) || IsPlayerInRangeOfPoint(-967.9983,-322.3340,35.9383, 10) || IsPlayerInRangeOfPoint(-71.7615,-892.4689,15.3092, 10) || IsPlayerInRangeOfPoint(-68.7422,-867.9615,14.0653, 10) || IsPlayerInRangeOfPoint(100.1979,-1284.3651,13.6976, 10) || IsPlayerInRangeOfPoint(94.4024,-1277.8165,13.6380, 10) || IsPlayerInRangeOfPoint(97.1871,-1254.1139,14.2317, 10) || IsPlayerInRangeOfPoint(94.6934,-1245.5920,14.2429, 10) || IsPlayerInRangeOfPoint(42.7052,-1537.9767,4.7632, 10) || IsPlayerInRangeOfPoint(58.0220,-1524.9335,4.5461, 10))
 	{
-		AddChatMessage("{0E1681}Agency{FFFFFF} | Möchtest du den Zoll jetzt öffnen? Zum öffnen '{FFBF00}X{FFFFFF}' drücken.")
+		AddChatMessage( "|{01DF01}Agency{FFFFFF}| MÃ¶chtest du den Zoll jetzt Ã¶ffnen? Zum Ã¶ffnen '{FFBF00}X{FFFFFF}' drÃ¼cken.")
 		Settimer, XTaste, off
 		KeyWait, X, D, T10
 		if !ErrorLevel
@@ -741,7 +722,7 @@ if(IsPlayerInAnyVehicle() && IsPlayerDriver())
 			Settimer, XTaste, 500
 			SendChat("/zoll")
 			GetChatLine(0, chat)
-			if(InStr(chat, "Es ist keine Zo l Station in deiner Nähe"))
+			if(InStr(chat, "Es ist keine Zoll Station in deiner NÃ¤he"))
 			{
 				Sleep, 800
 				SendChat("/zoll")
@@ -752,7 +733,7 @@ if(IsPlayerInAnyVehicle() && IsPlayerDriver())
 		Settimer, XTaste, 500
 	} else if(isPlayerInRangeOfPoint(330.7347,-40.3479,2.2255, 2))
 	{
-		AddChatMessage("{0E1681}Agency{FFFFFF} | Möchtest du dir Drogen kaufen? Zum kaufen '{FFBF00}X{FFFFFF}' drücken.")
+		AddChatMessage( "|{01DF01}Agency{FFFFFF}| MÃ¶chtest du dir Drogen kaufen? Zum kaufen '{FFBF00}X{FFFFFF}' drÃ¼cken.")
 		Settimer, XTaste, off
 		KeyWait, X, D, T10
 		if !ErrorLevel
@@ -770,11 +751,42 @@ return
 
 fee:
 GetChatLine(1, line2)
-if(InStr(line2, "Du hast deinen heutigen Aktivitätsbonus"))
+if(InStr(line2, "Du hast deinen heutigen AktivitÃ¤tsbonus"))
 {
 SendChat("/fee " . FeeEinstellung . "")
-} 
+}
 return
+
+overlay:
+IfWinActive, GTA:SA:MP
+{
+	IniRead, xheal, overlay.ini, Pos-Heal, xpos, 500
+	IniRead, yheal, overlay.ini, Pos-Heal, ypos, 100
+	
+	IniRead, xping, overlay.ini, Pos-Ping, xpos, 500
+	IniRead, yping, overlay.ini, Pos-Ping, ypos, 100
+	
+	IniRead, xid, overlay.ini, Pos-ID, xpos, 500
+	IniRead, yid, overlay.ini, Pos-ID, ypos, 100
+	
+	IniRead, xpak, overlay.ini, Pos-Pak, xpos, 500
+	IniRead, ypak, overlay.ini, Pos-Pak, ypos, 100
+	
+	IniRead, xkit, overlay.ini, Pos-Kit, xpos, 500
+	IniRead, ykit, overlay.ini, Pos-Kit, ypos, 100
+	
+}
+
+return
+
+
+
+
+
+
+
+
+
 
 clearvariable:
 urli := ""
@@ -815,36 +827,38 @@ If(InStr(line1, "hat einen Eintrag entfernt") || InStr(line2, "hat einen Eintrag
 		if(line1name == line2name || line1name == line3name || line1name == ""){
 			return
 		}
-		urli = http://wheelman.jameschans.de/keybinder/einnahme.php?name=%username%&einnahme=%money_2%
+		urli = http://agency.jameschans.de/keybinder/einnahme.php?name=%username%&einnahme=%money_2%
 		UrlDownloadToVar(urli, resultm)
 		StringSplit, resultm_, resultm, ~
-		url = http://wheelman.jameschans.de/keybinder/gehackt.php?name=%username%&anzahl=1
+		url = http://agency.jameschans.de/keybinder/gehackt.php?name=%username%&anzahl=1
 		UrlDownloadToVar(url, result)
 		StringSplit, result_, result, ~
-		if(result_1 == 11 && resultm_1 == 1 || result_1 == 1 && resultm_1 == 1)
+		errors(result_1)
+		errors(resultm_1)
+		if(result_1 == 1 && resultm_1 == 1)
 		{
-			AddChatMessage("{0E1681}Agency{FFFFFF} | Du hast bereits " result_2 " Wanteds gehackt und bereits " resultm_2 "$ verdient.")
+			AddChatMessage("|{01DF01}Agency{FFFFFF}| Du hast bereits " result_2 " Wanteds gehackt und bereits " resultm_2 "$ verdient.")
 			
 			VarSetCapacity(url, 0)
 			VarSetCapacity(result, 0)
 			VarSetCapacity(urli, 0)
 			VarSetCapacity(resulti, 0)
-			url = http://wheelman.jameschans.de/keybinder/dm/deinnahme.php?name=%username%&einnahme=%money_2%
-			urli = http://wheelman.jameschans.de/keybinder/dm/dgehackt.php?name=%username%&anzahl=1
+			url = http://agency.jameschans.de/keybinder/dm/deinnahme.php?name=%username%&einnahme=%money_2%
+			urli = http://agency.jameschans.de/keybinder/dm/dgehackt.php?name=%username%&anzahl=1
 			URLDownloadToVar(url, result)
 			URLDownloadToVar(urli, resulti)
 			StringSplit, result, result, ~
 			StringSplit, resulti, resulti, ~
-			if(result1 == 11 && resulti1 == 1 || result1 == 1 && resulti1 == 1){
-				AddChatMessage("{0E1681}Agency{FFFFFF} | Wocheneinnahmen: " FormatNumber(result2) "$ - Monatseinnahmen: " FormatNumber(result3) "$")
-				AddChatMessage("{0E1681}Agency{FFFFFF} | Wochenwanteds: " FormatNumber(resulti2) " - Monatswanteds: " FormatNumber(resulti3))
+			errors(result1)
+			errors(resulti1)
+			if(result1 == 1 && resulti1 == 1){
+				AddChatMessage("|{01DF01}Agency{FFFFFF}| Wocheneinnahmen: " FormatNumber(result2) "$ - Monatseinnahmen: " FormatNumber(result3) "$")
+				AddChatMessage("|{01DF01}Agency{FFFFFF}| Wochenwanteds: " FormatNumber(resulti2) " - Monatswanteds: " FormatNumber(resulti3))
 			} else {
-				AddChatMessage("{0E1681}Agency{FFFFFF} | Datenbankfehler: " result2 " (Result2) ~~ " resulti2 " (Resulti2) ~~ Bitte an John_Reese wenden")
+				AddChatMessage("|{01DF01}Agency{FFFFFF}| Datenbankfehler: " result2 " (Result2) ~~ " resulti2 " (Resulti2) ~~ Bitte an John_Reese wenden")
 			}
 			
 			Sleep 1000
-		} else {
-			AddChatMessage("{0E1681}Agency{FFFFFF} | Datenbankfehler: " result_2 " (Result_2) ~~ " resultm_2	" (Resultm_2) ~~ Bitte an John_Reese wenden")
 		}
 	}
 	if(InStr(line1, "hat einen Eintrag entfernt. Verbleibend: ") && InStr(line2, "hat einen Eintrag entfernt. Verbleibend:") && !InStr(line3, "hat einen Eintrag entfernt. Verbleibend:"))
@@ -859,35 +873,37 @@ If(InStr(line1, "hat einen Eintrag entfernt") || InStr(line2, "hat einen Eintrag
 		}
 		money_gesamt += moneyl2_2
 		money_gesamt += moneyl1_2
-		urli = http://wheelman.jameschans.de/keybinder/einnahme.php?name=%username%&einnahme=%money_gesamt%
+		urli = http://agency.jameschans.de/keybinder/einnahme.php?name=%username%&einnahme=%money_gesamt%
 		UrlDownloadToVar(urli, resultm)
 		StringSplit, resultm_, resultm, ~
-		url = http://wheelman.jameschans.de/keybinder/gehackt.php?name=%username%&anzahl=2
+		url = http://agency.jameschans.de/keybinder/gehackt.php?name=%username%&anzahl=2
 		UrlDownloadToVar(url, result)
 		StringSplit, result_, result, ~
-		if(result_1 == 11 && resultm_1 == 1 || result_1 == 1 && resultm_1 == 1)
+		errors(result_1)
+		errors(resultm_1)
+		if(result_1 == 1 && resultm_1 == 1)
 		{
-			AddChatMessage("{0E1681}Agency{FFFFFF} | Du hast bereits " result_2 " Wanteds gehackt und bereits " resultm_2 "$ verdient.")
+			AddChatMessage("|{01DF01}Agency{FFFFFF}| Du hast bereits " result_2 " Wanteds gehackt und bereits " resultm_2 "$ verdient.")
 			VarSetCapacity(url, 0)
 			VarSetCapacity(result, 0)
 			VarSetCapacity(urli, 0)
 			VarSetCapacity(resulti, 0)
-			url = http://wheelman.jameschans.de/keybinder/dm/deinnahme.php?name=%username%&einnahme=%money_2%
-			urli = http://wheelman.jameschans.de/keybinder/dm/dgehackt.php?name=%username%&anzahl=2
+			url = http://agency.jameschans.de/keybinder/dm/deinnahme.php?name=%username%&einnahme=%money_2%
+			urli = http://agency.jameschans.de/keybinder/dm/dgehackt.php?name=%username%&anzahl=2
 			URLDownloadToVar(url, result)
 			URLDownloadToVar(urli, resulti)
 			StringSplit, result, result, ~
 			StringSplit, resulti, resulti, ~
-			if(result1 == 11 && resulti1 == 1 || result1 == 1 && resulti1 == 1){
-				AddChatMessage("{0E1681}Agency{FFFFFF} | Wocheneinnahmen: " FormatNumber(result2) "$ - Monatseinnahmen: " FormatNumber(result3) "$")
-				AddChatMessage("{0E1681}Agency{FFFFFF} | Wochenwanteds: " FormatNumber(resulti2) " - Monatswanteds: " FormatNumber(resulti3))
+			errors(result1)
+			errors(resulti1)
+			if(result1 == 1 && resulti1 == 1){
+				AddChatMessage("|{01DF01}Agency{FFFFFF}| Wocheneinnahmen: " FormatNumber(result2) "$ - Monatseinnahmen: " FormatNumber(result3) "$")
+				AddChatMessage("|{01DF01}Agency{FFFFFF}| Wochenwanteds: " FormatNumber(resulti2) " - Monatswanteds: " FormatNumber(resulti3))
 			} else {
-				AddChatMessage("{0E1681}Agency{FFFFFF} | Datenbankfehler: " result2 " (Result2) ~~ " resulti2 " (Resulti2) ~~ Bitte an John_Reese wenden")
+				AddChatMessage("|{01DF01}Agency{FFFFFF}| Datenbankfehler: " result2 " (Result2) ~~ " resulti2 " (Resulti2) ~~ Bitte an John_Reese wenden")
 			}
 			
 			Sleep 1000
-		} else {
-			AddChatMessage("{0E1681}Agency{FFFFFF} | Datenbankfehler: " result_2 " (Result_2) ~~ " resultm_2	" (Resultm_2) ~~ Bitte an John_Reese wenden")
 		}
 	}
 	if(InStr(line1, "hat einen Eintrag entfernt. Verbleibend: ") && InStr(line2, "hat einen Eintrag entfernt. Verbleibend:") && InStr(line3, "hat einen Eintrag entfernt. Verbleibend:"))
@@ -907,36 +923,39 @@ If(InStr(line1, "hat einen Eintrag entfernt") || InStr(line2, "hat einen Eintrag
 		money_gesamt += moneyl2_2
 		money_gesamt += moneyl1_2
 		
-		urli = http://wheelman.jameschans.de/keybinder/einnahme.php?name=%username%&einnahme=%money_gesamt%
+		urli = http://agency.jameschans.de/keybinder/einnahme.php?name=%username%&einnahme=%money_gesamt%
 		UrlDownloadToVar(urli, resultm)
 		StringSplit, resultm_, resultm, ~
-		url = http://wheelman.jameschans.de/keybinder/gehackt.php?name=%username%&anzahl=3
+		url = http://agency.jameschans.de/keybinder/gehackt.php?name=%username%&anzahl=3
 		UrlDownloadToVar(url, result)
 		StringSplit, result_, result, ~
-		if(result_1 == 11 && resultm_1 == 1 || result_1 == 1 && resultm_1 == 1)
+		errors(result_1)
+		errors(resultm_1)
+		if(result_1 == 1 && resultm_1 == 1)
 		{
-			AddChatMessage("{0E1681}Agency{FFFFFF} | Du hast bereits " result_2 " Wanteds gehackt und bereits " resultm_2 "$ verdient.")
+			AddChatMessage("|{01DF01}Agency{FFFFFF}| Du hast bereits " result_2 " Wanteds gehackt und bereits " resultm_2 "$ verdient.")
 			
 			VarSetCapacity(url, 0)
 			VarSetCapacity(result, 0)
 			VarSetCapacity(urli, 0)
 			VarSetCapacity(resulti, 0)
-			url = http://wheelman.jameschans.de/keybinder/dm/deinnahme.php?name=%username%&einnahme=%money_2%
-			urli = http://wheelman.jameschans.de/keybinder/dm/dgehackt.php?name=%username%&anzahl=3
+			url = http://agency.jameschans.de/keybinder/dm/deinnahme.php?name=%username%&einnahme=%money_2%
+			urli = http://agency.jameschans.de/keybinder/dm/dgehackt.php?name=%username%&anzahl=3
 			URLDownloadToVar(url, result)
 			URLDownloadToVar(urli, resulti)
 			StringSplit, result, result, ~
 			StringSplit, resulti, resulti, ~
-			if(result1 == 11 && resulti1 == 1 || result1 == 1 && resulti1 == 1){
-				AddChatMessage("{0E1681}Agency{FFFFFF} | Wocheneinnahmen: " FormatNumber(result2) "$ - Monatseinnahmen: " FormatNumber(result3) "$")
-				AddChatMessage("{0E1681}Agency{FFFFFF} | Wochenwanteds: " FormatNumber(resulti2) " - Monatswanteds: " FormatNumber(resulti3))
+			errors(result1)
+			errors(resulti1)
+			if(result1 == 1 && resulti1 == 1)
+			{
+				AddChatMessage("|{01DF01}Agency{FFFFFF}| Wocheneinnahmen: " FormatNumber(result2) "$ - Monatseinnahmen: " FormatNumber(result3) "$")
+				AddChatMessage("|{01DF01}Agency{FFFFFF}| Wochenwanteds: " FormatNumber(resulti2) " - Monatswanteds: " FormatNumber(resulti3))
 			} else {
-				AddChatMessage("{0E1681}Agency{FFFFFF} | Datenbankfehler: " result2 " (Result2) ~~ " resulti2 " (Resulti2) ~~ Bitte an John_Reese wenden")
+				AddChatMessage("|{01DF01}Agency{FFFFFF}| Datenbankfehler: " result2 " (Result2) ~~ " resulti2 " (Resulti2) ~~ Bitte an John_Reese wenden")
 			}
 			
 			Sleep 1000
-		} else {
-			AddChatMessage("{0E1681}Agency{FFFFFF} | Datenbankfehler: " result_2 " (Result_2) ~~ " resultm_2	" (Resultm_2) ~~ Bitte an John_Reese wenden")
 		}
 	}
 }
@@ -948,9 +967,9 @@ return
 
 GK:
 GetChatLine(0, Chatline)
-if(InStr(Chatline, "Der Spieler befindet sich in") && InStr(Chatline, "Gebäudekomplex"))
+if(InStr(Chatline, "Der Spieler befindet sich in") && InStr(Chatline, "GebÃ¤udekomplex"))
 {
-	RegExMatch(Chatline, "Der Spieler befindet sich in Gebäudekomplex (.*)", params) 
+	RegExMatch(Chatline, "Der Spieler befindet sich in GebÃ¤udekomplex (.*)", params) 
 	GKID := params1
 	gk_search(GKID)
 }
@@ -967,13 +986,13 @@ if(!WinActive("GTA:SA:MP"))
 GetChatLine(0, Chatline__)
 GetChatLine(1, Chatline_)
 Chatline := Chatline_ Chatline__
-if(InStr(Chatline, "WARNUNG: Hör auf zu Spamen, sonst wirst du gekickt!")){
+if(InStr(Chatline, "WARNUNG: HÃ¶r auf zu Spamen, sonst wirst du gekickt!")){
 	if(InStr(Chatline, "sagt:") || InStr(Chatline, "schreit:") || InStr(Chatline, "**(("))
 		return
 	BlockChatInput()
-	AddChatMessage("{0E1681}Agency{FFFFFF} |Anti-Spam Schutz aktiviert.")
+	AddChatMessage("|{01DF01}Agency{FFFFFF}|Anti-Spam Schutz aktiviert.")
 	sleep, 3000
-	AddChatMessage("{0E1681}Agency{FFFFFF} |Anti-Spam Schutz deaktiviert.")
+	AddChatMessage("|{01DF01}Agency{FFFFFF}|Anti-Spam Schutz deaktiviert.")
 	unblockChatInput()
 }
 return
@@ -990,28 +1009,28 @@ if(InStr(line, "* Du versuchst") && InStr(line, "in dein Fahrzeug zu ziehen."))
     Sleep 1000
     ShowGameText("~g~5 ~g~", 1000, 3) 
 	GetChatLine(0, line1)
-	if(InStr(line1, "Du bist nicht in der Nähe des Spielers"))
+	if(InStr(line1, "Du bist nicht in der NÃ¤he des Spielers"))
 	{
 		return
 	}	
     Sleep 1000
     ShowGameText("~g~4 ~g~", 1000, 3)
 	GetChatLine(0, line1)
-	if(InStr(line1, "Du bist nicht in der Nähe des Spielers"))
+	if(InStr(line1, "Du bist nicht in der NÃ¤he des Spielers"))
 	{
 		return
 	}
     Sleep 1000
     ShowGameText("~g~3 ~g~", 1000, 3)
 	GetChatLine(0, line1)
-	if(InStr(line1, "Du bist nicht in der Nähe des Spielers"))
+	if(InStr(line1, "Du bist nicht in der NÃ¤he des Spielers"))
 	{
 		return
 	}
     Sleep 1000
     ShowGameText("~g~2 ~g~", 1000, 3)
 	GetChatLine(0, line1)
-	if(InStr(line1, "Du bist nicht in der Nähe des Spielers"))
+	if(InStr(line1, "Du bist nicht in der NÃ¤he des Spielers"))
 	{
 		return
 	}
@@ -1019,7 +1038,7 @@ if(InStr(line, "* Du versuchst") && InStr(line, "in dein Fahrzeug zu ziehen."))
     ShowGameText("~g~1 ~g~", 1000, 3)
 }
 GetChatLine(0, line1)
-	if(InStr(line1, "Du bist nicht in der Nähe des Spielers"))
+	if(InStr(line1, "Du bist nicht in der NÃ¤he des Spielers"))
 	{
 		return
 	}
@@ -1028,75 +1047,77 @@ GetChatLine(0, line1)
 if(InStr(line1, "steigt in dein Fahrzeug ein und zahlt"))
 {
 		RegExMatch(line1, "(.*) steigt in dein Fahrzeug ein und zahlt (.*)\$", money_)
-		urli = http://wheelman.jameschans.de/keybinder/einnahme.php?name=%username%&einnahme=%money_2%
+		urli = http://agency.jameschans.de/keybinder/einnahme.php?name=%username%&einnahme=%money_2%
 		UrlDownloadToVar(urli, resultm)
 		StringSplit, resultm_, resultm, ~
         SendChat("/f Ich habe den Kunden " money_1 " erfolgreich befreit. Danke!")
-		url = http://wheelman.jameschans.de/keybinder/ausge.php?name=%username%
+		url = http://agency.jameschans.de/keybinder/ausge.php?name=%username%
 		result := ""
 		result_1 := ""
 		URLDownloadToVar(url, result)
 		StringSplit, result, result, ~
+		errors(result1)
+		errors(resultm_1)
 		
 		if(result1 == 1 && resultm_1 == 1)
 		{
-			AddChatMessage("{0E1681}Agency{FFFFFF} | Du hast schon " FormatNumber(result2) " Personen befreit und " FormatNumber(resultm_2) "$ verdient.")
+			AddChatMessage("|{01DF01}Agency{FFFFFF}| Du hast schon " FormatNumber(result2) " Personen befreit und " FormatNumber(resultm_2) "$ verdient.")
 			
-			url = http://wheelman.jameschans.de/keybinder/dm/deinnahme.php?name=%username%&einnahme=%money_2%
-			urli = http://wheelman.jameschans.de/keybinder/dm/dausge.php?name=%username%
+			url = http://agency.jameschans.de/keybinder/dm/deinnahme.php?name=%username%&einnahme=%money_2%
+			urli = http://agency.jameschans.de/keybinder/dm/dausge.php?name=%username%
 			URLDownloadToVar(url, result)
 			URLDownloadToVar(urli, resulti)
 			StringSplit, result, result, ~
 			StringSplit, resulti, resulti, ~
-			AddChatMessage("{0E1681}Agency{FFFFFF} | Wocheneinnahmen: " FormatNumber(result2) "$ - Monatseinnahmen: " FormatNumber(result3) "$")
-			AddChatMessage("{0E1681}Agency{FFFFFF} | Wochengrabs: " resulti2 " - Monatsgrabs: " resulti3)
-		} else {
-			AddChatMessage("{0E1681}Agency{FFFFFF} | Datenbankfehler. Bitte an Pietro_Miller oder John_Reese wenden.")
+			errors(result1)
+			errors(resulti1)
+			if(result1 == 1)
+				AddChatMessage("|{01DF01}Agency{FFFFFF}| Wocheneinnahmen: " FormatNumber(result2) "$ - Monatseinnahmen: " FormatNumber(result3) "$")
+			
+			if(resulti1 == 1)
+				AddChatMessage("|{01DF01}Agency{FFFFFF}| Wochengrabs: " resulti2 " - Monatsgrabs: " resulti3)
 		}
 }
 
 return   
 
-contracts:
-GetChatLine(0, Line1)
-GetChatLine(2, Line3)
-username := GetUsername()
-url := ""
-urli := ""
-regex_ := ""
-regex_2 := ""
-result1 := ""
-result2 := ""
-output1_ := ""
-output1_1 := ""
-output1_2 := ""
-output1_3 := ""
-output2_ := ""
-output2_1 := ""
-output2_2 := ""
-output2_3 := ""
-output2_4 := ""
-output2_5 := ""
-if(InStr(Line1, "<< Hitman " username " hat den Auftrag ausgeführt und"))
-{
-	RegExMatch(Line1, "<< Hitman " username " hat den Auftrag ausgeführt und (.*) für (.+)\$ getötet. >>", regex_)
-	contracting := -1
-	contractupload(username, regex_2)
-}
-if(InStr(Line3, "<< Hitman " username " hat den Auftrag ausgeführt und"))
-{
-	
-	RegExMatch(Line3, "<< Hitman " username " hat den Auftrag ausgeführt und (.*) für (.+)\$ getötet. >>", regex_)
-	contracting := -1
-	contractupload(username, regex_2)
-}
-return
 
 FischTimer:
 AddChatMessage("Du kannst nun wieder zum Angeln gehen!")
 Settimer, Fischtimer, OFf
 return
 
+Timer:
+if(!WinActive("GTA:SA:MP"))
+	return
+
+GetChatLine(0, Chatline)
+if(InStr(Chatline, "|=================||============||=================|")){
+	gesamtmoney:=0
+	Loop, 6
+	{
+		GetChatLine(A_Index-1,Chatline)
+		if(InStr(Chatline,"Lohnsteuer: ")){
+			RegExMatch(Chatline,"Lohn\: (.*)\$     Miete\: \-(.*)\$     Lohnsteuer\: \-(.*)\$",var)
+			gesamtmoney:=gesamtmoney+var1
+			gesamtmoney:=gesamtmoney-var2
+			gesamtmoney:=gesamtmoney-var3
+		}else if(InStr(Chatline,"KFZ Steuer: ")){
+			RegExMatch(Chatline,"KFZ Steuer\: \-(.*)\$",var)
+			gesamtmoney:=gesamtmoney-var1
+		}
+	}
+	AddChatMessage( "|{01DF01}Agency{FFFFFF}| Du hast beim Payday " . gesamtmoney . "$ erhalten.")
+}
+GetChatLine(0, Link)
+IfInString, Link, http
+{
+res :=  SubStr(Link,(s := InStr(Link,"http://")),InStr(Link,"/",0,1,3) - s + 1)
+If(!InStr(Link, radio))
+AddChatMessage("[Link] Es wurde ein Link erkannt und in der Zwischenablage gespeichert")
+Clipboard := res
+}
+return
 
 
 ~F::
@@ -1124,13 +1145,13 @@ if(IsInChat())
 	return
 if(IsPlayerInAnyVehicle() == "0")
 {
-	AddChatMessage("{0E1681}Agency{FFFFFF} | Du bist in keinem Fahrzeug")
+	AddChatMessage( "|{01DF01}Agency{FFFFFF}| Du bist in keinem Fahrzeug")
 }
 else
 {
     If(IsPlayerDriver() == 0)
     {
-		AddChatMessage("{0E1681}Agency{FFFFFF} | Du bist nicht der Fahrer eines Fahrzeuges.")
+		AddChatMessage( "|{01DF01}Agency{FFFFFF}| Du bist nicht der Fahrer eines Fahrzeuges.")
 	}
     else
     {
@@ -1152,7 +1173,7 @@ if(IsInChat())
 	return
 if(IsPlayerInAnyVehicle() == "0")
 {
-        AddChatMessage("{0E1681}Agency{FFFFFF} | Du befindest dich in keinem Fahrzeug.")
+        AddChatMessage( "|{01DF01}Agency{FFFFFF}| Du befindest dich in keinem Fahrzeug.")
 }
 else
 {
@@ -1187,7 +1208,7 @@ if(Fische == 1)
 {
 	if(getPlayerHealth() > FishUse)
 	{
-		AddChatMessage("{0E1681}Agency{FFFFFF} | Du hast {FF0000}" . getPlayerHealth() . " HP{FFFFFF}, Du kannst erst unter {FF0000}" . FishUse . " HP{FFFFFF} Fische essen.")
+		AddChatMessage( "|{01DF01}Agency{FFFFFF}| Du hast {FF0000}" . getPlayerHealth() . " HP{FFFFFF}, Du kannst erst unter {FF0000}" . FishUse . " HP{FFFFFF} Fische essen.")
 	}
 	else
 	{
@@ -1204,7 +1225,7 @@ if(fischers == "6")
 {
 	fischers=1
 	sleep, 500
-	AddChatMessage("{0E1681}Agency{FFFFFF} | Du hast alle Fische Verbraucht.")
+	AddChatMessage( "|{01DF01}Agency{FFFFFF}| Du hast alle Fische Verbraucht.")
 }
 
 return
@@ -1219,7 +1240,7 @@ if(Drugs == 1)
 {
 		if(getPlayerHealth() > DrugsUse) 
 		{
-			AddChatMessage("{0E1681}Agency{FFFFFF} | Du hast {FF0000}" . getPlayerHealth() . " HP{FFFFFF}, Du kannst erst unter {FF0000}" . DrugsUse . " HP{FFFFFF} deine Drogen benutzen.")
+			AddChatMessage("|{01DF01}Agency{FFFFFF}| Du hast {FF0000}" . getPlayerHealth() . " HP{FFFFFF}, Du kannst erst unter {FF0000}" . DrugsUse . " HP{FFFFFF} deine Drogen benutzen.")
 			return
 		}      
 		else
@@ -1243,7 +1264,7 @@ if(Erstehilfe == 1)
 {
 	if(GetPlayerHealth() > PaketUse) 
 		{
-			AddChatMessage("{0E1681}Agency{FFFFFF} | Du hast {FF0000}" . getPlayerHealth() . " HP{FFFFFF}, Du kannst erst unter {FF0000}" . PaketUse . " HP{FFFFFF} dein Erstehilfe Paket benutzen.")
+			AddChatMessage("|{01DF01}Agency{FFFFFF}| Du hast {FF0000}" . getPlayerHealth() . " HP{FFFFFF}, Du kannst erst unter {FF0000}" . PaketUse . " HP{FFFFFF} dein Erstehilfe Paket benutzen.")
 			return
 		}
 	else
@@ -1262,22 +1283,36 @@ HotKey8:
 zone := getPlayerZone() 
 City := getPlayerCity()
 if(!IsInChat())
-		SendChat("/F BK! In: " zone ", " City " | ID: " . getId() . " | HP: " . GetPlayerHealth() . "") 
+{
+	If(backup == 1)
+	{
+		SendChat("/F Ich benÃ¶tige DRINGEND VerstÃ¤rkung in " zone ", " City " | Ich habe die ID: " . getId() . " | Ich habe noch " . GetPlayerHealth() . " HP") 
 		if(OrgCall == 1)
 		{
-			SendChat("/crew BK! In: " zone ", " City " | ID: " . getId() . " | HP: " . GetPlayerHealth() . "") 
+			SendChat("/crew Ich benÃ¶tige DRINGEND VerstÃ¤rkung in " zone ", " City " | Ich habe die ID: " . getId() . " | Ich habe noch " . GetPlayerHealth() . " HP")   
 		}
+	}
+	else
+	{
+		SendChat("/F Ich benÃ¶tige VerstÃ¤rkung in " zone ", " City " | Ich habe die ID: " . getId() . " | Ich habe noch " . GetPlayerHealth() . " HP")   
+		if(OrgCall == 1)
+		{
+			SendChat("/crew Ich benÃ¶tige VerstÃ¤rkung in " zone ", " City " | Ich habe die ID: " . getId() . " | Ich habe noch " . GetPlayerHealth() . " HP") 
+		}
+		backup := 1
+	}
+}
 return
 
 ;Bkend
 HotKey9:
 if(IsInChat())
 	return
-SendChat("/f Verstärkung wird NICHT mehr benötigt!")
+SendChat("/f VerstÃ¤rkung wird NICHT mehr benÃ¶tigt!")
 backup := 0
 if(OrgCall == 1)
 {
-    SendChat("/crew Verstärkung wird NICHT mehr benötigt!")
+    SendChat("/crew VerstÃ¤rkung wird NICHT mehr benÃ¶tigt!")
 }
 return
 
@@ -1313,82 +1348,50 @@ return
 
 
 
-Hotkey12:
-if(IsInChat())
-	return
-SendChat("/buykit")
-return
-
-Hotkey13:
-if(isInChat())
-	return
-if(getVehicleHealth() > 1000)
-{
-AddChatMessage("{0E1681}Agency{FFFFFF} | Erst ab 99% kann man das Kit Usen!")
-return
-} 
-else
-{
-	SendChat("/usekit")
-}
-return
-
-
-Hotkey14:
-if(IsInChat())
-	return
-SendChat("/mask")
-return
-
-
-
-
-
-
 
 ;PosF
-HotKey15:
+HotKey12:
 if(IsInChat())
 	return
  SendChat("/F Ich befinde mich in " . getPlayerCity() . ", " . getPlayerZone() . ".")
 return
 
 ;PosOrg
-HotKey16:
+HotKey13:
 if(IsInChat())
 	return
 SendChat("/crew Ich befinde mich in " . getPlayerCity() . ", " . getPlayerZone() . ".")
 return
 
 ;Letzter Befehl
-HotKey17:
+HotKey14:
 if(IsInChat())
 	return
 SendInput t{up}{enter}
 return
 
 ;Keybinder Pausieren
-HotKey18:
+HotKey15:
 if(IsInChat())
 	return
 SetTimer, Find, Off
 SetTimer, Show, Off
 SetTimer, GK, Off
-AddChatMessage( "|{01DF01}Wheelman{FFFFFF}| Automatisches Findsystem deaktiviert.") 
+AddChatMessage( "|{01DF01}Agency{FFFFFF}| Automatisches Findsystem deaktiviert.") 
 return
 
 ;Hacken
-HotKey19:
+HotKey16:
 if(IsInChat())
 	return
 SendChat("/hacken")
 return
 
-;Accept Wheelman
-HotKey20:
+;Accept agency
+HotKey17:
 if(IsInChat())
 	return
-SendChat("/accept Wheelman")
+SendChat("/accept agency")
 Settimer, accept, 500
 
 return
@@ -1399,43 +1402,43 @@ GetChatLine(0, line1)
 if(InStr(line1, "Du hast den Auftrag von") && InStr(line1, "angenommen"))
 {
 	Settimer, accept, off
-	url = http://wheelman.jameschans.de/keybinder/angen.php?name=%username%
+	url = http://agency.jameschans.de/keybinder/angen.php?name=%username%
 	UrlDownloadToVar(url, result)
 	StringSplit, result_, result, ~
-	IniWrite, %result_1%, reporting.ini, Reporting%A_MM%-%A_DD%-%A_Hour%-%A_Min%
+	errors(result_1)
 	if(result_1 == 1)
 	{
-		AddChatMessage("{0E1681}Agency{FFFFFF} | Du hast bereits " FormatNumber(result_2) " Aufträge angenommen")
+		AddChatMessage("|{01DF01}Agency{FFFFFF}| Du hast bereits " FormatNumber(result_2) " AuftrÃ¤ge angenommen")
 		url := ""
 		result := ""
-		url = http://wheelman.jameschans.de/keybinder/dm/dangen.php?name=%username%
+		url = http://agency.jameschans.de/keybinder/dm/dangen.php?name=%username%
 		URLDownloadToVar(url, result)
 		StringSplit, result, result, ~
-		AddChatMessage("{0E1681}Agency{FFFFFF} | Wochenaufträge: " FormatNumber(result2) " - Monatsaufträge: " FormatNumber(result3))
-	} else {
-		AddChatMessage("{0E1681}Agency{FFFFFF} | Datenbankfehler. Bitte an John_Reese oder Pietro_Miller wenden.")
+		errors(result1)
+		if(result1 == 1)
+			AddChatMessage("|{01DF01}Agency{FFFFFF}| WochenauftrÃ¤ge: " FormatNumber(result2) " - MonatsauftrÃ¤ge: " FormatNumber(result3))
 	}
 }
 return
 
 
-;Whzurücklegen
-HotKey21:
+;WhzurÃ¼cklegen
+HotKey18:
 if(IsInChat())
 	return
 SendChat("/revert")
-AddChatMessage( "|{01DF01}Wheelman{FFFFFF}| Sie haben den Wheelmanauftrag zurückgelgt.")
+AddChatMessage( "|{01DF01}Agency{FFFFFF}| Sie haben den agencyauftrag zurÃ¼ckgelgt.")
 return
 
-;CancelWheelman
-HotKey22:
+;Cancelagency
+HotKey19:
 if(IsInChat())
 	return
-SendChat("/cancel wheelman")
+SendChat("/cancel agency")
 return
 
 
-HotKey23:
+HotKey20:
 if(IsInChat())
 	return
 SendChat("/ausruesten " . Profil1_1 . " " . Profil1_2 . " " . Profil1_3 . " " . Profil1_4 . " " . Profil1_5 . " " . Profil1_6 . " " . Profil1_7 . " " . Profil1_8 . " " . Profil1_9 . " " . Profil1_10 . "")
@@ -1444,7 +1447,7 @@ SendChat("/heal")
 return
 
 
-HotKey24:
+HotKey21:
 if(IsInChat())
 	return
 SendChat("/ausruesten " . Profil2_1 . " " . Profil2_2 . " " . Profil2_3 . " " . Profil2_4 . " " . Profil2_5 . " " . Profil2_6 . " " . Profil2_7 . "")
@@ -1453,83 +1456,92 @@ SendChat("/heal")
 return
 
 
-/*
-Hotkey24:
+
+
+HotKey22:
 if(IsInChat())
 	return
 SendChat("/mask")
 return
-*/
 
+HotKey23:
+if(IsInChat())
+	return
+SendChat("/oldcontracts")
+return
 
-Hotkey25:
+HotKey24:
 if(IsInChat())
 	return
 SendChat("/hram")
 return
 
-Hotkey26:
+HotKey25:
 if(IsInChat())
 	return
-if(oldcontracts == 1)
-{
-	SendChat("/oldcontracts")
-}
-else
-{
-	SendChat("/contracts")
+IniRead, contracting, settings.ini, Zielperson, contract, -1
+if(contracting == -1){
+	AddChatMessage("|{01DF01}Hitman{FFFFFF}| Leer lassen um Abzubrechen")
+	contracting := PlayerInput("/Zielperson: ")
+	if(contracting == "")
+	{
+		AddChatMessage("|{01DF01}Hitman{FFFFFF}| Abgebrochen.")
+		return
+	} else {
+		AddChatMessage("|{01DF01}Hitman{FFFFFF}| MÃ¶chtest Du diese Person automatisch suchen lassen? DrÃ¼cke 'X'")
+		KeyWait, X, D, T3
+		if !ErrorLevel
+		{
+			AID := contracting
+			contracting := GetPlayerNameByID(AID)
+			IniWrite, %contracting%, settings.ini, Zielperson, contract
+			Settimer, Find, On
+		} else {
+			contracting := GetPlayerNameByID(contracting)
+			IniWrite, %contracting%, settings.ini, Zielperson, contract
+		}
+	}
+} else {
+	SendChat("/deathcontract " contracting)
+	Sleep 500
+	GetChatLine(0, Lines1)
+	if(InStr(Lines1, "Du bist an keinem")){
+		SendChat("/offlinecontract " contracting)
+		Sleep 500
+		GetChatLine(0, Liness1)
+		if(InStr(Liness1, "Du bist an keinem")){
+			contracting := -1
+			IniWrite, %contracting%, settings.ini, Zielperson, contract
+			AddChatMessage("|{01DF01}Hitman{FFFFFF}|Konnte Spieler nicht Death/Offlinecontracten. Verwende zurnot /oc oder /dc")
+		} else {
+			GetChatLine(2, Line3)
+			if(InStr(Line3, "<< Hitman " username " hat den Auftrag ausgefÃ¼hrt und (.*) fÃ¼r (.+)\$ getÃ¶tet (offline)")){
+				RegExMatch(Line3, "<< Hitman " username " hat den Auftrag ausgefÃ¼hrt und (.*) fÃ¼r (.+)\$ getÃ¶tet ", regex_)
+				contracting := -1
+				contractupload(username, regex_2)
+			}
+		}
+	} else {
+		GetChatLine(2, Line3)
+		if(InStr(Line3, "<< Hitman " username " hat den Auftrag ausgefÃ¼hrt und (.*) fÃ¼r (.+)\$ getÃ¶tet (offlinearrest)")){
+			RegExMatch(Line3, "<< Hitman " username " hat den Auftrag ausgefÃ¼hrt und (.*) fÃ¼r (.+)\$ getÃ¶tet ", regex_)
+			contracting := -1
+			contractupload(username, regex_2)
+		}
+	}
 }
 return
 
-:?:/oc::
-:?:/offlinecontract::
-{
-    labelText := getLabelText()
-    if (RegExMatch(labelText, "(\S+)\n\((\S+)\)\n(\d+):(\d+):(\d+)", labelText_)) {
-        SendChat("/offlinecontract "  labelText_1)
-    } else {
-        SendInput, /offlinecontract 
-    }
-if(InStr(Line3, "<< Hitman " username " hat den Auftrag ausgeführt und (.*) für (.+)\$ getötet (offlinearrest)")){
-RegExMatch(Line3, "<< Hitman " username " hat den Auftrag ausgeführt und (.*) für (.+)\$ getötet ", regex_)
-contracting := -1
-contractupload(username, regex_2)
-}
-}
+;~~~~~~ Frei Belegbare Hotkeys
+HotKey26:
+printHotkey(26)
 return
-
-:?:/dc::
-:?:/deathcontract::
-{
-    labelText := getLabelText()
-    if (RegExMatch(labelText, "(\S+)\n\((\S+)\)\n(\d+):(\d+):(\d+)", labelText_)) {
-        SendChat("/deathcontract "  labelText_1)
-    } else {
-        SendInput, /deathcontract{space}
-    }
-if(InStr(Line3, "<< Hitman " username " hat den Auftrag ausgeführt und ")){
-contractupload(username, regex_2)
-}
-}
+HotKey27:
+printHotkey(27)
 return
-
-
-
-Hotkey27:
-if(IsInChat())
-	return
-SendChat("/auf")
+HotKey28:
+printHotkey(28)
 return
-
-Hotkey28:
-if(IsInChat())
-	return
-SendChat("/hide")
-return
-
-
-
-
 HotKey29:
 printHotkey(29)
 return
@@ -1551,15 +1563,6 @@ return
 HotKey35:
 printHotkey(35)
 return
-HotKey36:
-printHotkey(36)
-return
-HotKey37:
-printHotkey(37)
-return
-HotKey38:
-printHotkey(38)
-return
 
 /*
 :?:/ej::
@@ -1578,9 +1581,6 @@ SendChat("/eject "psg[4])
 }
 return
 */
-
-
-
 
 ~e & ~1::
 psg := GetSeatIDs()
@@ -1631,14 +1631,14 @@ return
 Suspend 
 If (A_IsSuspended)
 {
-AddChatMessage( "|{01DF01}Wheelman{FFFFFF}| {F0F0F0}Keybinder {B40404}deaktiviert{F0F0F0}.")
+AddChatMessage( "|{01DF01}Agency{FFFFFF}| {F0F0F0}Keybinder {B40404}deaktiviert{F0F0F0}.")
 ShowGameText("~r~Keybinder ~r~ deaktiviert", 2000, 3)
 paused = 1
 Suspend permit
 }
 if (!A_IsSuspended)
 {
-AddChatMessage( "|{01DF01}Wheelman{FFFFFF}| {F0F0F0}Keybinder {088A4B}aktiviert{F0F0F0}.")
+AddChatMessage( "|{01DF01}Agency{FFFFFF}| {F0F0F0}Keybinder {088A4B}aktiviert{F0F0F0}.")
 ShowGameText("~g~Keybinder ~g~ aktiviert", 2000, 3)
 paused = 0
 Suspend off
@@ -1649,7 +1649,7 @@ Suspend off
 Suspend Permit
 
 Zahl1 := PlayerInput("Zahl 1: ")
-AddChatMessage( "|{01DF01}Wheelman{FFFFFF}| Es gibt folgende Aktionen: + - * /") 
+AddChatMessage( "|{01DF01}Agency{FFFFFF}| Es gibt folgende Aktionen: + - * /") 
 Aktion := PlayerInput("Aktion: ")
 Zahl2 := PlayerInput("Zahl 2: ")
 if (Aktion = "+")
@@ -1672,7 +1672,7 @@ if (Aktion = "/")
 StringSplit, calc, Aktion, /
 calcresult := Round(Zahl1 / Zahl2, 3)
 }
-AddChatMessage( "|{01DF01}Wheelman{FFFFFF}| Das Ergebnis lautet: {01DF01}" . calcresult . "")
+AddChatMessage( "|{01DF01}Agency{FFFFFF}| Das Ergebnis lautet: {01DF01}" . calcresult . "")
 return
 
 
@@ -1706,7 +1706,7 @@ Loop, 25
 {
 	GetChatLine(A_Index-1, Chatline)
 	if(InStr(Chatline,"Du hast deinen")){
-		RegExMatch(Chatline, "Du hast deinen (.*) \((.*) LBS\) für (.*)\$ verkauft\.", var)
+		RegExMatch(Chatline, "Du hast deinen (.*) \((.*) LBS\) fÃ¼r (.*)\$ verkauft\.", var)
 		gesamtmoney:=gesamtmoney+var3
 		gesamtlbs:=gesamtlbs+var2
 		counter++
@@ -1729,19 +1729,19 @@ InteriorID := 24/7 == ID:10
 :?:/FishHP::
 Suspend Permit
 angelType := 1
-AddChatMessage( "|{01DF01}Wheelman{FFFFFF}| Der Keybinder wirft nun bei '/fish || /afish' den Fisch weg, der die wenigsten HP bringt.")
+AddChatMessage( "|{01DF01}Agency{FFFFFF}| Der Keybinder wirft nun bei '/fish || /afish' den Fisch weg, der die wenigsten HP bringt.")
 return
 
 :?:/FishGeld::
 Suspend Permit
 angelType := 2
-AddChatMessage( "|{01DF01}Wheelman{FFFFFF}| Der Keybinder wirft nun bei '/fish || /afish' den Fisch mit den billigstens Verkaufpreis weg.")
+AddChatMessage( "|{01DF01}Agency{FFFFFF}| Der Keybinder wirft nun bei '/fish || /afish' den Fisch mit den billigstens Verkaufpreis weg.")
 return
 
 :?:/FishNix::
 Suspend Permit
 angelType := 3
-AddChatMessage("{0E1681}Agency{FFFFFF} | Der Keybinder wirft nun bei '/fish || /afish' keinen Fisch weg")
+AddChatMessage("|{01DF01}Agency{FFFFFF}| Der Keybinder wirft nun bei '/fish || /afish' keinen Fisch weg")
 return
 
 :?:/fish::
@@ -1803,29 +1803,30 @@ if(IsPlayerInRangeOfPoint(378.383605, -2085.143310, 7.387549, 50) || IsPlayerInR
 							continue
 						if(fishes_var2 == "Nichts"){
 							continue
-						}else if(fishes_var2 == "Bernfisch"){
+						}
+						else if(fishes_var2 == "Bernfisch"){
 							moneyGesamt += Floor(fishes_var3 * 1)
-						}else if(fishes_var2 == "Blauer Fächerfisch"){
+						}else if(fishes_var2 == "Blauer FÃ¤cherfisch"){
 							moneyGesamt += Floor(fishes_var3 * 2)
 						}else if(fishes_var2 == "Schwertfisch" || fishes_var2 == "Zackenbarsch" || fishes_var2 == "Roter Schnapper"){
-							moneyGesamt += Floor(fishes_var3 * 3)
+							moneyGesamt += Floor(fishes_var3 * 2)
 						}else if(fishes_var2 == "Katzenfisch"){
-							moneyGesamt += Floor(fishes_var3 * 4)
+							moneyGesamt += Floor(fishes_var3 * 3)
 						}else if(fishes_var2 == "Forelle"){
-							moneyGesamt += Floor(fishes_var3 * 5)
+							moneyGesamt += Floor(fishes_var3 * 3)
 						}else if(fishes_var2 == "Delphin" || fishes_var2 == "Hai" || fishes_var2 == "Segelfisch"){
-							moneyGesamt += Floor(fishes_var3 * 7)
+							moneyGesamt += Floor(fishes_var3 * 4)
 						}else if(fishes_var2 == "Makrele"){
-							moneyGesamt += Floor(fishes_var3 * 8)
+							moneyGesamt += Floor(fishes_var3 * 5)
 						}else if(fishes_var2 == "Hecht" || fishes_var2 == "Aal"){
-							moneyGesamt += Floor(fishes_var3 * 9)
-						}else if(fishes_var2 == "Schildkröte"){
-							moneyGesamt += Floor(fishes_var3 * 10)
+							moneyGesamt += Floor(fishes_var3 * 6)
+						}else if(fishes_var2 == "SchildkrÃ¶te"){
+							moneyGesamt += Floor(fishes_var3 * 8)
 						}else if(fishes_var2 == "Thunfisch" || fishes_var2 == "Wolfbarsch"){
-							moneyGesamt += Floor(fishes_var3 * 12)
+							moneyGesamt += Floor(fishes_var3 * 8)
 						}else{
 							AddChatMessage(fishes_var2 . " (" . fishes_var3 . " LBS) ist ein unbekannter Fisch und konnte nicht berechnet werden.")
-							AddChatMessage("Es wäre nett von dir, wenn du dir den Verkaufspreis, den Namen und die LBS des Fisches merken könntest")
+							AddChatMessage("Es wÃ¤re nett von dir, wenn du dir den Verkaufspreis, den Namen und die LBS des Fisches merken kÃ¶nntest")
 							AddChatMessage("und diese Daten Im CP unter'Bug Melden' posten.")
 							AddChatMessage(" Vielen Dank!")
 							continue
@@ -1833,7 +1834,7 @@ if(IsPlayerInRangeOfPoint(378.383605, -2085.143310, 7.387549, 50) || IsPlayerInR
 						healthGesamt += Floor(fishes_var3 * 0.3)
 					}
 					
-					AddChatMessage("Die Fische würden dir ingesamt " . healthGesamt . "HP oder " . moneyGesamt . "$ bringen.")
+					AddChatMessage("Die Fische wÃ¼rden dir ingesamt " . healthGesamt . "HP oder " . moneyGesamt . "$ bringen.")
 					break
 				}
 			}else if(InStr(Chatline, "Du kannst erst in")){
@@ -1851,34 +1852,34 @@ if(IsPlayerInRangeOfPoint(378.383605, -2085.143310, 7.387549, 50) || IsPlayerInR
 						continue
 					}else if(fishes_var2 == "Bernfisch"){
 						moneyGesamt += Floor(fishes_var3 * 1)
-					}else if(fishes_var2 == "Blauer Fächerfisch"){
+					}else if(fishes_var2 == "Blauer FÃ¤cherfisch"){
 						moneyGesamt += Floor(fishes_var3 * 2)
 					}else if(fishes_var2 == "Schwertfisch" || fishes_var2 == "Zackenbarsch" || fishes_var2 == "Roter Schnapper"){
-						moneyGesamt += Floor(fishes_var3 * 3)
+						moneyGesamt += Floor(fishes_var3 * 2)
 					}else if(fishes_var2 == "Katzenfisch"){
-						moneyGesamt += Floor(fishes_var3 * 4)
+						moneyGesamt += Floor(fishes_var3 * 3)
 					}else if(fishes_var2 == "Forelle"){
-						moneyGesamt += Floor(fishes_var3 * 5)
+						moneyGesamt += Floor(fishes_var3 * 3)
 					}else if(fishes_var2 == "Delphin" || fishes_var2 == "Hai" || fishes_var2 == "Segelfisch"){
-						moneyGesamt += Floor(fishes_var3 * 7)
+						moneyGesamt += Floor(fishes_var3 * 4)
 					}else if(fishes_var2 == "Makrele"){
-						moneyGesamt += Floor(fishes_var3 * 8)
+						moneyGesamt += Floor(fishes_var3 * 5)
 					}else if(fishes_var2 == "Hecht" || fishes_var2 == "Aal"){
-						moneyGesamt += Floor(fishes_var3 * 9)
-					}else if(fishes_var2 == "Schildkröte"){
-						moneyGesamt += Floor(fishes_var3 * 10)
+						moneyGesamt += Floor(fishes_var3 * 6)
+					}else if(fishes_var2 == "SchildkrÃ¶te"){
+						moneyGesamt += Floor(fishes_var3 * 8)
 					}else if(fishes_var2 == "Thunfisch" || fishes_var2 == "Wolfbarsch"){
-						moneyGesamt += Floor(fishes_var3 * 12)
+						moneyGesamt += Floor(fishes_var3 * 8)
 					}else{
 						AddChatMessage(fishes_var2 . " (" . fishes_var3 . " LBS) ist ein unbekannter Fisch und konnte nicht berechnet werden.")
-						AddChatMessage("Es wäre nett von dir, wenn du dir den Verkaufspreis, den Namen und die LBS des Fisches merken könntest")
+						AddChatMessage("Es wÃ¤re nett von dir, wenn du dir den Verkaufspreis, den Namen und die LBS des Fisches merken kÃ¶nntest")
 						AddChatMessage("und diese Daten Im CP unter'Bug Melden' posten.")
 						AddChatMessage(" Vielen Dank!")
 						continue
 					}
 					healthGesamt += Floor(fishes_var3 * 0.3)
 				}
-				AddChatMessage("Die Fische würden dir ingesamt " . healthGesamt . "HP oder " . moneyGesamt . "$ bringen.")
+				AddChatMessage("Die Fische wÃ¼rden dir ingesamt " . healthGesamt . "HP oder " . moneyGesamt . "$ bringen.")
 				return
 			}
 		}
@@ -1891,12 +1892,15 @@ return
 
 :?:/whstats::
 username := GetUsername()
-url = http://wheelman.jameschans.de/keybinder/stats.php?name=%username%
+url = http://agency.jameschans.de/keybinder/stats.php?name=%username%
 URLDownloadToVar(url, result)
 StringSplit, result_, result, ~
-AddChatMessage("{0E1681}Agency{FFFFFF} | Deine Wheelman Statistiken")
-AddChatMessage("{0E1681}Agency{FFFFFF} | Angenommen`t`tAusgeführt`t`tGehackt`t`tEinnahmen:")
-AddChatMessage("{0E1681}Agency{FFFFFF} | " FormatNumber(result_1) "`t`t`t`t`t`t`t`t`t`t`t`t`t`t`t`t`t`t`t`t`t`t" FormatNumber(result_2) "`t`t`t`t`t`t`t`t`t`t`t`t`t`t`t`t" FormatNumber(result_3) "`t`t`t`t`t`t`t`t`t`t`t`t" FormatNumber(result_4) "$")
+errors(result_1)
+if(result_1 == 1){
+AddChatMessage("|{01DF01}Agency{FFFFFF}| Deine agency Statistiken")
+AddChatMessage("|{01DF01}Agency{FFFFFF}| Angenommen`t`tAusgefÃ¼hrt`t`tGehackt`t`tEinnahmen:")
+AddChatMessage("|{01DF01}Agency{FFFFFF}| " FormatNumber(result_2) "`t`t`t`t`t`t`t`t`t`t`t`t`t`t`t`t`t`t`t`t`t`t" FormatNumber(result_3) "`t`t`t`t`t`t`t`t`t`t`t`t`t`t`t`t" FormatNumber(result_4) "`t`t`t`t`t`t`t`t`t`t`t`t" FormatNumber(result_5) "$")
+}
 return
 
 
@@ -1916,34 +1920,34 @@ Loop, 5
 		continue
 	}else if(fishes_var2 == "Bernfisch"){
 		moneyGesamt += Floor(fishes_var3 * 1)
-	}else if(fishes_var2 == "Blauer Fächerfisch"){
+	}else if(fishes_var2 == "Blauer FÃ¤cherfisch"){
 		moneyGesamt += Floor(fishes_var3 * 2)
 	}else if(fishes_var2 == "Schwertfisch" || fishes_var2 == "Zackenbarsch" || fishes_var2 == "Roter Schnapper"){
-		moneyGesamt += Floor(fishes_var3 * 3)
+		moneyGesamt += Floor(fishes_var3 * 2)
 	}else if(fishes_var2 == "Katzenfisch"){
-		moneyGesamt += Floor(fishes_var3 * 4)
+		moneyGesamt += Floor(fishes_var3 * 3)
 	}else if(fishes_var2 == "Forelle"){
-		moneyGesamt += Floor(fishes_var3 * 5)
+		moneyGesamt += Floor(fishes_var3 * 3)
 	}else if(fishes_var2 == "Delphin" || fishes_var2 == "Hai" || fishes_var2 == "Segelfisch"){
-		moneyGesamt += Floor(fishes_var3 * 7)
+		moneyGesamt += Floor(fishes_var3 * 4)
 	}else if(fishes_var2 == "Makrele"){
-		moneyGesamt += Floor(fishes_var3 * 8)
+		moneyGesamt += Floor(fishes_var3 * 5)
 	}else if(fishes_var2 == "Hecht" || fishes_var2 == "Aal"){
-		moneyGesamt += Floor(fishes_var3 * 9)
-	}else if(fishes_var2 == "Schildkröte"){
-		moneyGesamt += Floor(fishes_var3 * 10)
+		moneyGesamt += Floor(fishes_var3 * 6)
+	}else if(fishes_var2 == "SchildkrÃ¶te"){
+		moneyGesamt += Floor(fishes_var3 * 8)
 	}else if(fishes_var2 == "Thunfisch" || fishes_var2 == "Wolfbarsch"){
-		moneyGesamt += Floor(fishes_var3 * 12)
+		moneyGesamt += Floor(fishes_var3 * 8)
 	}else{
 		AddChatMessage(fishes_var2 . " (" . fishes_var3 . " LBS) ist ein unbekannter Fisch und konnte nicht berechnet werden.")
-		AddChatMessage("Es wäre nett von dir, wenn du dir den Verkaufspreis, den Namen und die LBS des Fisches merken könntest")
+		AddChatMessage("Es wÃ¤re nett von dir, wenn du dir den Verkaufspreis, den Namen und die LBS des Fisches merken kÃ¶nntest")
 		AddChatMessage("und diese Daten Im CP unter'Bug Melden' posten.")
 		AddChatMessage(" Vielen Dank!")
 		continue
 	}
 	healthGesamt += Floor(fishes_var3 * 0.3)
 }
-AddChatMessage("Die Fische würden dir ingesamt " . healthGesamt . "HP oder " . moneyGesamt . "$ bringen.")
+AddChatMessage("Die Fische wÃ¼rden dir ingesamt " . healthGesamt . "HP oder " . moneyGesamt . "$ bringen.")
 return
 
 :?:/acook::
@@ -1981,11 +1985,11 @@ return
 :?:/p::
 SendChat("/p")
 SendChat("Guten Tag, Sie sind verbunden mit " name ".")
-SendChat("Was kann ich für Sie tun?")
+SendChat("Was kann ich fÃ¼r Sie tun?")
 return
 
 :?:/h::
-SendChat("Vielen Dank für Ihren Anruf.")
+SendChat("Vielen Dank fÃ¼r Ihren Anruf.")
 SendChat("/h")
 return
 
@@ -2015,7 +2019,7 @@ Loop,
                 }
                 else If(InStr(line, "Diesen Spieler gibt es nicht!"))
                 {
-                        AddChatMessage( "|{01DF01}Wheelman{FFFFFF}| Versendung nicht möglich!")
+                        AddChatMessage( "|{01DF01}Agency{FFFFFF}| Versendung nicht mÃ¶glich!")
                         return
                 }
                 else
@@ -2078,9 +2082,9 @@ return
  :?:/cd::
 Suspend Permit
 zahli := 0
-AddChatMessage("{0E1681}Agency{FFFFFF} | Gib eine Zahl für deinen Countdown ein")
+AddChatMessage("|{01DF01}Agency{FFFFFF}| Gib eine Zahl fÃ¼r deinen Countdown ein")
 zahl := PlayerInput("/Countdown: ")
-AddChatMessage("{0E1681}Agency{FFFFFF} | Du kannst den Countdown mit '{FFBF00}<{FFFFFF}' beenden.")
+AddChatMessage("|{01DF01}Agency{FFFFFF}| Du kannst den Countdown mit '{FFBF00}<{FFFFFF}' beenden.")
 ;SendChat("Countdown startet!")
 Sleep 1000
 Loop, %zahl%
@@ -2111,10 +2115,10 @@ Loop, 5{
 	HP += HP%A_Index%
 }
 Loop, 5{
-	AddChatMessage("{0E1681}Agency{FFFFFF} |" . fisch%A_Index%_1 . " (" . fisch%A_Index%_2 . " LBS) - {FFA000} " . HP%A_Index% . " HP")
+	AddChatMessage("|{01DF01}Agency{FFFFFF}|" . fisch%A_Index%_1 . " (" . fisch%A_Index%_2 . " LBS) - {FFA000} " . HP%A_Index% . " HP")
 }
 
-AddChatMessage( "|{01DF01}Wheelman{FFFFFF}|Die Fische bringen dir Gesamt: {FFA000}" . HP . " HP")
+AddChatMessage( "|{01DF01}Agency{FFFFFF}|Die Fische bringen dir Gesamt: {FFA000}" . HP . " HP")
 return
 
 
@@ -2126,7 +2130,7 @@ if(Sekunden != "" && Sekunden != " " && Sekunden != 0)
 {
         Minuten := Sekunden / 60
         Minuten := round(Minuten, 2)
-        AddChatMessage( "|{01DF01}Wheelman{FFFFFF}|{3ADF00}" Sekunden "{FFFFFF} Sekunden sind {3ADF00}" Minuten "{FFFFFF} Minuten.")
+        AddChatMessage( "|{01DF01}Agency{FFFFFF}|{3ADF00}" Sekunden "{FFFFFF} Sekunden sind {3ADF00}" Minuten "{FFFFFF} Minuten.")
 }
 return
 /*
@@ -2268,15 +2272,49 @@ anzahlmats := Playerinput("Mats anzahl: ")
 SendChat("/trunk put mats "anzahlmats)
 return
 
-:?:/trpd::
+:?:t/trpd::
 Suspend Permit
 anzahldrogen := Playerinput("Drogen anzahl: ")
 SendChat("/trunk put drugs "anzahlmats)
 return
 
+:?:/trtm::
+Suspend Permit
+anzahlmats := Playerinput("Mats anzahl: ")
+SendChat("/trunk take mats "anzahlmats)
+return
+
+:?:t/trtd::
+Suspend Permit
+anzahldrogen := Playerinput("Drogen anzahl: ")
+SendChat("/trunk take drugs "anzahlmats)
+return
+
+:?:t/trtde::
+Suspend Permit
+SendChat("/trunk take deagle 25")
+return
+
+:?:t/sd::
+Suspend Permit
+userid := PlayerInput("ID/Name: ")
+SendChat("/selldrugs " userid " 1 1")
+return
+
+:?:t/bombe::
+Suspend Permit
+userid := PlayerInput("ID/Name: ")
+SendChat("/sellgun " userid " Haftbombe 1 1")
+return
+
+:?:t/messer::
+Suspend Permit
+userid := PlayerInput("ID/Name: ")
+SendChat("/sellgun " userid " Messer 1 1")
+return
 
 
-:?:/db::
+:?:t/db::
 Suspend Permit
 SendChat("/drink bier")
 Sleep 100
@@ -2285,13 +2323,13 @@ return
 
 
 
-:?:/alotto::
+:?:t/alotto::
 Suspend Permit
 Random, rand, 1, 200
 SendChat("/lotto " rand)
 return
 
-:?:/aall::
+:?:t/aall::
 Suspend, Permit
 Geld_Vorher := GetPlayerMoney()
 Sleep, 250
@@ -2299,11 +2337,11 @@ SendChat("/ausruesten all")
 Sleep, 250
 Geld_Nachher := GetPlayerMoney()
 GesamtGeld := Geld_Nachher - Geld_Vorher
-AddChatMessage( "|{01DF01}Wheelman{FFFFFF}| Du hast alle Waffen für {FF0000}" . GesamtGeld . "{FFFFFF}$ ausgerüstet.")
+AddChatMessage( "|{01DF01}Agency{FFFFFF}| Du hast alle Waffen fÃ¼r {FF0000}" . GesamtGeld . "{FFFFFF}$ ausgerÃ¼stet.")
 return
 
 
-:?:/ac::
+:?:t/ac::
 Suspend Permit
 Loop, read, %A_MyDocuments%\GTA San Andreas User Files\SAMP\chatlog.txt
 {
@@ -2360,21 +2398,21 @@ return
 
 
 
-:?:/cc::
-:?:/clear::
-:?:/chatclear::
+:?:t/cc::
+:?:t/clear::
+:?:t/chatclear::
 Suspend Permit
 Loop 300
 {
   AddChatMessage( " ")
 }
-AddChatMessage( "|{01DF01}Wheelman{FFFFFF}| Chatclear abgeschlossen")
+AddChatMessage( "|{01DF01}Agency{FFFFFF}| Chatclear abgeschlossen")
 return
 
 
 
-:?:/af::
-:?:/afind::
+:?:t/af::
+:?:t/afind::
 Suspend Permit
 Suspend On
 SendInput, /find{space}
@@ -2383,11 +2421,11 @@ Send {enter}
 SetTimer, Find, 6000
 SetTimer, GK, 1000
 Suspend Off
-AddChatMessage( "|{01DF01}Wheelman{FFFFFF}| Das automatische Suchen können Sie mit der eingestellten Taste deaktivieren.")
+AddChatMessage( "|{01DF01}Agency{FFFFFF}| Das automatische Suchen kÃ¶nnen Sie mit der eingestellten Taste deaktivieren.")
 return
 
-:?:/as::
-:?:/ashow::
+:?:t/as::
+:?:t/ashow::
 Suspend Permit
 SendInput, /showpos{space}
 Input, AID, V I M,{enter}
@@ -2395,20 +2433,46 @@ Send {enter}
 SetTimer, Show, 6000
 SetTimer, GK, 1000
 Suspend Off
-AddChatMessage( "|{01DF01}Wheelman{FFFFFF}| Das automatische Suchen können Sie mit der eingestellten Taste deaktivieren.")
+AddChatMessage( "|{01DF01}Agency{FFFFFF}| Das automatische Suchen kÃ¶nnen Sie mit der eingestellten Taste deaktivieren.")
 return
+
+
+:?:/oc::
+targetID := PlayerInput("/Offlinecontract: ")
+SendChat("/offlinecontract " targetID)
+GetChatLine(2, Line3)
+if(InStr(Line3, "<< Hitman " username " hat den Auftrag ausgefÃ¼hrt und (.*) fÃ¼r (.+)\$ getÃ¶tet (offlinearrest)")){
+	RegExMatch(Line3, "<< Hitman " username " hat den Auftrag ausgefÃ¼hrt und (.*) fÃ¼r (.+)\$ getÃ¶tet ", regex_)
+	contracting := -1
+	contractupload(username, regex_2)
+}
+return
+
+:?:/dc::
+targetID := PlayerInput("/deathcontract: ")
+SendChat("/deathcontract " targetID)
+GetChatLine(2, Line3)
+if(InStr(Line3, "<< Hitman " username " hat den Auftrag ausgefÃ¼hrt und (.*) fÃ¼r (.+)\$ getÃ¶tet (deatharrest)")){
+	RegExMatch(Line3, "<< Hitman " username " hat den Auftrag ausgefÃ¼hrt und (.*) fÃ¼r (.+)\$ getÃ¶tet ", regex_)
+	contracting := -1
+	contractupload(username, regex_2)
+}
+return
+
+
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;KIDNAP
 
-:?:/kidhelp::
+:?:t/kidhelp::
 Suspend Permit
-AddChatMessage( "|{01DF01}Wheelman{FFFFFF}| /fahrer - Damit legst du fest, wer der Fahrer ist.") 
-AddChatMessage( "|{01DF01}Wheelman{FFFFFF}| /opfer - Mit diesem Befehl legst du fest, wer dein Opfer ist.") 
-AddChatMessage( "|{01DF01}Wheelman{FFFFFF}| /sitz - Dies ist der Sitzplatz im Auto, wo das Opfer hingezogen wird.")
-AddChatMessage( "|{01DF01}Wheelman{FFFFFF}| # um das ganze Auszuführen")
-AddChatMessage( "|{01DF01}Wheelman{FFFFFF}| /kidinfo - zeigt die aktuelle Aufstellung anzeigen")
-AddChatMessage( "|{01DF01}Wheelman{FFFFFF}| /retie - Das Opfer erneut tien")
-AddChatMessage( "|{01DF01}Wheelman{FFFFFF}| < - Beendet /retie Timer")
+AddChatMessage( "|{01DF01}Agency{FFFFFF}| /fahrer - Damit legst du fest, wer der Fahrer ist.") 
+AddChatMessage( "|{01DF01}Agency{FFFFFF}| /opfer - Mit diesem Befehl legst du fest, wer dein Opfer ist.") 
+AddChatMessage( "|{01DF01}Agency{FFFFFF}| /sitz - Dies ist der Sitzplatz im Auto, wo das Opfer hingezogen wird.")
+AddChatMessage( "|{01DF01}Agency{FFFFFF}| # um das ganze AuszufÃ¼hren")
+AddChatMessage( "|{01DF01}Agency{FFFFFF}| /kidinfo - zeigt die aktuelle Aufstellung anzeigen")
+AddChatMessage( "|{01DF01}Agency{FFFFFF}| /retie - Das Opfer erneut tien")
+AddChatMessage( "|{01DF01}Agency{FFFFFF}| < - Beendet /retie Timer")
 return
 
 
@@ -2417,27 +2481,27 @@ return
 opfer := PlayerInput("/Opfer-ID: ")
 IniWrite, %opfer%, settings.ini, Kidnap, Opfer
 name := GetPlayerNameByID(opfer)
-AddChatMessage("{0E1681}Agency{FFFFFF} | Du hast " name " (ID: " opfer ") als Opfer eingetragen")
+AddChatMessage("|{01DF01}Agency{FFFFFF}| Du hast " name " (ID: " opfer ") als Opfer eingetragen")
 return
 
 :?:t/fahrer::
 fahrer := PlayerInput("/Fahrer-ID: ")
 IniWrite, %fahrer%, settings.ini, Kidnap, Fahrer
 name := GetPlayerNameByID(fahrer)
-AddChatMessage("{0E1681}Agency{FFFFFF} | Du hast " name " (ID: " fahrer ") als Fahrer eingetragen")
+AddChatMessage("|{01DF01}Agency{FFFFFF}| Du hast " name " (ID: " fahrer ") als Fahrer eingetragen")
 return
 
 :?:t/sitz::
 sitz := PlayerInput("/Sitz-ID: ")
 IniWrite, %sitz%, settings.ini, Kidnap, Sitz
-AddChatMessage("{0E1681}Agency{FFFFFF} | Du hast den Sitzplatz " sitz " eingetragen")
+AddChatMessage("|{01DF01}Agency{FFFFFF}| Du hast den Sitzplatz " sitz " eingetragen")
 return
 
 ~<::
 if(IsInChat())
 	return
 Settimer, kidnaptimer2, Off
-AddChatMessage("{0E1681}Agency{FFFFFF} |Entführungstimer beendet.")
+AddChatMessage("|{01DF01}Agency{FFFFFF}|EntfÃ¼hrungstimer beendet.")
 return
 
 
@@ -2450,7 +2514,7 @@ IniRead, Opfer, settings.ini, Kidnap, Opfer, -1
 IniRead, Sitz, settings.ini, Kidnap, Sitz, -1
 if(Fahrer == -1 || Opfer == -1 || Sitz == -1)
 	return
-AddChatMessage( "|{01DF01}Wheelman{FFFFFF}| Entführung ist im Gange...")
+AddChatMessage( "|{01DF01}Agency{FFFFFF}| EntfÃ¼hrung ist im Gange...")
 SendChat("/kidnap " . Opfer . " " . Fahrer . " " . Sitz . "")
 
 SetTimer, Kidnapcd, on
@@ -2460,7 +2524,7 @@ return
 /*
 * Du versuchst Sandro_Santiago ins Farzeug zu ziehen.
 * Pietro_Miller hat Sandro_Santiago in das Fahrzeug gezogen.
-Der Spieler ist nicht in der nähe
+Der Spieler ist nicht in der nÃ¤he
 */
 
 Kidnapcd:
@@ -2487,7 +2551,7 @@ if(InStr(line1, "in das Fahrzeug gezogen"))
 	Settimer, kidnaptimer2, on
 }
 if(InStr(line1, "Der Spieler ist nicht in der")){
-	AddChatMessage("{0E1681}Agency{FFFFFF} | Abgebrochen")
+	AddChatMessage("|{01DF01}Agency{FFFFFF}| Abgebrochen")
 	Settimer, kidnaptimer, off
 }
 return
@@ -2505,7 +2569,7 @@ if(timer == 1)
 }
 return
 
-:?:/retie::
+:?:t/retie::
 Suspend permit
 Settimer, kidnaptimer2, off
 IniRead, Opfer, settings.ini, Kidnap, Opfer
@@ -2517,7 +2581,7 @@ timer := 10
 Settimer, kidnaptimer2, 1000
 return
 
-:?:/kidinfo::
+:?:t/kidinfo::
 Suspend, Permit
 IniRead, Fahrer, settings.ini, Kidnap, Fahrer
 IniRead, Opfer, settings.ini, Kidnap, Opfer
@@ -2541,11 +2605,11 @@ return
 
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Vorrübergehende Copliste
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; VorrÃ¼bergehende Copliste
 
-:?:/cops::
+:?:t/cops::
 copscount := 0
-UrlDownloadToVar("http://wheelman.jameschans.de/keybinder/allcops.php", result)
+UrlDownloadToVar("http://agency.jameschans.de/keybinder/allcops.php", result)
 cops := "Name `t`t`t`t`tID`n"
 if(coplist == 1){
 	Loop, Parse, result, ~
@@ -2595,73 +2659,45 @@ if(coplist == 1){
 }
 if(copscount != 0)
 {
-	AddChatMessage("{0E1681}Agency{FFFFFF} | Es sind " copscount " Cops online")
+	AddChatMessage("|{01DF01}Agency{FFFFFF}| Es sind " copscount " Cops online")
 } else if(copscount == 0){
-	AddChatMessage("{0E1681}Agency{FFFFFF} | Es sind 0 Cops online")
+	AddChatMessage("|{01DF01}Agency{FFFFFF}| Es sind 0 Cops online")
 }
 return
 
-:?:/addcop::
+:?:t/addcop::
 Suspend Permit
 playername := GetUsername()
 cname := PlayerInput("/Cop-Name: ")
-url = http://wheelman.jameschans.de/keybinder/addcop.php?name=%cname%&uname=%playername%
+if cname is number
+	cname := GetPlayerNameByID(cname)
+url = http://agency.jameschans.de/keybinder/addcop.php?name=%cname%&uname=%playername%
 URLDownloadToVar(url, result)
-if(result == 1 || result == 11)
-{
-	AddChatMessage("{0E1681}Agency{FFFFFF} | Du hast den Cop " cname " hinzugefügt")
-} else {
-	AddChatMessage("{0E1681}Agency{FFFFFF} | Fehler: " result)
-}
+StringSplit, result, result, ~
+errors(result1)
+if(result1 == 1)
+	AddChatMessage("|{01DF01}Agency{FFFFFF}| Der Cop " cname " wurde erfolgreich eingetragen")
 return
 
-:?:/delcop::
+:?:t/delcop::
 Suspend Permit
 username := GetUsername()
 cname := PlayerInput("/Cop-Name: ")
-url = http://wheelman.jameschans.de/keybinder/delcop.php?name=%cname%&uname=%username%
+url = http://agency.jameschans.de/keybinder/delcop.php?name=%cname%&uname=%username%
 URLDownloadToVar(url, result)
-if(result == 1)
-{
-	AddChatMessage("{0E1681}Agency{FFFFFF} | Du hast den Cop " cname " gelöscht")
-}  else {
-	AddChatMessage("{0E1681}Agency{FFFFFF} | Fehler: " result)
-}
+StringSplit, result, result, ~
+errors(result1)
+if(result1 == 1)
+	AddChatMessage("|{01DF01}Agency{FFFFFF}| Der Cop " cname " wurde erfolgreich ausgetragen")
 return
 
-:?:/relog::
-AddChatMessage("{0E1681}Agency{FFFFFF} | Du verbindest nun neu...")
+:?:t/relog::
+;~ AddChatMessage("Diese Funktion ist derzeit auÃŸer Funktion")
+;~ addChatMessage("|{01DF01}Agency{FFFFFF}| Du verbindest nun neu...")
 restart()
 return
 
 ;~ Scripte
-
-contractupload(username, geld){
-	url = http://wheelman.jameschans.de/keybinder/contract.php?name=%username%
-	urli = http://wheelman.jameschans.de/keybinder/dm/dcontract.php?name=%username%
-	URLDownloadToVar(url, result1)
-	URLDownloadToVar(urli, result2)
-	StringSplit, output1_, result1, ~
-	StringSplit, output2_, result2, ~
-	IniWrite, -1, settings.ini, Zielperson, contract
-	if(output1_1 == 1){
-	AddChatMessage("{0E1681}Agency{FFFFFF} | Ausgeführte Contracts: " FormatNumber(output1_2) "")
-	} else {
-		AddChatMessage(output1_1)
-		AddChatMessage(output1_2)
-		AddChatMessage("Datenbankfehler" output1_2 " ~~ Bitte an John_Reese wenden")
-	}
-	if(output2_1 == 1)
-	{
-		AddChatMessage("{0E1681}Agency{FFFFFF} | Ausgeführte Contracts ( Monat ): " FormatNumber(output2_4) "")
-		AddChatMessage("{0E1681}Agency{FFFFFF} | Ausgeführte Contracts ( Woche ): " FormatNumber(output2_2) "")
-	} else {
-		AddChatMessage(output2_1)
-		AddChatMessage(output2_2)
-		AddChatMessage("Datenbankfehler " output2_2 " ~~ Bitte an John_Reese wenden")
-	}	
-	
-}
 
 
 printHotkey(id) 
@@ -2674,7 +2710,7 @@ printHotkey(id)
 	{
 		if(GetPlayerHealth() >= 100)
 		{
-			AddChatMessage("Du hast es nicht nötig, dich zu healen!")
+			AddChatMessage("Du hast es nicht nÃ¶tig, dich zu healen!")
 			return
 		}
 		
@@ -2744,39 +2780,82 @@ printHotkey(id)
 }
 
 
+errors(output){
+	if(output != 1){ 
+		AddChatMessage("{FF0000} Fehler: " output " --- Bitte an John_Reese wenden")
+		return
+	}
+}
+
+errors2(output){
+	if(output != 1){ 
+		MsgBox, 16, Fehler, Fehler bei Verifizierung.`nFehlercode: %output%, 5
+		ExitApp
+	}
+}
+
+contractupload(username, geld){
+	url = http://hitman.jameschans.de/keybinder/addhitman.php?name=%username%&einnahme=%geld%
+	urli = http://hitman.jameschans.de/keybinder/dm/addhitman.php?name=%username%&einnahmen=%geld%
+	URLDownloadToVar(url, result1)
+	URLDownloadToVar(urli, result2)
+	StringSplit, output1_, result1, ~
+	StringSplit, output2_, result2, ~
+	IniWrite, -1, settings.ini, Zielperson, contract
+	if(output1_1 == 1){
+	AddChatMessage("|{01DF01}Hitman{FFFFFF}| AusgefÃ¼hrte Contracts: " FormatNumber(output1_2) " --- Einnahmen: " FormatNumber(output1_3))
+	} else {
+		AddChatMessage(output1_1)
+		AddChatMessage(output1_2)
+		AddChatMessage("Datenbankfehler" output1_2 " ~~ Bitte an John_Reese wenden")
+	}
+	if(output2_1 == 1)
+	{
+		AddChatMessage("|{01DF01}Hitman{FFFFFF}| AusgefÃ¼hrte Contracts ( Monat ): " FormatNumber(output2_4) " --- Einnahmen ( Monat ): " FormatNumber(output2_5))
+		AddChatMessage("|{01DF01}Hitman{FFFFFF}| AusgefÃ¼hrte Contracts ( Woche ): " FormatNumber(output2_2) " --- Einnahmen ( Woche ): " FormatNumber(output2_3))
+	} else {
+		AddChatMessage(output2_1)
+		AddChatMessage(output2_2)
+		AddChatMessage("Datenbankfehler " output2_2 " ~~ Bitte an John_Reese wenden")
+	}	
+	
+}
+
+
+
 FischPreis(FishName, FishLBS) {
 	if(FishName == "Delphin")
-		Preis := FishLBS*7
+		Preis := FishLBS*4
 	else if(FishName == "Makrele")
-		Preis := FishLBS*8
+		Preis := FishLBS*5
 	else if(FishName == "Segelfisch")
-		Preis := FishLBS*7
+		Preis := FishLBS*4
 	else if(FishName == "Bernfisch")
 		Preis := FishLBS*1
 	else if(FishName == "Hai")
-		Preis := FishLBS*7
-	else if(FishName == "Schwertfisch")
-		Preis := FishLBS*3
-	else if(FishName == "Schildkröte")
-		Preis := FishLBS*10
-	else if(FishName == "Thunfisch")
-		Preis := FishLBS*12
-	else if(FishName == "Hecht")
-		Preis := FishLBS*9
-	else if(FishName == "Aal")
-		Preis := FishLBS*9
-	else if(FishName == "Forelle")
-		Preis := FishLBS*5
-	else if(FishName == "Wolfbarsch")
-		Preis := FishLBS*12
-	else if(FishName == "Zackenbarsch")
-		Preis := FishLBS*3
-	else if(FishName == "Katzenfisch")
 		Preis := FishLBS*4
-	else if(FishName == "Blauer Fächerfisch")
+	else if(FishName == "Schwertfisch")
 		Preis := FishLBS*2
-	else if(FishName == "Roter Schnapper")
+	else if(FishName == "SchildkrÃ¶te")
+		Preis := FishLBS*8
+	else if(FishName == "Thunfisch")
+		Preis := FishLBS*8
+	else if(FishName == "Hecht")
+		Preis := FishLBS*6
+	else if(FishName == "Aal")
+		Preis := FishLBS*6
+	else if(FishName == "Forelle")
 		Preis := FishLBS*3
+	else if(FishName == "Wolfbarsch")
+		Preis := FishLBS*8
+	else if(FishName == "Zackenbarsch")
+		Preis := FishLBS*2
+	else if(FishName == "Katzenfisch")
+		Preis := FishLBS*3
+	else if(FishName == "Blauer FÃ¤cherfisch")
+		Preis := FishLBS*1
+	else if(FishName == "Roter Schnapper")
+		Preis := FishLBS*2
 	if(Preis == "")
 		Preis := 0
 	return Preis
@@ -2793,45 +2872,54 @@ sekunden(sek){
 }
 
 
+
 UrlDownloadToVar(URL, ByRef Result, UserAgent = "", Proxy = "", ProxyBypass = "") 
 {
-	hModule := DllCall("LoadLibrary", "Str", "wininet.dll")
-	AccessType := Proxy != "" ? 3 : 1
-	io := DllCall("wininet\InternetOpenA", "Str", UserAgent, "UInt", AccessType, "Str", Proxy, "Str", ProxyBypass, "UInt", 0)
-	
-	iou := DllCall("wininet\InternetOpenUrlA", "UInt", io, "Str", url, "Str", "", "UInt", 0, "UInt", 0x80000000, "UInt", 0)
-	If (ErrorLevel != 0 or iou = 0) {
-		DllCall("FreeLibrary", "UInt", hModule)
-		return 0
-	}
-	
-	VarSetCapacity(buffer, 10240, 0)
-	VarSetCapacity(BytesRead, 4, 0)
-	
-	Loop
-	{
-		irf := DllCall("wininet\InternetReadFile", "UInt", iou, "UInt", &buffer, "UInt", 10240, "UInt", &BytesRead)
-		VarSetCapacity(buffer, -1)
-		BytesRead_ = 0
-		
-		Loop, 4
-			BytesRead_ += *(&BytesRead + A_Index-1) << 8*(A_Index-1)
-			If (irf = 1 and BytesRead_ = 0)
-				break
-			Else
-				Result .= SubStr(buffer, 1, BytesRead_)
-	}
-	
-	DllCall("wininet\InternetCloseHandle", "UInt", iou)
-	DllCall("wininet\InternetCloseHandle", "UInt", io)
-	DllCall("FreeLibrary", "UInt", hModule)
+hModule := DllCall("LoadLibrary", "Str", "wininet.dll")
+AccessType := Proxy != "" ? 3 : 1
+io := DllCall("wininet\InternetOpenA"
+, "Str", UserAgent
+, "UInt", AccessType
+, "Str", Proxy
+, "Str", ProxyBypass
+, "UInt", 0)
+iou := DllCall("wininet\InternetOpenUrlA"
+, "UInt", io
+, "Str", url
+, "Str", ""
+, "UInt", 0
+, "UInt", 0x80000000
+, "UInt", 0)
+If (ErrorLevel != 0 or iou = 0) {
+DllCall("FreeLibrary", "UInt", hModule)
+return 0
 }
+VarSetCapacity(buffer, 10240, 0)
+VarSetCapacity(BytesRead, 4, 0)
+Loop
+{
+irf := DllCall("wininet\InternetReadFile", "UInt", iou, "UInt", &buffer, "UInt", 10240, "UInt", &BytesRead)
+VarSetCapacity(buffer, -1)
+BytesRead_ = 0
+Loop, 4
+BytesRead_ += *(&BytesRead + A_Index-1) << 8*(A_Index-1)
+If (irf = 1 and BytesRead_ = 0)
+break
+Else
+Result .= SubStr(buffer, 1, BytesRead_)
+}
+DllCall("wininet\InternetCloseHandle", "UInt", iou)
+DllCall("wininet\InternetCloseHandle", "UInt", io)
+DllCall("FreeLibrary", "UInt", hModule)
+}
+
+
 
  
  GetFishPrice(fish, lbs){
 	if(fish == "Bernfisch"){
 		price := Floor(lbs * 1)
-	}else if(fish == "Blauer Fächerfisch"){
+	}else if(fish == "Blauer FÃ¤cherfisch"){
 		price := Floor(lbs * 2)
 	}else if(fish == "Schwertfisch" || fish == "Zackenbarsch" || fish == "Roter Schnapper"){
 		price := Floor(lbs * 3)
@@ -2845,7 +2933,7 @@ UrlDownloadToVar(URL, ByRef Result, UserAgent = "", Proxy = "", ProxyBypass = ""
 		price := Floor(lbs * 8)
 	}else if(fish == "Hecht" || fish == "Aal"){
 		price := Floor(lbs * 9)
-	}else if(fish == "Schildkröte"){
+	}else if(fish == "SchildkrÃ¶te"){
 		price := Floor(lbs * 10)
 	}else if(fish == "Thunfisch" || fish == "Wolfbarsch"){
 		price := Floor(lbs * 12)
@@ -2860,16 +2948,16 @@ gk_search(gk)
 {
 if(!RegExMatch(gk, "^\s*(\d+)\.(\d+)\s*$", regex_))
 {
-AddChatMessage("Deine Angabe ist ungültig")
+AddChatMessage("Deine Angabe ist ungÃ¼ltig")
 return
 }
 URLDownloadToVar("http://samp.lennartf.com/gkapi/query/" regex_1 "/" regex_2 "", res)
 if(!InStr(res, "success"))
 {
-AddChatMessage("Die vom Server erhaltenen Daten sind fehlerhaft. Versuche es (später) erneut")
+AddChatMessage("Die vom Server erhaltenen Daten sind fehlerhaft. Versuche es (spÃ¤ter) erneut")
 return
 }
-AddChatMessage("{FFFFFF}Es wurden folgende Gebäudekomplexe unter {0077FF}" gk "{FFFFFF} gefunden:")
+AddChatMessage("{FFFFFF}Es wurden folgende GebÃ¤udekomplexe unter {0077FF}" gk "{FFFFFF} gefunden:")
 Loop, parse, res, `n
 {
 if(RegExMatch(A_LoopField, "^([^`t]*)`t([^`t]*)`t([^`t]*)`t([^`t]*)`t([^`t]*)", regex_))
@@ -2901,7 +2989,3 @@ IniWrite, -1, settings.ini, Kidnap, Sitz
 
 ExitApp
 return
-
-
-
-
