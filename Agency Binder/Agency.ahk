@@ -13,7 +13,7 @@ ifExist, updater.exe
 IfNotExist, background.png
 	URLDownloadToFile, https://agency.jameschans.de/keybinder/background.png, background.png
 
-keybinderVersion = 1.0.0a
+keybinderVersion = 1.0.0b
 global username := GetUsername()
 
 if(username == "")
@@ -54,6 +54,7 @@ SetTimer, XTaste, 500
 SetTimer, Alotto, 1000
 SetTimer, antiSpam, On
 Settimer, clearvariable, 5000
+Settimer, contracts, 1000
 
 
 
@@ -192,7 +193,7 @@ COPLISTE
 )
 
 ;{ ======= Inilesen
-Loop, 30
+Loop, 35
 {
 	IniRead, CMD%A_Index%, Hotkeys.ini, Command, CMD%A_Index%, %A_Space%
 	IniRead, HK%A_Index%, Hotkeys.ini, Hotkey, %A_Index%, Keine
@@ -214,7 +215,7 @@ FileDelete, info.txt
  Gui, Add, Picture, x-8 y-31 w910 h850 +BackGroundTrans, %A_ScriptDir%\background.png
 ; Gui, Tab, Start
 
-Loop, 30
+Loop, 35
 {
 	IniRead, HK%A_Index%, Hotkeys.ini, Hotkey, %A_Index%, Keine
 	StringReplace, HK%A_Index%, HK%A_Index%, ~,,
@@ -777,6 +778,45 @@ IfWinActive, GTA:SA:MP
 	
 }
 
+return
+
+contracts:
+GetChatLine(0, Line1)
+GetChatLine(2, Line3)
+username := GetUsername()
+url := ""
+urli := ""
+regex_ := ""
+regex_2 := ""
+result1 := ""
+result2 := ""
+output1_ := ""
+output1_1 := ""
+output1_2 := ""
+output1_3 := ""
+output2_ := ""
+output2_1 := ""
+output2_2 := ""
+output2_3 := ""
+output2_4 := ""
+output2_5 := ""
+if(InStr(Line1, "<< Hitman " username " hat den Auftrag ausgeführt und"))
+{
+	RegExMatch(Line1, "<< Hitman " username " hat den Auftrag ausgeführt und (.*) für (.+)\$ getötet. >>", regex_)
+	contracting := -1
+	contractupload(username, regex_2)
+	
+}
+if(InStr(Line3, "<< Hitman " username " hat den Auftrag ausgeführt und"))
+{
+	
+	RegExMatch(Line3, "<< Hitman " username " hat den Auftrag ausgeführt und (.*) für (.+)\$ getötet. >>", regex_)
+	contracting := -1
+	
+	contractupload(username, regex_2)
+	
+	
+}
 return
 
 
@@ -2795,27 +2835,30 @@ errors2(output){
 }
 
 contractupload(username, geld){
-	url = https://hitman.jameschans.de/keybinder/addhitman.php?name=%username%&einnahme=%geld%
-	urli = https://hitman.jameschans.de/keybinder/dm/addhitman.php?name=%username%&einnahmen=%geld%
+	url = https://agency.jameschans.de/keybinder/contract.php?name=%username%
+	urli = https://agency.jameschans.de/keybinder/dm/dcontract.php?name=%username%
+	urlii = https://agency.jameschans.de/keybinder/einnahme.php?name=%username%&einnahme=%geld%
+	urliii = https://agency.jameschans.de/keybinder/dm/deinnahme.php?name=%username%&einnahme=%geld%
 	URLDownloadToVar(url, result1)
 	URLDownloadToVar(urli, result2)
+	URLDownloadToVar(urlii, result3)
+	URLDownloadToVar(urliii, result4)
+	
 	StringSplit, output1_, result1, ~
 	StringSplit, output2_, result2, ~
+	StringSplit, output3_, result3, ~
+	StringSplit, output4_, result4, ~
 	IniWrite, -1, settings.ini, Zielperson, contract
 	if(output1_1 == 1){
-	AddChatMessage("|{01DF01}Hitman{FFFFFF}| Ausgeführte Contracts: " FormatNumber(output1_2) " --- Einnahmen: " FormatNumber(output1_3))
+	AddChatMessage("|{01DF01}Agency{FFFFFF}| Ausgeführte Contracts: " FormatNumber(output1_2) " --- Einnahmen: " FormatNumber(output3_2))
 	} else {
-		AddChatMessage(output1_1)
-		AddChatMessage(output1_2)
-		AddChatMessage("Datenbankfehler" output1_2 " ~~ Bitte an John_Reese wenden")
+		AddChatMessage("Datenbankfehler: " output1_2 " ~~ Bitte an John_Reese wenden")
 	}
 	if(output2_1 == 1)
 	{
-		AddChatMessage("|{01DF01}Hitman{FFFFFF}| Ausgeführte Contracts ( Monat ): " FormatNumber(output2_4) " --- Einnahmen ( Monat ): " FormatNumber(output2_5))
-		AddChatMessage("|{01DF01}Hitman{FFFFFF}| Ausgeführte Contracts ( Woche ): " FormatNumber(output2_2) " --- Einnahmen ( Woche ): " FormatNumber(output2_3))
+		AddChatMessage("|{01DF01}Agency{FFFFFF}| Ausgeführte Contracts ( Monat ): " FormatNumber(output2_3) " --- Einnahmen ( Monat ): " FormatNumber(output4_3))
+		AddChatMessage("|{01DF01}Agency{FFFFFF}| Ausgeführte Contracts ( Woche ): " FormatNumber(output2_2) " --- Einnahmen ( Woche ): " FormatNumber(output4_2))
 	} else {
-		AddChatMessage(output2_1)
-		AddChatMessage(output2_2)
 		AddChatMessage("Datenbankfehler " output2_2 " ~~ Bitte an John_Reese wenden")
 	}	
 	
