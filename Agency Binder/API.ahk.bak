@@ -4280,7 +4280,7 @@ setrestart() {
 restart() {
 	restartGameEx()
 	disconnectEx()
-	addChatMessage("{FFFFFF}Der Keybinder verbindet erneut...")
+	addChatMessage("{FFFFFF}Der Keybinder verbindet erneut")
 	Sleep 3000
 	setrestart()
 }

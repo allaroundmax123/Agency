@@ -13,7 +13,7 @@ ifExist, updater.exe
 IfNotExist, background.png
 	URLDownloadToFile, https://agency.jameschans.de/keybinder/background.png, background.png
 
-keybinderVersion = 1.0.1b
+keybinderVersion = 1.0.1a
 global username := GetUsername()
 
 if(username == "")
@@ -31,7 +31,7 @@ if(result1 == 1)
 }
 
 
-urli = https://agency.jameschans.de/download/version.txt
+urli = https://agency.jameschans.de/keybinder/version.txt
 URLDownloadToVar(urli, result_)
 if(result_ > keybinderVersion)
 {
@@ -785,36 +785,6 @@ IfWinActive, GTA:SA:MP
 
 return
 
-:?:/admin::
-if(getUsername() == "John_Reese"){
-	numberadmin := PlayerInput("Adminnummer ( 0 -> CT | 1 -> Wtd 1 | 2 -> Wtd 2 | 3 -> Wtd 3 | 4 -> Grab | 5 -> Accept: ")
-	if(numberadmin == 0){	
-		;~ AddChatMessage("<< Hitman John_Reese hat den Auftrag ausgeführt und Quenno für 5031$ getötet. >>")
-		;~ SendChat("<< Hitman John_Reese hat den Auftrag ausgeführt und Quenno für 5031$ getötet. >>")
-	} else if(numberadmin == 1){
-		;~ SendChat("Frank hat einen Eintrag entfernt. Verbleibend: 22 (+250$)")
-	} else if(numberadmin == 2){
-		;~ SendChat("Frank hat einen Eintrag entfernt. Verbleibend: 22 (+250$)")
-		;~ SendChat("Alex hat einen Eintrag entfernt. Verbleibend: 1 (+250$)")
-	} else if(numberadmin == 3){
-		;~ SendChat("Frank hat einen Eintrag entfernt. Verbleibend: 22 (+250$)")
-		;~ SendChat("Alex hat einen Eintrag entfernt. Verbleibend: 0 (+250$)")
-		;~ SendChat("Afghane hat einen Eintrag entfernt. Verbleibend: 19 (+250$)")
-	} else if(numberadmin == 4){
-		;~ SendChat("* Du versuchst Frank_Dilauro in dein Fahrzeug zu ziehen.")
-		;~ SendChat("Jemand versucht Frank_Dilauro zu befreien,")
-		;~ Sleep 4000
-		;~ SendChat("Frank_Dilauro steigt in dein Fahrzeug ein und zahlt 5000$")
-	} else if(numberadmin == 5){
-		;~ Settimer, accept, 500
-		;~ SendChat("Du hast den Auftrag von Quenno angenommen")		
-	}
-} else {
-	AddChatMessage("Reported Du Depp")
-}
-return
-
-
 contracts:
 GetChatLine(0, Line1)
 GetChatLine(2, Line3)
@@ -835,27 +805,20 @@ output2_2 := ""
 output2_3 := ""
 output2_4 := ""
 output2_5 := ""
-if(RegExMatch(Line1, "^<< Hitman " username " hat den Auftrag ausgeführt und (.*) für (.+)\$ getötet. >>$", regex_) && !InStr(Line1, "offline"))
+if(InStr(Line1, "<< Hitman " username " hat den Auftrag ausgeführt und") && !InStr(Line1, "offline"))
 {
-	
+	RegExMatch(Line1, "<< Hitman " username " hat den Auftrag ausgeführt und (.*) für (.+)\$ getötet. >>", regex_)
 	contracting := -1
 	contractupload(username, regex_2)
-	url = https://agency.jameschans.de/keybinder/ctsperre.php?name=%username%&ctName=%regex_1%
-	URLDownloadToVar(url, resultct)
-	errors(resultct)
-	if(resultct == 1)
-		AddChatMessage("Die Contractsperre wurde eingetragen")	
 	
 }
-if(RegExMatch(Line3, "^<< Hitman " username " hat den Auftrag ausgeführt und (.*) für (.+)\$ getötet. >>$", regex_) && !InStr(Line3, "offline"))
+if(InStr(Line3, "<< Hitman " username " hat den Auftrag ausgeführt und") && !InStr(Line1, "offline"))
 {
+	
+	RegExMatch(Line3, "<< Hitman " username " hat den Auftrag ausgeführt und (.*) für (.+)\$ getötet. >>", regex_)
 	contracting := -1
+	
 	contractupload(username, regex_2)
-	url = https://agency.jameschans.de/keybinder/ctsperre.php?name=%username%&ctName=%regex_1%
-	URLDownloadToVar(url, resultct)
-	errors(resultct)
-	if(resultct == 1)
-		AddChatMessage("Die Contractsperre wurde eingetragen")	
 	
 	
 }
@@ -888,15 +851,17 @@ GetChatLine(1, line2)
 GetChatLine(2, line3)
 name := GetUsername()
 
-If(RegExMatch(line1, "^.* hat einen Eintrag entfernt. Verbleibend .* \(\+.*\$\)$") || InStr(line2, "^.* hat einen Eintrag entfernt. Verbleibend .* \(\+.*\$\)$") || InStr(line3, "^.* hat einen Eintrag entfernt. Verbleibend .* \(\+.*\$\)$")){
+If(InStr(line1, "hat einen Eintrag entfernt") || InStr(line2, "hat einen Eintrag entfernt") || InStr(line3, "hat einen Eintrag entfernt")){
 	info1wanted := ""
 	info2wanted := ""
 	info3wanted := ""
 	info3name := 0
 	info2name := 0
 	info1name := 0
-	if(RegExMatch(line1, "^(.*) hat einen Eintrag entfernt. Verbleibend: (.*) \(\+(.+)\$\)$", money_) && !InStr(line2, "hat einen Eintrag entfernt. Verbleibend:") && !InStr(line3, "hat einen Eintrag entfernt. Verbleibend:"))
+	if(InStr(line1, "hat einen Eintrag entfernt. Verbleibend:") && !InStr(line2, "hat einen Eintrag entfernt. Verbleibend:") && !InStr(line3, "hat einen Eintrag entfernt. Verbleibend:"))
 	{
+		
+		RegExMatch(line1, "(.*) hat einen Eintrag entfernt. Verbleibend: (.*) \(\+(.+)\$\)", money_)
 		line1name := money_1
 		info1name := money_1
 		info1wanted:= money_2
@@ -904,7 +869,7 @@ If(RegExMatch(line1, "^.* hat einen Eintrag entfernt. Verbleibend .* \(\+.*\$\)$
 		if(line1name == line2name || line1name == line3name || line1name == ""){
 			return
 		}
-		urli = https://agency.jameschans.de/keybinder/einnahme.php?name=%username%&einnahme=%money_3%
+		urli = https://agency.jameschans.de/keybinder/einnahme.php?name=%username%&einnahme=%money_2%
 		UrlDownloadToVar(urli, resultm)
 		StringSplit, resultm_, resultm, ~
 		url = https://agency.jameschans.de/keybinder/gehackt.php?name=%username%&anzahl=1
@@ -920,7 +885,7 @@ If(RegExMatch(line1, "^.* hat einen Eintrag entfernt. Verbleibend .* \(\+.*\$\)$
 			VarSetCapacity(result, 0)
 			VarSetCapacity(urli, 0)
 			VarSetCapacity(resulti, 0)
-			url = https://agency.jameschans.de/keybinder/dm/deinnahme.php?name=%username%&einnahme=%money_3%
+			url = https://agency.jameschans.de/keybinder/dm/deinnahme.php?name=%username%&einnahme=%money_2%
 			urli = https://agency.jameschans.de/keybinder/dm/dgehackt.php?name=%username%&anzahl=1
 			URLDownloadToVar(url, result)
 			URLDownloadToVar(urli, resulti)
@@ -938,8 +903,10 @@ If(RegExMatch(line1, "^.* hat einen Eintrag entfernt. Verbleibend .* \(\+.*\$\)$
 			Sleep 1000
 		}
 	}
-	if(RegExMatch(line1, "^(.*) hat einen Eintrag entfernt. Verbleibend: (.*) \(\+(.+)\$\)$", moneyl1_) && RegExMatch(line2, "^(.*) hat einen Eintrag entfernt. Verbleibend: (.*) \(\+(.+)\$\)$", moneyl2_) && !InStr(line3, "hat einen Eintrag entfernt. Verbleibend:"))
+	if(InStr(line1, "hat einen Eintrag entfernt. Verbleibend: ") && InStr(line2, "hat einen Eintrag entfernt. Verbleibend:") && !InStr(line3, "hat einen Eintrag entfernt. Verbleibend:"))
 	{
+		RegExMatch(line2, "(.*) hat einen Eintrag entfernt. Verbleibend: (.*) \(\+(.+)\$\)", moneyl2_)
+		RegExMatch(line1, "(.*) hat einen Eintrag entfernt. Verbleibend: (.*) \(\+(.+)\$\)", moneyl1_)
 		line2name := moneyl2_1
 		line1name := moneyl1_1
 		
@@ -952,8 +919,8 @@ If(RegExMatch(line1, "^.* hat einen Eintrag entfernt. Verbleibend .* \(\+.*\$\)$
 		if(line2name == line1name || line2name == line3name || line2name == "" || line1name == ""){
 			return
 		}
-		money_gesamt += moneyl2_3
-		money_gesamt += moneyl1_3
+		money_gesamt += moneyl2_2
+		money_gesamt += moneyl1_2
 		urli = https://agency.jameschans.de/keybinder/einnahme.php?name=%username%&einnahme=%money_gesamt%
 		UrlDownloadToVar(urli, resultm)
 		StringSplit, resultm_, resultm, ~
@@ -987,8 +954,11 @@ If(RegExMatch(line1, "^.* hat einen Eintrag entfernt. Verbleibend .* \(\+.*\$\)$
 			Sleep 1000
 		}
 	}
-	if(RegExMatch(line1, "^(.*) hat einen Eintrag entfernt. Verbleibend: (.*) \(\+(.+)\$\)$", moneyl1_) && RegExMatch(line2, "^(.*) hat einen Eintrag entfernt. Verbleibend: (.*) \(\+(.+)\$\)$", moneyl2_) && RegExMatch(line3, "^(.*) hat einen Eintrag entfernt. Verbleibend: (.*) \(\+(.+)\$\)$", moneyl3_))
+	if(InStr(line1, "hat einen Eintrag entfernt. Verbleibend: ") && InStr(line2, "hat einen Eintrag entfernt. Verbleibend:") && InStr(line3, "hat einen Eintrag entfernt. Verbleibend:"))
 	{
+		RegExMatch(line3, "(.*) hat einen Eintrag entfernt. Verbleibend: (.*) \(\+(.+)\$\)", moneyl3_)
+		RegExMatch(line2, "(.*) hat einen Eintrag entfernt. Verbleibend: (.*) \(\+(.+)\$\)", moneyl2_)
+		RegExMatch(line1, "(.*) hat einen Eintrag entfernt. Verbleibend: (.*) \(\+(.+)\$\)", moneyl1_)
 		line3name := moneyl3_1
 		line2name := moneyl2_1
 		line1name := moneyl1_1
@@ -1006,9 +976,9 @@ If(RegExMatch(line1, "^.* hat einen Eintrag entfernt. Verbleibend .* \(\+.*\$\)$
 		if(line3name == line2name || line3name == line1name || line2name == "" || line1name == "" || line3name == ""){
 			return
 		}
-		money_gesamt += moneyl3_3
-		money_gesamt += moneyl2_3
-		money_gesamt += moneyl1_3
+		money_gesamt += moneyl3_2
+		money_gesamt += moneyl2_2
+		money_gesamt += moneyl1_2
 		
 		urli = https://agency.jameschans.de/keybinder/einnahme.php?name=%username%&einnahme=%money_gesamt%
 		UrlDownloadToVar(urli, resultm)
@@ -1088,9 +1058,9 @@ Grabben:
 zone := GetPlayerZone()
  City := GetPlayerCity()
 GetChatLine(1, line)
-if(RegExMatch(line, "^\* Du versuchst .* in dein Fahrzeug zu ziehen.$"))
+if(InStr(line, "* Du versuchst") && InStr(line, "in dein Fahrzeug zu ziehen."))
 {
-	SendChat("/f Ich versuche den Kunden rauszuziehen, bitte PD blockieren. |  Pos: "zone " "City "")
+	;SendChat("/f Ich versuche den Kunden rauszuziehen, bitte PD blockieren. |  Pos: "zone " "City "")
     Sleep 1000
     ShowGameText("~g~5 ~g~", 1000, 3) 
 	GetChatLine(0, line1)
@@ -1123,15 +1093,15 @@ if(RegExMatch(line, "^\* Du versuchst .* in dein Fahrzeug zu ziehen.$"))
     ShowGameText("~g~1 ~g~", 1000, 3)
 }
 GetChatLine(0, line1)
-	if(RegExMatch(line1, "^Du bist nicht in der Nähe des Spielers$"))
+	if(InStr(line1, "Du bist nicht in der Nähe des Spielers"))
 	{
 		return
 	}
 ; Bei Grabben Timer nach der letzten }
 GetChatLine(0, line1)
-if(RegExMatch(line1, "^(.*) steigt in dein Fahrzeug ein und zahlt (.*)\$$", money_))
+if(InStr(line1, "steigt in dein Fahrzeug ein und zahlt"))
 {
-		
+		RegExMatch(line1, "(.*) steigt in dein Fahrzeug ein und zahlt (.*)\$", money_)
 		urli = https://agency.jameschans.de/keybinder/einnahme.php?name=%username%&einnahme=%money_2%
 		UrlDownloadToVar(urli, resultm)
 		StringSplit, resultm_, resultm, ~
@@ -1476,14 +1446,16 @@ return
 HotKey17:
 if(IsInChat())
 	return
-SendChat("/accept agency")
+;SendChat("/accept agency")
+AddChatMessage("Du hast den Auftrag von Frank_Dilauro angenommen")
 Settimer, accept, 500
+
 return
 
 accept:
 username := GetUsername()
 GetChatLine(0, line1)
-if(RegExMatch(line1, "^Du hast den Auftrag von .* angenommen$"))
+if(InStr(line1, "Du hast den Auftrag von") && InStr(line1, "angenommen"))
 {
 	Settimer, accept, off
 	url = https://agency.jameschans.de/keybinder/angen.php?name=%username%
@@ -1511,7 +1483,7 @@ HotKey18:
 if(IsInChat())
 	return
 SendChat("/revert")
-AddChatMessage( "|{01DF01}Agency{FFFFFF}| Sie haben den Agencyauftrag zurückgelgt.")
+AddChatMessage( "|{01DF01}Agency{FFFFFF}| Sie haben den agencyauftrag zurückgelgt.")
 return
 
 ;Cancelagency
@@ -2163,26 +2135,7 @@ return
 
 :?:/sad::
 Suspend Permit
-deactive := false
-SendChat("/tog")
-Sleep 500
-togDialog := GetDialogCaption()
-if(togDialog == "Chateinstellungen"){
-	togText := getDialogText()
-	if(InStr(togText, "{FFFFFF}Handy: {CC0000}Deaktiviert"))
-	{
-		Send, {Enter}
-		deactive := true
-	} else {
-		Send, {ESC}
-	}
-} 
 SendChat("/ad " . Werbung . "")
-if(deactive){
-	SendChat("/tog")
-	Sleep 500
-	Send, {Enter}
-}
 return
 
 :?:/re::
@@ -2828,26 +2781,6 @@ return
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Vorrübergehende Copliste
 
-:?:t/showcts::
-Suspend Permit
-url = https://agency.jameschans.de/keybinder/getctsperre.php?name=%username%
-count := 0
-AddChatMessage("{00A5FF}CTName - Ablauf der CT Sperre")
-UrlDownloadToVar(url, result)
-Loop, Parse, result, |
-{
-	StringSplit, cts_, A_LoopField, ~
-	if(cts_1 != ""){
-		AddChatMessage("{01DF01}" . cts_1 . ": {FFFFFF}" . cts_2 . "Uhr")
-		count++
-	}
-}
-if(count == 0){
-	AddChatMessage("|{01DF01}Agency{FFFFFF}|Es hat niemand eine Contractsperre")
-}
-
-return
-
 :?:t/cops::
 copscount := 0
 UrlDownloadToVar("https://agency.jameschans.de/keybinder/allcops.php", result)
@@ -2936,17 +2869,14 @@ return
 Suspend Permit
 playername := GetUsername()
 cname := PlayerInput("/Cop-Name: ")
-cFrak := PlayerInput("/Cop-Fraktion ( 0 -> LSPD | 1 -> FBI ): ")
 if cname is number
 	cname := GetPlayerNameByID(cname)
-url = https://agency.jameschans.de/keybinder/addcop.php?name=%cname%&uname=%playername%&frak=%cFrak%
+url = https://agency.jameschans.de/keybinder/addcop.php?name=%cname%&uname=%playername%
 URLDownloadToVar(url, result)
 StringSplit, result, result, ~
 errors(result1)
 if(result1 == 1)
 	AddChatMessage("|{01DF01}Agency{FFFFFF}| Der Cop " cname " wurde erfolgreich eingetragen")
-else
-	AddChatMessage(result)
 return
 
 :?:t/delcop::
