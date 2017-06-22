@@ -1,42 +1,56 @@
-# Wheelman Keybinder: Release 5.0 Juni/Juli
+<p align="center">
+  <img src="http://cp.rpg-city.de/images/userUpload/fraktion/8.png?d=21052017" alt="Agency Logo"/>
+</p>
 
-# Allgemeine Sachen
-## RangÃ¼bersicht --> Max
-0 - Sonstiges <br />
-1 - Wheelman<br />
-2 - Leaderschaft ( Wheelman )<br />
-3 - Techniker<br />
+# Agency Keybinder: Release 1.0.2a
 
-## Sonstige RÃ¤nge --> Max / Jakob
-0 - Normal<br />
-1 - VIP ( Jakob know )<br />
+Die Agency Keybinder Version **1.0.2a** ist erschienen.
+Es können gegebenfalls Bugs auftreten, sollte dies der Fall sein, so bitte den Bugtracker benutzen.
+Es wurde alles von beiden Keybindern übernommen und bearbeitet
 
-## Overlay --> Frank
-- Overlay komplett Dynamisch verschiebbar/einstellbar<br />
-- Soll im GUI einstellbar sein<br />
-- VerfÃ¼gbare Variablen: HP, Standort<br />
-- Wheelman Variablen: AngAuf -> Angenommene AuftrÃ¤ge; AusAuf -> AusgefÃ¼hrte AuftrÃ¤ge; GehWan -> Gehackte Wanteds; Einnahme -> Gesamte Einnahmen<br />
+## Dies ist ein Internes Dokument und darf nicht veröffentlicht werden!
 
-- To be continued
+# Keybinder
 
-# Wheelman
-## Funktionen -> Frank/Jakob
-- Alles aus altem Keybinder<br />
-- Verbesserter StatszÃ¤hltimer<br />
+## Überarbeitung
+- [x] /sad überprüft ob Handy aus/an ( Ticket #34 von Exory )
+- [ ] GUI Überarbeitet
 
-## Funktionen aus den Tickets -> Frank/Jakob
-- Ticket 25 komplett ( Vorschlag )
-- Ticket 22 ( Vorschlag 1 & 4 )
-- Ticket 20 ( Bug )
-- Ticket 24 ( Bug )
-- Ticket 21 ( Bug )
+- [ ] Copliste geht nur noch per Chat
+- [ ] Tanken/Zoll/ALotto geht immer per X Taste
+- [ ] Autolotto aus GUI entfernt
+- [ ] Keybinder setzt /fee automatisch auf 0
+- [ ] Stats bearbeiten Option entfernt
+- [ ] /fg nun Ingame änderbar und nicht mehr im GUI
+
+## Neu
+- [x] Contractsperren anzeigen lassen ( Ticket #46 von Exory )
+
+## Fehlerbehebung
+- [x] /addcop funktioniert nun wieder richtig
+
+# Control Panel
+
+## Neu
+- [ ] Admin: Statistik für letzten Monat & diesen Monat mit Durchschnitt => Wer über dem Durchschnitt ist und drunter
+- [x] Es ist nun möglich seine Statistiken der letzten Monate und Wochen anzuschauen
 
 
 
-# Control Panel --> Max / Frank
-- Ticket 27
-- Ticket 26
-- Neues Ticketsystem
-- Bessere Statistiken
-- Statistiken von einem Zeitraum X angucken
 
+
+# Systemerklärungen
+## Erklärung Versionsnummer System:
+a = Erste Version bei einer neuen Nummer<br/>
+b-z = Änderungen an der Version
+
+
+
+
+<br><br>
+
+## Danke an
+
+> Exory: für die Tickets
+____
+> Frank Dilauro: Moralische Unterstützung & die neue GUI

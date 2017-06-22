@@ -30,7 +30,7 @@ ExitApp
 
 ; Das GS-Control Panel öffnen, wenn auf den Button geklickt wurde
 CP:
-Run, http://dorf.spdns.de/rpgcity/gs
+Run, https://agency.jameschans.de/
 return
 
 ; Einstellungs-Tab anzeigen, wenn auf den Button geklickt wurde
@@ -45,11 +45,11 @@ Startseite:
 GuiMain()
 
 ; Hintergründe für die Texte erstellen
-Gui, Add, Picture, x30 y70 w560 h110 vBG1 +BackgroundTrans, src/gui/trans60.png
+Gui, Add, Picture, x30 y70 w660 h210 vBG1 +BackgroundTrans, src/gui/trans60.png
 
 ; Texte erstellen
 Gui, Font, s11
-Gui, Add, Text, x37 y75 vText1 +BackgroundTrans, Hey, Dude!`nWillkommen beim neuen Wheelman Keybinder.`n`nSolltest du Fragen, Vorschläge oder Bugmeldungen haben,`nschreibe diese bitte ins Control Panel!
+Gui, Add, Text, x37 y75 vText1 +BackgroundTrans, Hey,`nWillkommen beim neuen Agency Keybinder.`n`nSolltest du Fragen, Vorschläge oder Bugmeldungen haben,`nschreibe diese bitte ins Control Panel!
 
 GuiShow()
 return
@@ -67,33 +67,32 @@ GuiMain()
 	Gui, -SysMenu
 
 	; Bilder hinzufügen
-	Random, randPicture, 1, 4
-	Gui, Add, Picture, x0 y0 +BackgroundTrans, src/gui/pic%randPicture%.jpg
+	Gui, Add, Picture, x0 y0 w900 h600 +BackgroundTrans, src/gui/pic1.jpg
 
 	; Font einstellen
 	Gui, Font, s16, Source Code Pro
 	Gui, Font, cFFFFFF
 
 	; Heading erstellen
-	Gui, Add, Picture, x0 y0 w800 h40 +BackgroundTrans, src/gui/trans80.png
-	Gui, Add, Text, x190 y6 +BackgroundTrans, Agency - Keybinder v1.0
+	Gui, Add, Picture, x0 y0 w900 h40 +BackgroundTrans, src/gui/trans80.png
+	Gui, Add, Text, x290 y6 +BackgroundTrans, Agency - Keybinder v1.0
 
 	; Footer erstellen
 	Gui, Font, s9
-	Gui, Add, Text, x666 y425 +BackgroundTrans vmadeBy, made by`nPietro_Miller,`nJohn_Reese,`nFrank_Dilauro
+	Gui, Add, Text, x766 y525 +BackgroundTrans vmadeBy, made by`nPietro_Miller,`nJohn_Reese,`nFrank_Dilauro
 	GuiControl, +Center, madeBy
 
 	; Hintergrund bei den Buttons erstellen
-	Gui, Add, Picture, x630 y40 w170 h460 +BackgroundTrans, src/gui/trans60.png
+	Gui, Add, Picture, x730 y40 w170 h560 +BackgroundTrans, src/gui/trans60.png
 
 	; Buttons erstellen
-	Gui, Add, Button, vBT1 x750 y5 w30 h30 hwndHBT1 gGuiClose +BackgroundTrans
-	Gui, Add, Button, vBT2 x710 y5 w30 h30 hwndHBT2 gMinimizeGui +BackgroundTrans
-	Gui, Add, Button, vBT3 x650 y50 w130 h35 hwndHBT3 +BackgroundTrans
-	Gui, Add, Button, vBT4 x650 y100 w130 h35 hwndHBT4 +BackgroundTrans
-	Gui, Add, Button, vBT5 x650 y150 w130 h35 gEinstellungen hwndHBT5 +BackgroundTrans
-	Gui, Add, Button, vBT6 x650 y200 w130 h35 hwndHBT6 +BackgroundTrans
-	Gui, Add, Button, vBT7 x650 y380 w130 h35 hwndHBT7 gCP +BackgroundTrans
+	Gui, Add, Button, vBT1 x850 y5 w30 h30 hwndHBT1 gGuiClose +BackgroundTrans
+	Gui, Add, Button, vBT2 x810 y5 w30 h30 hwndHBT2 gMinimizeGui +BackgroundTrans
+	Gui, Add, Button, vBT3 x750 y50 w130 h35 hwndHBT3 +BackgroundTrans
+	Gui, Add, Button, vBT4 x750 y100 w130 h35 hwndHBT4 +BackgroundTrans
+	Gui, Add, Button, vBT5 x750 y150 w130 h35 gEinstellungen hwndHBT5 +BackgroundTrans
+	Gui, Add, Button, vBT6 x750 y200 w130 h35 hwndHBT6 +BackgroundTrans
+	Gui, Add, Button, vBT7 x750 y380 w130 h35 hwndHBT7 gCP +BackgroundTrans
 	ImageButton.Create(HBT1, [0, "src/gui/button_exit.png"], {2: "src/gui/button_exit_hot.png"})
 	ImageButton.Create(HBT2, [0, "src/gui/button_minimize.png"], {2: "src/gui/button_minimize_hot.png"})
 	ImageButton.Create(HBT3, [0, "src/gui/button_hotkeys.png"], {2: "src/gui/button_hotkeys_hot.png"})
@@ -107,13 +106,13 @@ GuiMain()
 GuiShow()
 {
 	; Zone hinzufügen, um das GUI zu verschieben
-	Gui, Add, Text, x0 y0 w800 h500 gMoveGui +BackgroundTrans,
+	Gui, Add, Text, x0 y0 w900 h600 gMoveGui +BackgroundTrans,
 
 	; Ecken vom GUI entfernen
-	WinSet, Region, 0-0 w800 h500 R44-44
+	WinSet, Region, 0-0 w900 h600 R44-44
 
 	; GUI anzeigen
-	Gui, Show, w800 h500
+	Gui, Show, w900 h600
 }
 ;}
 ; =========================================================================================================
