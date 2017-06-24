@@ -8,7 +8,7 @@
 global BT1, BT2, BT3, BT4, BT5, BT6, BT7, BT8, BT9, BT10 := -1
 global HBT1, HBT2, HBT3, HBT4, HBT5, HBT6, HBT7, HBT8, HBT9, HBT10 := -1
 global madeBy := -1
-loadIni()
+
 
 ; GUI erstellen
 GoSub, Startseite

@@ -59,64 +59,6 @@ Settimer, contracts, 1000
 
 
 
-;{
-IniRead, Profil1_1, settings.ini, Ausruesten, Profil1_1
-IniRead, Profil1_2, settings.ini, Ausruesten, Profil1_2
-IniRead, Profil1_3, settings.ini, Ausruesten, Profil1_3
-IniRead, Profil1_4, settings.ini, Ausruesten, Profil1_4
-IniRead, Profil1_5, settings.ini, Ausruesten, Profil1_5
-IniRead, Profil1_6, settings.ini, Ausruesten, Profil1_6
-IniRead, Profil1_7, settings.ini, Ausruesten, Profil1_7
-;V2
-IniRead, Profil2_1, settings.ini, Ausruesten, Profil2_1
-IniRead, Profil2_2, settings.ini, Ausruesten, Profil2_2
-IniRead, Profil2_3, settings.ini, Ausruesten, Profil2_3
-IniRead, Profil2_4, settings.ini, Ausruesten, Profil2_4
-IniRead, Profil2_5, settings.ini, Ausruesten, Profil2_5
-IniRead, Profil2_6, settings.ini, Ausruesten, Profil2_6
-IniRead, Profil2_7, settings.ini, Ausruesten, Profil2_7
-;Einstellung
-IniRead, Orgcall, settings.ini, Einstellung, Orgcall
-IniRead, Stats, settings.ini, Einstellung, Stats
-IniRead, Erstehilfe, settings.ini, Einstellung, Erstehilfe
-IniRead, Drugs, settings.ini, Einstellung, Drugs
-IniRead, Fische, settings.ini, Einstellung, Fische
-IniRead, AktvierenHP, settings.ini, Einstellung, AktvierenHP
-IniRead, PaketUse, settings.ini, Einstellung, PaketUse
-IniRead, DrugsUse, settings.ini, Einstellung, DrugsUse
-IniRead, FishUse, settings.ini, Einstellung, FishUse
-IniRead, FeeEinstell, settings.ini, Einstellung, FeeEinstell
-IniRead, FeeEinstellung, settings.ini, Einstellung, FeeEinstellung
-IniRead, angelType, settings.ini, Einstellung, angelType, 3
-IniRead, AutoMotorAus, settings.ini, Einstellung, AutoMotorAus
-IniRead, ALotto_An, settings.ini, Einstellung, Alotto_An
-IniRead, ALotto_Preis, settings.ini, Einstellung, ALotto_Preis
-IniRead, ALotto_rnd, settings.ini, Einstellung, ALotto_rnd
-IniRead, ALotto_zahl, settings.ini, Einstellung, ALotto_zahl
-IniRead, Alock, settings.ini, Einstellung, Alock
-InIRead, ALight, settings.ini, Einstellung, ALight
-IniRead, coplist, settings.ini, Einstellung, Copliste, 2
-IniRead, fg, settings.ini, Einstellung, Festgeld, 1250000
-IniRead, XTasteOn, settings.ini, Einstellung, XTasteOn
-/*IniRead, overlayOn, settings.ini, Einstellung, OverlayOn, false
-
-if(overlayOn){
-	Settimer, overlay, 1000
-}
-*/
-;Werbung
-IniRead, Werbung, settings.ini, AD, Werbung
-;Kidnap
-IniRead, Fahrer, settings.ini, Kidnap, Fahrer
-IniRead, Opfer, settings.ini, Kidnap, Opfer
-IniRead, Sitz, settings.ini, Kidnap, Sitz
-;}
-fischers := 1
-
-info3name := 0
-info2name := 0
-info1name := 0
-
 Slashbinds=
 (
 FISH
@@ -256,7 +198,6 @@ Loop, 14
 	y += 40
 	cmdcount++
 }
-Gui, Add, text, x422 y39 +BackGroundTrans cwhite, Position Im F-Chat
 Gui, Add, text, x422 y80 +BackGroundTrans cwhite, Position im Org-Chat
 Gui, Add, text, x422 y120 +BackGroundTrans cwhite, Letzten Befehl Wiederholen
 Gui, Add, text, x422 y160 +BackGroundTrans cwhite, Auto. Findystem Deaktiveren
@@ -3279,8 +3220,49 @@ Gui, Destroy
 IniWrite, -1, settings.ini, Kidnap, Fahrer
 IniWrite, -1, settings.ini, Kidnap, Opfer
 IniWrite, -1, settings.ini, Kidnap, Sitz
-
-
-ExitApp
 unblockChatInput()
+ExitApp
 return
+
+loadIni(){
+	;{
+	IniRead, Profil1_1, settings.ini, Ausruesten, Profil1_1
+	IniRead, Profil1_2, settings.ini, Ausruesten, Profil1_2
+	IniRead, Profil1_3, settings.ini, Ausruesten, Profil1_3
+	IniRead, Profil1_4, settings.ini, Ausruesten, Profil1_4
+	IniRead, Profil1_5, settings.ini, Ausruesten, Profil1_5
+	IniRead, Profil1_6, settings.ini, Ausruesten, Profil1_6
+	IniRead, Profil1_7, settings.ini, Ausruesten, Profil1_7
+	;V2
+	IniRead, Profil2_1, settings.ini, Ausruesten, Profil2_1
+	IniRead, Profil2_2, settings.ini, Ausruesten, Profil2_2
+	IniRead, Profil2_3, settings.ini, Ausruesten, Profil2_3
+	IniRead, Profil2_4, settings.ini, Ausruesten, Profil2_4
+	IniRead, Profil2_5, settings.ini, Ausruesten, Profil2_5
+	IniRead, Profil2_6, settings.ini, Ausruesten, Profil2_6
+	IniRead, Profil2_7, settings.ini, Ausruesten, Profil2_7
+	
+	;Einstellung
+	IniRead, Orgcall, settings.ini, Einstellung, Orgcall
+	IniRead, activateHP, settings.ini, Einstellung, AktvierenHP
+	IniRead, PaketUse, settings.ini, Einstellung, PaketUse
+	IniRead, DrugsUse, settings.ini, Einstellung, DrugsUse
+	IniRead, FishUse, settings.ini, Einstellung, FishUse
+	IniRead, angelType, settings.ini, Einstellung, angelType, 3
+	IniRead, AutoMotorAus, settings.ini, Einstellung, AutoMotorAus
+	IniRead, Alock, settings.ini, Einstellung, Alock
+	InIRead, ALight, settings.ini, Einstellung, ALight
+
+	;Werbung
+	IniRead, Werbung, settings.ini, AD, Werbung
+	;Kidnap
+	IniRead, Fahrer, settings.ini, Kidnap, Fahrer
+	IniRead, Opfer, settings.ini, Kidnap, Opfer
+	IniRead, Sitz, settings.ini, Kidnap, Sitz
+	;}
+	fischers := 1
+
+	info3name := 0
+	info2name := 0
+	info1name := 0
+}
