@@ -1,9 +1,13 @@
 ﻿#Include API.ahk
 #ifWinActive, GTA:SA:MP
 #SingleInstance, force
+#include inc\ImageButton.ahk
 #Persistent
 #UseHook
 #NoEnv
+
+loadIni()
+
 Menu, Tray, NoStandard
 Menu, Tray, Add , Schließen, GuiClose
 

@@ -3,12 +3,12 @@
 
 ; Implementation anderer Scripte
 #include inc\ImageButton.ahk
-
-; Globale Buttonvariablen erstellen
-global BT1, BT2, BT3, BT4, BT5, BT6, BT7, BT8, BT9, BT10 := -1
-global HBT1, HBT2, HBT3, HBT4, HBT5, HBT6, HBT7, HBT8, HBT9, HBT10 := -1
-global madeBy := -1
 loadIni()
+; Globale Buttonvariablen erstellen
+global BT1, BT2, BT3, BT4, BT5, BT6, BT7, BT8, BT9, BT10, BT11, BT12 := -1
+global HBT1, HBT2, HBT3, HBT4, HBT5, HBT6, HBT7, HBT8, HBT9, HBT10, HBT11, HBT12 := -1
+global madeBy := -1
+
 
 ; GUI erstellen
 GoSub, Startseite
@@ -42,42 +42,45 @@ GuiMain(2)
 
 Gui, Add, Picture, x30 y60 w660 h500 vBG1 +BackgroundTrans, src/gui/trans60.png
 
-Gui, Add, GroupBox, x45 y65 w500 h180 +BackgroundTrans cwhite,
-Gui, Add, Text, x60 y75 +BackgroundTrans cwhite, de/aktivieren
+Gui, Add, GroupBox, x45 y65 w500 h180 +BackgroundTrans ,
+Gui, Add, Text, x60 y75 +BackgroundTrans , de/aktivieren
 
-Gui, Add, CheckBox, x60 y90 w12 h12 +BackgroundTrans cwhite vOrgcall Checked%Orgcall%,
-Gui, Add, Text, x100 y90 +BackgroundTrans cwhite, Meldet den Backup-call auch im /crew-chat?
+Gui, Add, CheckBox, x60 y90 w12 h12 +BackgroundTrans  vOrgcall Checked%Orgcall%,
+Gui, Add, Text, x100 y90 +BackgroundTrans , Meldet den Backup-call auch im /crew-chat?
 
-Gui, Add, Checkbox, x60 y115 w12 h12 +BackgroundTrans cwhite gAktivierenHP vAktvierenHP Checked%activateHP% ,
-Gui, Add, Text, x100 y115 +BackgroundTrans cwhite, Die HP selbst einstellen, wann er Paket/Fische/Drogen used?
+Gui, Add, Checkbox, x60 y115 w12 h12 +BackgroundTrans  gAktivierenHP vAktvierenHP Checked%activateHP% ,
+Gui, Add, Text, x100 y115 +BackgroundTrans , Die HP selbst einstellen, wann er Paket/Fische/Drogen used?
 
-Gui, Add, Checkbox, x60 y140 w12 h12 +BackgroundTrans cwhite vAutoMotorAus Checked%AutoMotorAus% ,
-Gui, add, Text, x100 y140 +BackgroundTrans cwhite, beim Absteigen den Motor ausschalten?
+Gui, Add, Checkbox, x60 y140 w12 h12 +BackgroundTrans  vAutoMotorAus Checked%AutoMotorAus% ,
+Gui, add, Text, x100 y140 +BackgroundTrans , beim Absteigen den Motor ausschalten?
 
-Gui, Add, Checkbox, x60 y165 w12 h12 +BackgroundTrans cwhite  vAlock Checked%Alock%,
-Gui, Add, Text, x100 y165 +BackgroundTrans cwhite, Fahrzeug abschließen beim Motorstart
+Gui, Add, Checkbox, x60 y165 w12 h12 +BackgroundTrans   vAlock Checked%Alock%,
+Gui, Add, Text, x100 y165 +BackgroundTrans , Fahrzeug abschließen beim Motorstart
 
-Gui, add, Checkbox, x60 y190 w12 h12 +BackgroundTrans cwhite vALight Checked%ALight%,
-Gui, Add, Text, x100 y190 +BackgroundTrans cwhite, Fahrzeuglicht einschalten bei Motorstart
-Gui, Font, cBlack
+Gui, add, Checkbox, x60 y190 w12 h12 +BackgroundTrans  vALight Checked%ALight%,
+Gui, Add, Text, x100 y190 +BackgroundTrans , Fahrzeuglicht einschalten bei Motorstart
 ;Fisch
-Gui, Add, GroupBox, x45 y250 w500 h100 +BackgroundTrans cwhite,
-Gui, Add, Text, x50 y260 +BackgroundTrans cwhite, Einstellung /Fish
-Gui, Add, Text, x50 y280 +BackgroundTrans cwhite, Billigsten Fisch, HP niedrigsten Fisch oder keinen Fisch wegschmeißen?
-Gui, Add, Text, x150 y300 +BackgroundTrans cwhite,HP = 1 || $ = 2 || Nix = 3
-Gui, Add, Edit, x50 y300 w100 h16 vangelType, %angelType%
+Gui, Add, GroupBox, x45 y250 w500 h100 +BackgroundTrans ,
+Gui, Add, Text, x50 y260 +BackgroundTrans , Einstellung /Fish
+Gui, Add, Text, x50 y280 +BackgroundTrans , Billigsten Fisch, HP niedrigsten Fisch oder keinen Fisch wegschmeißen?
+Gui, Add, Text, x150 y300 +BackgroundTrans ,HP = 1 || $ = 2 || Nix = 3
+
+
+toggleHPSettings(activateHP)
 
 Gui, Add, Groupbox, x45 y350 w300 h115 vHPGroupbox +BackgroundTrans, 
-Gui, Add, Text, x55 y360 +BackgroundTrans cwhite vHPText, Einstellung HP 
+Gui, Add, Text, x55 y360 +BackgroundTrans  vHPText, Einstellung HP 
 
+
+Gui, Add, Text, x110 y380 +BackgroundTrans  vHPPaket, HP Erstehilfe Paket
+Gui, Add, Text, x110 y410 +BackgroundTrans  vHPDrogen, HP Drogen
+Gui, Add, Text, x110 y440 +BackgroundTrans  vHPFische, HP Fische
+
+Gui, Font, cBlack
 Gui, Add, Edit, x60 y380 w40 h20 vPaketUse, %PaketUse%
 Gui, Add, Edit, x60 y410 w40 h20 vDrugsUse, %DrugsUse%
 Gui, Add, Edit, x60 y440 w40 h20 vFishUse, %FishUse%
-Gui, Add, Text, x110 y380 +BackgroundTrans cwhite vHPPaket, HP Erstehilfe Paket
-Gui, Add, Text, x110 y410 +BackgroundTrans cwhite vHPDrogen, HP Drogen
-Gui, Add, Text, x110 y440 +BackgroundTrans cwhite vHPFische, HP Fische
-
-toggleHPSettings(activateHP)
+Gui, Add, Edit, x50 y300 w100 h16 vangelType, %angelType%
 
 GuiShow()
 return
@@ -131,18 +134,18 @@ Loop, 12
 	Gui, Add, Hotkey, x35 y%y% w90 h20 vHK%A_Index% gLabel, % HK%A_Index%
 	y += 40
 }
-Gui, Add, text, x142 y75 +BackGroundTrans cwhite, Motor An/Aus
-Gui, Add, text, x142 y115 +BackGroundTrans cwhite, Fahrzeug Abschließen
-Gui, Add, text, x142 y155 +BackGroundTrans cwhite, Members
-Gui, Add, text, x142 y195 +BackGroundTrans cwhite, Crewmembers
-Gui, Add, text, x142 y235 +BackGroundTrans cwhite, Fisch Essen (1-5)
-Gui, Add, text, x142 y275 +BackGroundTrans cwhite, usedrugs 
-Gui, Add, text, x142 y315 +BackGroundTrans cwhite, Erstehilfe 
-Gui, Add, text, x142 y355 +BackGroundTrans cwhite, Call Backup
-Gui, Add, text, x142 y395 +BackGroundTrans cwhite, Cancel Backup
-Gui, Add, text, x142 y435 +BackGroundTrans cwhite, Help Backup
-Gui, Add, text, x142 y475 +BackGroundTrans cwhite, Ejected alle im Car
-Gui, Add, text, x142 y515 +BackGroundTrans cwhite, Position Im F-Chat
+Gui, Add, text, x142 y75 +BackGroundTrans , Motor An/Aus
+Gui, Add, text, x142 y115 +BackGroundTrans , Fahrzeug Abschließen
+Gui, Add, text, x142 y155 +BackGroundTrans , Members
+Gui, Add, text, x142 y195 +BackGroundTrans , Crewmembers
+Gui, Add, text, x142 y235 +BackGroundTrans , Fisch Essen (1-5)
+Gui, Add, text, x142 y275 +BackGroundTrans , usedrugs 
+Gui, Add, text, x142 y315 +BackGroundTrans , Erstehilfe 
+Gui, Add, text, x142 y355 +BackGroundTrans , Call Backup
+Gui, Add, text, x142 y395 +BackGroundTrans , Cancel Backup
+Gui, Add, text, x142 y435 +BackGroundTrans , Help Backup
+Gui, Add, text, x142 y475 +BackGroundTrans , Ejected alle im Car
+Gui, Add, text, x142 y515 +BackGroundTrans , Position Im F-Chat
 
 ; Spalte 2
 Gui, Add, Picture, x305 y70 w350 h520 vBG2 +BackgroundTrans, src/gui/trans60.png
@@ -154,19 +157,19 @@ Loop, 13
 	y += 40
 	cmdcount++
 }
-Gui, Add, text, x422 y80 +BackGroundTrans cwhite, Position im Org-Chat
-Gui, Add, text, x422 y120 +BackGroundTrans cwhite, Letzten Befehl Wiederholen
-Gui, Add, text, x422 y160 +BackGroundTrans cwhite, Auto. Findystem deaktivieren
-Gui, Add, text, x422 y200 +BackGroundTrans cwhite, Hackvorgang Starten
-Gui, Add, text, x422 y240 +BackGroundTrans cwhite, Accept Wheelman
-Gui, Add, text, x422 y280 +BackGroundTrans cwhite, Revert Auftrag
-Gui, Add, text, x422 y320 +BackGroundTrans cwhite, Cancel Wheelman
-Gui, Add, text, x422 y360 +BackGroundTrans cwhite, Ausruesten(V1)
-Gui, Add, text, x422 y400 +BackGroundTrans cwhite, Ausruesten(V2)
-Gui, Add, text, x422 y440 +BackGroundTrans cwhite, Maske aufsetzen
-Gui, Add, text, x422 y480 +BackGroundTrans cwhite, /oldcontracts
-Gui, Add, text, x422 y520 +BackGroundTrans cwhite, /hram
-Gui, Add, text, x422 y560 +BackGroundTrans cwhite, Contractsystem
+Gui, Add, text, x422 y80 +BackGroundTrans , Position im Org-Chat
+Gui, Add, text, x422 y120 +BackGroundTrans , Letzten Befehl Wiederholen
+Gui, Add, text, x422 y160 +BackGroundTrans , Auto. Findystem deaktivieren
+Gui, Add, text, x422 y200 +BackGroundTrans , Hackvorgang Starten
+Gui, Add, text, x422 y240 +BackGroundTrans , Accept Wheelman
+Gui, Add, text, x422 y280 +BackGroundTrans , Revert Auftrag
+Gui, Add, text, x422 y320 +BackGroundTrans , Cancel Wheelman
+Gui, Add, text, x422 y360 +BackGroundTrans , Ausruesten(V1)
+Gui, Add, text, x422 y400 +BackGroundTrans , Ausruesten(V2)
+Gui, Add, text, x422 y440 +BackGroundTrans , Maske aufsetzen
+Gui, Add, text, x422 y480 +BackGroundTrans , /oldcontracts
+Gui, Add, text, x422 y520 +BackGroundTrans , /hram
+Gui, Add, text, x422 y560 +BackGroundTrans , Contractsystem
 
 
 GuiShow()
@@ -176,6 +179,8 @@ Hot2:
 Gui, Add, Edit, x0 y0 w0 h0 +ReadOnly,
 GuiMain(1)
 Gui, Add, Picture, x30 y70 w260 h500 vBG1 +BackgroundTrans, src/gui/trans60.png
+Gui, Add, Picture, x350 y70 w280 h500 vBG2 +BackgroundTrans, src/gui/trans60.png
+Gui, Add, Text, x355 y75 +BackgroundTrans, Verfügbare Labels:`n`n[HP] => Gibt die HP aus`n`n[Land] => Gibt das Land aus`n`n[Stadt] => Gibt die Stadt aus`n`n[Veh] => Gibt den Fahrzeugname aus`n`n[VehHP] => Gibt die Fahrzeughp aus `n`n[Kill] => Gibt die aktuellen Kills aus`n`n[Death] => Gibt die aktuellen Tode aus`n`n[KD] => Gibt die KD aus`n`n[HEAL] => Healt sich bei <100 HP`n`n[MOTOR] => Motorsystem
 Loop, 35
 {
 	IniRead, HK%A_Index%, Hotkeys.ini, Hotkey, %A_Index%, Keine
@@ -199,6 +204,80 @@ GuiShow()
 return
 
 ;}
+
+
+Equip:
+GuiMain(3)
+Gui, Add, Picture, x10 y70 w710 h220 vBG1 +BackgroundTrans, src/gui/trans60.png
+Gui, Add, Text, x30 y75 w910 h70 +BackgroundTrans, Hier kannst Du deine Ausrüstprofile verwalten.`nWichtig ist das der erste Slot niemals leer sein darf.`nDie Hotkeys zum Ausrüsten findest Du unter Hotkey 1
+Gui, Add, GroupBox, x15 y65 w700 h170 ,
+Gui, Add, DropDownList, x22 y150 w90 h110 vProfil1_1, ||Messer|Deagle|Shotgun|M4|MP5|Sniper|Drogen
+Gui, Add, DropDownList, x122 y150 w90 h110 vProfil1_2, ||Messer|Deagle|Shotgun|M4|MP5|Sniper|Drogen
+Gui, Add, DropDownList, x222 y150 w90 h110 vProfil1_3, ||Messer|Deagle|Shotgun|M4|MP5|Sniper|Drogen
+Gui, Add, DropDownList, x322 y150 w90 h110 vProfil1_4, ||Messer|Deagle|Shotgun|M4|MP5|Sniper|Drogen
+Gui, Add, DropDownList, x422 y150 w90 h110 vProfil1_5, ||Messer|Deagle|Shotgun|M4|MP5|Sniper|Drogen
+Gui, Add, DropDownList, x522 y150 w90 h110 vProfil1_6, ||Messer|Deagle|Shotgun|M4|MP5|Sniper|Drogen
+Gui, Add, DropDownList, x622 y150 w90 h110 vProfil1_7, ||Messer|Deagle|Shotgun|M4|MP5|Sniper|Drogen
+;V2
+Gui, Add, DropDownList, x22 y200 w90 h110 vProfil2_1, ||Messer|Deagle|Shotgun|M4|MP5|Sniper|Drogen
+Gui, Add, DropDownList, x122 y200 w90 h110 vProfil2_2, ||Messer|Deagle|Shotgun|M4|MP5|Sniper|Drogen
+Gui, Add, DropDownList, x222 y200 w90 h110 vProfil2_3, ||Messer|Deagle|Shotgun|M4|MP5|Sniper|Drogen
+Gui, Add, DropDownList, x322 y200 w90 h110 vProfil2_4, ||Messer|Deagle|Shotgun|M4|MP5|Sniper|Drogen
+Gui, Add, DropDownList, x422 y200 w90 h110 vProfil2_5, ||Messer|Deagle|Shotgun|M4|MP5|Sniper|Drogen
+Gui, Add, DropDownList, x522 y200 w90 h110 vProfil2_6, ||Messer|Deagle|Shotgun|M4|MP5|Sniper|Drogen
+Gui, Add, DropDownList, x622 y200 w90 h110 vProfil2_7, ||Messer|Deagle|Shotgun|M4|MP5|Sniper|Drogen
+
+GuiControl, Choose, Profil1_1, %Profil1_1%
+GuiControl, Choose, Profil1_2, %Profil1_2%
+GuiControl, Choose, Profil1_3, %Profil1_3%
+GuiControl, Choose, Profil1_4, %Profil1_4%
+GuiControl, Choose, Profil1_5, %Profil1_5%
+GuiControl, Choose, Profil1_6, %Profil1_6%
+GuiControl, Choose, Profil1_7, %Profil1_7%
+
+
+GuiControl, Choose, Profil2_1, %Profil2_1%
+GuiControl, Choose, Profil2_2, %Profil2_2%
+GuiControl, Choose, Profil2_3, %Profil2_3%
+GuiControl, Choose, Profil2_4, %Profil2_4%
+GuiControl, Choose, Profil2_5, %Profil2_5%
+GuiControl, Choose, Profil2_6, %Profil2_6%
+GuiControl, Choose, Profil2_7, %Profil2_7%
+
+GuiShow()
+return
+
+Binds:
+GuiMain()
+URLDownloadToFile, https://agency.jameschans.de/keybinder/keybinds.txt, keybinds.txt
+Sleep 100
+FileRead, keybinds, keybinds.txt
+Sleep 150
+FileDelete, keybinds.txt
+StringReplace, keybinds, keybinds, \n, `n, all
+Gui, Add, Picture, x10 y70 w710 h520 vBG1 +BackgroundTrans, src/gui/trans60.png
+Gui, Add, Text, x15 y75 w710 h520 +BackgroundTrans, %keybinds%
+
+GuiShow()
+return
+
+Update:
+GuiMain()
+URLDownloadToFile, https://agency.jameschans.de/download/info.txt, info.txt
+Sleep 100
+FileRead, info, info.txt
+Sleep 150
+FileDelete, info.txt
+StringReplace, info, info, \n, `n, all
+Gui, Add, Picture, x10 y70 w710 h520 vBG1 +BackgroundTrans, src/gui/trans60.png
+Gui, Add, Text, x15 y75 w710 h520 +BackgroundTrans, %info%
+
+
+GuiShow()
+return
+
+
+
 
 Startseite:
 GuiMain()
@@ -228,7 +307,7 @@ GuiMain(safe := -1)
 	Gui, -SysMenu
 
 	; Bilder hinzufügen
-	Gui, Add, Picture, x0 y0 w900 h600 +BackgroundTrans, src/gui/pic1.jpg
+	Gui, Add, Picture, x0 y0 w900 h700 +BackgroundTrans, src/gui/pic1.jpg
 
 	; Font einstellen
 	Gui, Font, s16, Source Code Pro
@@ -240,29 +319,32 @@ GuiMain(safe := -1)
 
 	; Footer erstellen
 	Gui, Font, s9
-	Gui, Add, Text, x766 y525 +BackgroundTrans vmadeBy, made by`nPietro_Miller,`nJohn_Reese,`nFrank_Dilauro
+	Gui, Add, Text, x766 y625 +BackgroundTrans vmadeBy, made by`nPietro_Miller,`nJohn_Reese,`nFrank_Dilauro
 	GuiControl, +Center, madeBy
 
 	; Hintergrund bei den Buttons erstellen
-	Gui, Add, Picture, x730 y40 w170 h560 +BackgroundTrans, src/gui/trans60.png
+	Gui, Add, Picture, x730 y40 w170 h660 +BackgroundTrans, src/gui/trans60.png
 
 	; Buttons erstellen
 	Gui, Add, Button, vBT1 x850 y5 w30 h30 hwndHBT1 gGuiClose +BackgroundTrans
 	Gui, Add, Button, vBT2 x810 y5 w30 h30 hwndHBT2 gMinimizeGui +BackgroundTrans
 	Gui, Add, Button, vBT3 x750 y50 w130 h35 gHot hwndHBT3 +BackgroundTrans
 	Gui, Add, Button, vBT8 x750 y100 w130 h35 gHot2 hwndHBT8 +BackgroundTrans
-	Gui, Add, Button, vBT4 x750 y150 w130 h35 hwndHBT4 +BackgroundTrans
+	Gui, Add, Button, vBT4 x750 y150 w130 h35 gBinds hwndHBT4 +BackgroundTrans
 	Gui, Add, Button, vBT5 x750 y200 w130 h35 gEinstellungen hwndHBT5 +BackgroundTrans
-	Gui, Add, Button, vBT6 x750 y250 w130 h35 hwndHBT6 +BackgroundTrans
-	Gui, Add, Button, vBT10 x750 y300 w130 h35 hwndHBT10 +BackgroundTrans
+	Gui, Add, Button, vBT6 x750 y250 w130 h35 gUpdate hwndHBT6 +BackgroundTrans
+	Gui, Add, Button, vBT10 x750 y300 w130 h35 gEquip hwndHBT10 +BackgroundTrans
 	if(safe == 1) 
 		Gui, Add, Button, vBT9 x750 y380 w130 h35 gBTdynHotSave hwndHBT9 +BackgroundTrans
 	else if(safe == 2)
 		Gui, Add, Button, vBT9 x750 y380 w130 h35 gSave_Einstellungen hwndHBT9 +BackgroundTrans
+	else if(safe == 3)
+		Gui, Add, Button, vBT9 x750 y380 w130 h35 gSpeichern_Ausruesten hwndHBT9 +BackgroundTrans
 	
 	
 	
-	Gui, Add, Button, vBT7 x750 y460 w130 h35 hwndHBT7 gCP +BackgroundTrans
+	Gui, Add, Button, vBT7 x750 y560 w130 h35 hwndHBT7 gCP +BackgroundTrans
+	Gui, Add, Button, vBT12 x750 y510 w130 h35 hwndHBT12 gConnect +BackgroundTrans
 	
 	ImageButton.Create(HBT1, [0, "src/gui/button_exit.png"], {2: "src/gui/button_exit_hot.png"})
 	ImageButton.Create(HBT2, [0, "src/gui/button_minimize.png"], {2: "src/gui/button_minimize_hot.png"})
@@ -274,20 +356,28 @@ GuiMain(safe := -1)
 	ImageButton.Create(HBT7, [0, "src/gui/button_cp.png"], {2: "src/gui/button_cp_hot.png"})
 	ImageButton.Create(HBT9, [0, "src/gui/button_speichern.png"], {2: "src/gui/button_speichern_hot.png"})
 	ImageButton.Create(HBT10, [0, "src/gui/button_ausruesten.png"], {2: "src/gui/button_ausruesten_hot.png"})
+	ImageButton.Create(HBT11, [0, "src/gui/button_kurzbefehle.png"], {2: "src/gui/button_kurzbefehle_hot.png"})
+	ImageButton.Create(HBT12, [0, "src/gui/button_rpg-city.png"], {2: "src/gui/button_rpg-city_hot.png"})
 }
 
 ; Funktion, um die letzten Einstellungen des GUI's zu tätigen
 GuiShow()
 {
 	; Zone hinzufügen, um das GUI zu verschieben
-	Gui, Add, Text, x0 y0 w900 h600 gMoveGui +BackgroundTrans,
+	Gui, Add, Text, x0 y0 w900 h700 gMoveGui +BackgroundTrans,
 
 	; Ecken vom GUI entfernen
-	WinSet, Region, 0-0 w900 h600 R44-44
+	WinSet, Region, 0-0 w900 h700 R44-44
 
 	; GUI anzeigen
-	Gui, Show, w900 h600
+	Gui, Show, w900 h700
 }
+
+Connect:
+RegRead GTA_SA_EXE, HKEY_CURRENT_USER, Software\SAMP, GTA_SA_EXE 
+SplitPath, GTA_SA_EXE,, PFAD 
+Run, %PFAD%\samp.exe server.rpg-city.de:7777
+return
 
 BTdynHotSave: ;{
 Loop 50
@@ -360,6 +450,63 @@ Reload
 return
 ;}
 
+Speichern_Ausruesten:
+GuiControlGet, Profil1_1
+GuiControlGet, Profil1_2
+GuiControlGet, Profil1_3
+GuiControlGet, Profil1_4
+GuiControlGet, Profil1_5
+GuiControlGet, Profil1_6
+GuiControlGet, Profil1_7
+
+ 
+GuiControlGet, Profil2_1
+GuiControlGet, Profil2_2
+GuiControlGet, Profil2_3
+GuiControlGet, Profil2_4
+GuiControlGet, Profil2_5
+GuiControlGet, Profil2_6
+GuiControlGet, Profil2_7
+
+ 
+
+IniWrite, %Profil1_1%, settings.ini, Ausruesten, Profil1_1
+IniWrite, %Profil1_2%, settings.ini, Ausruesten, Profil1_2
+IniWrite, %Profil1_3%, settings.ini, Ausruesten, Profil1_3
+IniWrite, %Profil1_4%, settings.ini, Ausruesten, Profil1_4
+IniWrite, %Profil1_5%, settings.ini, Ausruesten, Profil1_5
+IniWrite, %Profil1_6%, settings.ini, Ausruesten, Profil1_6
+IniWrite, %Profil1_7%, settings.ini, Ausruesten, Profil1_7
+
+
+IniWrite, %Profil2_1%, settings.ini, Ausruesten, Profil2_1
+IniWrite, %Profil2_2%, settings.ini, Ausruesten, Profil2_2
+IniWrite, %Profil2_3%, settings.ini, Ausruesten, Profil2_3
+IniWrite, %Profil2_4%, settings.ini, Ausruesten, Profil2_4
+IniWrite, %Profil2_5%, settings.ini, Ausruesten, Profil2_5
+IniWrite, %Profil2_6%, settings.ini, Ausruesten, Profil2_6
+IniWrite, %Profil2_7%, settings.ini, Ausruesten, Profil2_7
+
+ 
+IniRead, Profil1_1, settings.ini, Ausruesten, Profil1_1
+IniRead, Profil1_2, settings.ini, Ausruesten, Profil1_2
+IniRead, Profil1_3, settings.ini, Ausruesten, Profil1_3
+IniRead, Profil1_4, settings.ini, Ausruesten, Profil1_4
+IniRead, Profil1_5, settings.ini, Ausruesten, Profil1_5
+IniRead, Profil1_6, settings.ini, Ausruesten, Profil1_6
+IniRead, Profil1_7, settings.ini, Ausruesten, Profil1_7
+
+IniRead, Profil2_1, settings.ini, Ausruesten, Profil2_1
+IniRead, Profil2_2, settings.ini, Ausruesten, Profil2_2
+IniRead, Profil2_3, settings.ini, Ausruesten, Profil2_3
+IniRead, Profil2_4, settings.ini, Ausruesten, Profil2_4
+IniRead, Profil2_5, settings.ini, Ausruesten, Profil2_5
+IniRead, Profil2_6, settings.ini, Ausruesten, Profil2_6
+IniRead, Profil2_7, settings.ini, Ausruesten, Profil2_7
+
+
+Reload
+return
 
 loadIni(){
 	;{

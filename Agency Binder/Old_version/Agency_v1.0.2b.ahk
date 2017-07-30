@@ -105,9 +105,6 @@ Loop, 35
 
 loadIni()
 
-url = https://agency.jameschans.de/keybinder/duty.php?name=%username%&duty=0 
-UrlDownloadToVar(url, result)
-
 ; GUI erstellen
 GoSub, Startseite
 
@@ -130,8 +127,6 @@ IniWrite, -1, settings.ini, Kidnap, Fahrer
 IniWrite, -1, settings.ini, Kidnap, Opfer
 IniWrite, -1, settings.ini, Kidnap, Sitz
 unblockChatInput()
-url = https://agency.jameschans.de/keybinder/duty.php?name=%username%&duty=6 
-UrlDownloadToVar(url, result)
 ExitApp
 return
 
@@ -751,12 +746,12 @@ SendChat("/fee " . FeeEinstellung . "")
 }
 return
 
-:?:/keyadmin::
+:?:/admin::
 if(getUsername() == "John_Reese"){
 	numberadmin := PlayerInput("Adminnummer ( 0 -> CT | 1 -> Wtd 1 | 2 -> Wtd 2 | 3 -> Wtd 3 | 4 -> Grab | 5 -> Accept: ")
 	if(numberadmin == 0){	
-		AddChatMessage("<< John_Reese hat den Auftrag ausgeführt und Quenno für 5031$ getötet. >>")
-		;~ SendChat("<< John_Reese hat den Auftrag ausgeführt und Quenno für 5031$ getötet. >>")
+		AddChatMessage("<< Hitman John_Reese hat den Auftrag ausgeführt und Quenno für 5031$ getötet. >>")
+		;~ SendChat("<< Hitman John_Reese hat den Auftrag ausgeführt und Quenno für 5031$ getötet. >>")
 	} else if(numberadmin == 1){
 		AddChatMessage("Frank hat einen Eintrag entfernt. Verbleibend: 22 (+250$)")
 	} else if(numberadmin == 2){
@@ -779,15 +774,7 @@ if(getUsername() == "John_Reese"){
 	AddChatMessage("Reported Du Depp")
 }
 return
-/*
-[18:49:32] << John_Reese hat den Auftrag ausgeführt und Anton_Flake für 5000$ getötet. >>
 
-[18:49:32] Du hast ein Verbrechen begangen ( Mord ). Zeuge: Niemand.
-
-[18:49:32] Dein Wanted Level: 2
-
-
-*/
 
 contracts:
 GetChatLine(0, Line1)
@@ -809,20 +796,9 @@ output2_2 := ""
 output2_3 := ""
 output2_4 := ""
 output2_5 := ""
-activeFunction := true
-if(RegExMatch(Line1, "<< " username " hat den Auftrag ausgeführt und (.*) für (.+)\$ getötet. >>", regex_) && !InStr(Line1, "offline"))
+if(RegExMatch(Line1, "^<< Hitman " username " hat den Auftrag ausgeführt und (.*) für (.+)\$ getötet. >>$", regex_) && !InStr(Line1, "offline"))
 {
-	
-	contracting := -1
-	contractupload(username, regex_2)
-	url = https://agency.jameschans.de/keybinder/ctsperre.php?name=%username%&ctName=%regex_1%
-	URLDownloadToVar(url, resultct)
-	errors(resultct)
-	if(resultct == 1)
-		AddChatMessage("Die Contractsperre wurde eingetragen")		
-}
-if(RegExMatch(Line3, "<< " username " hat den Auftrag ausgeführt und (.*) für (.+)\$ getötet. >>", regex_) && !InStr(Line3, "offline"))
-{
+	activeFunction := true
 	contracting := -1
 	contractupload(username, regex_2)
 	url = https://agency.jameschans.de/keybinder/ctsperre.php?name=%username%&ctName=%regex_1%
@@ -830,17 +806,27 @@ if(RegExMatch(Line3, "<< " username " hat den Auftrag ausgeführt und (.*) für 
 	errors(resultct)
 	if(resultct == 1)
 		AddChatMessage("Die Contractsperre wurde eingetragen")	
+	activeFunction := false
+	
 }
-activeFunction := false
+if(RegExMatch(Line3, "^<< Hitman " username " hat den Auftrag ausgeführt und (.*) für (.+)\$ getötet. >>$", regex_) && !InStr(Line3, "offline"))
+{
+	activeFunction := true
+	contracting := -1
+	contractupload(username, regex_2)
+	url = https://agency.jameschans.de/keybinder/ctsperre.php?name=%username%&ctName=%regex_1%
+	URLDownloadToVar(url, resultct)
+	errors(resultct)
+	if(resultct == 1)
+		AddChatMessage("Die Contractsperre wurde eingetragen")	
+	activeFunction := false
+	
+	
+}
 return
 
 
 clearvariable:
-username := GetUsername()
-if(username == "")
-{
-RegRead, username, HKCU, Software\SAMP, PlayerName
-}
 if(!activeFunction){
 	urli := ""
 	money_ := ""
@@ -875,10 +861,9 @@ If(InStr(line1, "hat einen Eintrag entfernt. Verbleibend: ") || InStr(line2, "ha
 	info3name := 0
 	info2name := 0
 	info1name := 0
-	activeFunction := true
 	if(RegExMatch(line1, "^(.*) hat einen Eintrag entfernt. Verbleibend: (.*) \(\+(.+)\$\)$", money_) && !InStr(line2, "hat einen Eintrag entfernt. Verbleibend:") && !InStr(line3, "hat einen Eintrag entfernt. Verbleibend:"))
 	{
-		
+		activeFunction := true
 		line1name := money_1
 		info1name := money_1
 		info1wanted:= money_2
@@ -919,9 +904,11 @@ If(InStr(line1, "hat einen Eintrag entfernt. Verbleibend: ") || InStr(line2, "ha
 			
 			Sleep 1000
 		}
+		activeFunction := false
 	}
 	if(RegExMatch(line1, "^(.*) hat einen Eintrag entfernt. Verbleibend: (.*) \(\+(.+)\$\)$", moneyl1_) && RegExMatch(line2, "^(.*) hat einen Eintrag entfernt. Verbleibend: (.*) \(\+(.+)\$\)$", moneyl2_) && !InStr(line3, "hat einen Eintrag entfernt. Verbleibend:"))
 	{
+		activeFunction := true
 		line2name := moneyl2_1
 		line1name := moneyl1_1
 		
@@ -968,9 +955,11 @@ If(InStr(line1, "hat einen Eintrag entfernt. Verbleibend: ") || InStr(line2, "ha
 			
 			Sleep 1000
 		}
+		activeFunction := false
 	}
 	if(RegExMatch(line1, "^(.*) hat einen Eintrag entfernt. Verbleibend: (.*) \(\+(.+)\$\)$", moneyl1_) && RegExMatch(line2, "^(.*) hat einen Eintrag entfernt. Verbleibend: (.*) \(\+(.+)\$\)$", moneyl2_) && RegExMatch(line3, "^(.*) hat einen Eintrag entfernt. Verbleibend: (.*) \(\+(.+)\$\)$", moneyl3_))
 	{
+		activeFunction := true
 		line3name := moneyl3_1
 		line2name := moneyl2_1
 		line1name := moneyl1_1
@@ -1026,8 +1015,8 @@ If(InStr(line1, "hat einen Eintrag entfernt. Verbleibend: ") || InStr(line2, "ha
 			
 			Sleep 1000
 		}
+		activeFunction := false
 	}
-	activeFunction := false
 }
 return
 
@@ -1448,7 +1437,7 @@ return
 accept:
 username := GetUsername()
 GetChatLine(0, line1)
-if(RegExMatch(line1, "Du hast den Auftrag von .* angenommen"))
+if(RegExMatch(line1, "^Du hast den Auftrag von .* angenommen$"))
 {
 	activeFunction := true
 	Settimer, accept, off
@@ -1485,7 +1474,7 @@ return
 HotKey19:
 if(IsInChat())
 	return
-SendChat("/cancel wheelman")
+SendChat("/cancel agency")
 return
 
 
@@ -1567,8 +1556,8 @@ if(contracting == -1){
 			AddChatMessage("|{01DF01}Hitman{FFFFFF}|Konnte Spieler nicht Death/Offlinecontracten. Verwende zurnot /oc oder /dc")
 		} else {
 			GetChatLine(2, Line3)
-			if(InStr(Line3, "<< " username " hat den Auftrag ausgeführt und") && InStr(Line3, "getötet (offline)")){
-				RegExMatch(Line3, "<< " username " hat den Auftrag ausgeführt und (.*) für (.+)\$ getötet (offline). >>", regex_)
+			if(InStr(Line3, "<< Hitman " username " hat den Auftrag ausgeführt und") && InStr(Line3, "getötet (offline)")){
+				RegExMatch(Line3, "<< Hitman " username " hat den Auftrag ausgeführt und (.*) für (.+)\$ getötet ", regex_)
 				contracting := -1
 				contractupload(username, regex_2)
 			}
@@ -1576,8 +1565,8 @@ if(contracting == -1){
 		
 	} else {
 		GetChatLine(2, Line3)
-		if(InStr(Line3, "<< " username " hat den Auftrag ausgeführt und") && InStr(Line3, "getötet (Deathcontract)")){
-			RegExMatch(Line3, "<< " username " hat den Auftrag ausgeführt und (.*) für (.+)\$ getötet ", regex_)
+		if(InStr(Line3, "<< Hitman " username " hat den Auftrag ausgeführt und") && InStr(Line3, "getötet (offlinearrest)")){
+			RegExMatch(Line3, "<< Hitman " username " hat den Auftrag ausgeführt und (.*) für (.+)\$ getötet ", regex_)
 			contracting := -1
 			contractupload(username, regex_2)
 		}
@@ -2557,14 +2546,12 @@ return
 
 
 :?:/oc::
-username := GetUsername()
 targetID := PlayerInput("/Offlinecontract: ")
 activeFunction := true
 SendChat("/offlinecontract " targetID)
-Sleep 500
 GetChatLine(2, Line3)
-if(InStr(Line3, "<< " username " hat den Auftrag ausgeführt und (.*) für (.+)\$ getötet (offline). >>")){
-	RegExMatch(Line3, "<< " username " hat den Auftrag ausgeführt und (.*) für (.+)\$ getötet (offline). >>", regex_)
+if(InStr(Line3, "<< Hitman " username " hat den Auftrag ausgeführt und (.*) für (.+)\$ getötet (offlinearrest)")){
+	RegExMatch(Line3, "<< Hitman " username " hat den Auftrag ausgeführt und (.*) für (.+)\$ getötet ", regex_)
 	contracting := -1
 	contractupload(username, regex_2)
 }
@@ -2576,9 +2563,8 @@ targetID := PlayerInput("/deathcontract: ")
 activeFunction := true
 SendChat("/deathcontract " targetID)
 GetChatLine(2, Line3)
-username := GetUsername()
-if(InStr(Line3, "<< " username " hat den Auftrag ausgeführt und (.*) für (.+)\$ getötet (Deathcontract). >>")){
-	RegExMatch(Line3, "<< " username " hat den Auftrag ausgeführt und (.*) für (.+)\$ getötet (Deathcontract). >>", regex_)
+if(InStr(Line3, "<< Hitman " username " hat den Auftrag ausgeführt und (.*) für (.+)\$ getötet (deatharrest)")){
+	RegExMatch(Line3, "<< Hitman " username " hat den Auftrag ausgeführt und (.*) für (.+)\$ getötet ", regex_)
 	contracting := -1
 	contractupload(username, regex_2)
 }
@@ -2959,49 +2945,8 @@ IniRead, FeeEinstellung, settings.ini, Einstellung, FeeEinstellung
 AddChatMessage("|{005FFF}Agency{FFFFFF}| Die /fee-Einstellung ist {01DF01}" . FeeEinstellung)
 return
 
-;~ Dutysystem
-:?:/dienst::
-Suspend permit
-AddChatMessage("|{005FFF}Agency{FFFFFF}| 0 - Kein Dienst, 1 - Hackdienst, 2 - Grabdienst, 3 - Backupdienst, 4 - Contractdienst")
-duty := PlayerInput("/Dienst: ")
-if(duty < 0 && duty > 4){
-	AddChatMessage("|{005FFF}Agency{FFFFFF}| Bitte die richtige Dienstnummer auswählen!")
-	return
-}
-url = https://agency.jameschans.de/keybinder/duty.php?name=%username%&duty=%duty% 
-UrlDownloadToVar(url, result)
-StringSplit, result_, result, ~
-errors(result_1)
-if(result_1 == 1)
-{
-	SendChat("/f Ich bin nun " result_2)
-}
-return
-
-:?:/showdienst::
-sdienst()
-return
-
 ;~ Scripte
 
-
-sdienst(){
-	url = https://agency.jameschans.de/keybinder/getdienst.php
-	count := 0
-	URLDownloadToVar(url, result)
-	Loop, Parse, result, |
-	{
-		StringSplit, duty_, A_LoopField, ~
-		if(duty_1 != ""){
-			AddChatMessage("{01DF01}" . duty_1 . ": {FFFFFF}" . duty_2)
-			count++
-		}
-	}
-	if(count == 0){
-		AddChatMessage("|{005FFF}Agency{FFFFFF}|Es ist niemand im Dienst")
-	}
-	return
-}
 
 printHotkey(id) 
 {
